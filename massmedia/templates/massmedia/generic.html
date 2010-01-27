@@ -1,0 +1,1 @@
+<embed {% if media.width %}width="{{ media.width }}"{% endif %} {% if media.height %}height="{{ media.height }}"{% endif %} autoplay="false" src="{{ media.get_absolute_url }}" type="{{ media.get_mime_type }}"/>

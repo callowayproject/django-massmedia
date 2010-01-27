@@ -1,0 +1,16 @@
+<h1>Types</h1>
+<ul>
+    <li><a href="type/audio/">Audio</a></li>
+    <li><a href="type/image/">Image</a></li>
+    <li><a href="type/video/">Video</a></li>
+    <li><a href="type/flash/">Flash</a></li>
+</ul>
+
+{% if collections %}
+<h1>Collections</h1>
+<ul>
+{% for collection in collections %}
+    <li><a href="collection/{{ collection.id }}/">{{ collection }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}

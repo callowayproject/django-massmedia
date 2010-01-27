@@ -1,0 +1,13 @@
+{% extends "media/base_video.html" %}
+
+{% load media_widgets %}
+{% load mogrify %}
+{% load slot_tags %}
+
+{% block video_feature %}
+	<div id="videoplayer">{% show_media object %}</div>
+	<h1><a href="/massmedia/grab/{{ object.pk }}/">{{ object.title }}</a></h1>
+	<p class="small">{{ object.creation_date|date:"M d, Y" }}</p>
+        <p class="small">{% if object.credit %}{{ object.credit }}{% else %}By: {{ object.one_off_author }}{% endif %}</p>
+	<p>{{ object.caption }}</p>
+{% endblock %}

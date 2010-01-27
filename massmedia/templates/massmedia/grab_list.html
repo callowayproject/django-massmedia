@@ -1,0 +1,7 @@
+{% if videos %}
+{% for media in videos %}
+{{ media.render_template }}
+{% endfor %}
+{% else %}
+No media found
+{% endif %}

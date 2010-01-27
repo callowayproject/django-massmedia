@@ -1,0 +1,14 @@
+{% if videos %}
+({"items":[
+{% for media in videos %}
+    {
+        "pk": {{ media.pk }},
+        "title": "{{ media.title }}",
+		"absolute_url": "/massmedia/grab/{{ media.pk }}/",
+        "thumbnail": "{{ media.thumbnail.file.url }}",
+        "creation_date": "{{ media.creation_date|date:"M d, Y" }}"
+    }{% if not forloop.last %},{% endif %}
+{% endfor %}
+]
+})
+{% endif %}

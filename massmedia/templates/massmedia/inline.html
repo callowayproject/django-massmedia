@@ -1,0 +1,13 @@
+{% load media_widgets %}
+<html>
+    <head>
+        <script type="text/javascript">
+            var frame = window.parent.document.getElementById('{{ type }}{{ media.id }}');
+            {% if media.height %}frame.height = '{{ media.height }}';{% endif %}
+            {% if media.width %}frame.width = '{{ media.width }}';{% endif %}
+        </script>
+    </head>
+    <body>
+        {% show_media media %}
+    </body>
+</html>

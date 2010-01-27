@@ -1,0 +1,7 @@
+<object id="swfclip{{ media.asset_id }}" width="{% if media.width %}{{ media.width }}{% else %}326{% endif %}" height="{% if media.height %}{{ media.height }}{% else %}248{% endif %}" type="application/x-shockwave-flash" data="http://wstm.grabnetworks.com/swf/cube.swf?a={{ media.asset_id }}&amp;m={{ media.layout_id }}">
+	<param name="movie" value="http://player.grabnetworks.com/swf/cube.swf?a={{ media.asset_id }}&amp;m={{ media.layout_id }}"/>
+	<param name="allowScriptAccess" value="always"/>
+	<param name="base" value="." />
+	<param name="wmode" value="transparent"/>
+	<param name="allowfullscreen" value="true"/>
+</object>

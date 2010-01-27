@@ -1,0 +1,10 @@
+
+{% if objects %}
+<ul>
+{% for media in objects %}
+    <li><b>{{ media }}</b><br><blockquote>{{ media.render_template }}</blockquote></li>
+{% endfor %}
+</ul>
+{% else %}
+No media found
+{% endif %}

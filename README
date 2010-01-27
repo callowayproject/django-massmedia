@@ -1,0 +1,5 @@
+Django-MassMedia
+ 
+To start using the app, place it in your INSTALLED_APPS. You may want to edit the settings.py file in the massmedia directory and adjust a few things. If you want to gather metadata, you should install the hachoir lib available at http://hachoir.org/. All in all, you will need the hachoir core,parser, and metadata packages installed.
+
+To customize the app, try editing some of the templates. Media items are templated with the show_media tag using templates based on the media's mimetype.
