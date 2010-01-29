@@ -89,6 +89,8 @@ class Metadata():
                 result[key] = 'new Date(Date.UTC(%d,%d,%d))'%(value.year, value.month, value.day)
             elif isinstance(value, time.struct_time):
                 result[key] =  'new Date(Date.UTC(%d,%d,%d,%d,%d,%d))'%(value.tm_year, value.tm_mon, value.tm_mday, value.tm_hour, value.tm_min, value.tm_sec)
+            elif isinstance(value, datetime.timedelta):
+                result[key] = str(value)
             else:
                 result[key] = value
         return result
@@ -96,11 +98,17 @@ class Metadata():
     def from_json(self, json_str):
         result = simplejson.loads(json_str)
         dt_regex = re.compile(r'^new\sDate\(Date\.UTC\((.*?)\)\)')
+        td_regex = re.compile(r'^(\d+:\d+:\d+\.\d+)$')
         for key, value in result.items():
             if isinstance(value, basestring):
                 m = dt_regex.match(value)
+                n = td_regex.match(value)
                 if m:
                     result[key] = datetime.datetime(*(simplejson.loads('[%s]'%m.group(1))))
+                if n:
+                    vals = n.group(1).split(':')
+                    result[key] = datetime.timedelta(hours=int(vals[0]),minutes=int(vals[1]),seconds=float(vals[2]))
+                
         self._data.update(result)
     
     def __str___(self):
