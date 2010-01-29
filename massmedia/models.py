@@ -197,8 +197,8 @@ class Image(Media):
                     return ''
                 im.thumbnail(appsettings.THUMB_SIZE,PilImage.ANTIALIAS)
                 im.save(thumbnail,im.format)
-            return '<a href="%s"><img src="%s%s"/></a>'%\
-                        (self.get_absolute_url(),settings.MEDIA_URL,thumburl)
+            return '<a href="%s" target="_blank"><img src="%s%s" alt="%s" title="%s. Click to see the full sized image." /></a>'%\
+                        (self.get_absolute_url(),settings.MEDIA_URL,thumburl, self.file, self.file)
         elif self.external_url:
             return '<a href="%s"><img src="%s"/></a>'%\
                         (self.get_absolute_url(),self.get_absolute_url())
