@@ -8,7 +8,11 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.template.loader import get_template
 from django.template import TemplateDoesNotExist,Template,Context
+from django.core.exceptions import ImproperlyConfigured
+
 from massmedia import settings as appsettings
+from fields import Metadata, SerializedObjectField, MetadataJSONEncoder, MetadataJSONDecoder
+
 from cStringIO import StringIO
 import mimetypes
 import os
@@ -26,7 +30,7 @@ except ImportError:
 try:
     from tagging.fields import TagField
 except ImportError:
-    raise ImportError('You must have django-tagging installed!')
+    raise ImproperlyConfigured('You must have django-tagging installed!')
         
 try:
     import Image as PilImage
@@ -44,46 +48,9 @@ try:
 except ImportError:
     extractMetadata = None
 
-from fields import SerializedObjectField
-
 
 is_image = lambda s: os.path.splitext(s)[1][1:] in appsettings.IMAGE_EXTS
-
-def parse_metadata(path):
-    try:
-        parser = createParser(unicode(path))
-    except InputStreamError:           
-        return
-    if not parser:
-        return
-    try:
-        metadata = extractMetadata(parser, appsettings.INFO_QUALITY)
-    except HachoirError:
-        return
-    if not metadata:
-        return
-    data = {}
-    text = metadata.exportPlaintext(priority=None, human=False)           
-    for line in text:
-        if not line.strip().startswith('-'):
-            key = line.strip().lower().split(':')[0]
-            value = []
-        else:
-            key = line.strip().split('- ')[1].split(': ')[0]
-            value = line.split(key)[1][2:]
-            if key in data:
-                if hasattr(data[key],'__iter__'):
-                    value = data[key] + [value]
-                else:
-                    value = [data[key],value]
-        if value:
-            data[key] = value
-    if is_image(path) and IPTCInfo:
-        try:
-            data.update(IPTCInfo(path).__dict__['_data'])
-        except:
-            pass
-    return data
+value_or_list = lambda x: len(x) == 1 and x[0] or x
 
 class Media(models.Model):
     title = models.CharField(max_length=255)
@@ -93,7 +60,7 @@ class Media(models.Model):
     one_off_author = models.CharField('one-off author', max_length=100, blank=True)
     credit = models.CharField(max_length=150, blank=True)
     caption = models.TextField(blank=True)
-    metadata = SerializedObjectField(blank=True)
+    metadata = SerializedObjectField(blank=True, encoder=MetadataJSONEncoder, decoder=MetadataJSONDecoder)
     sites = models.ManyToManyField(Site,related_name='%(class)s_sites')
     categories = TagField(blank=True,null=True)
     reproduction_allowed = models.BooleanField("we have reproduction rights for this media", default=True)
@@ -112,7 +79,13 @@ class Media(models.Model):
         
     def __unicode__(self):
         return self.title
-
+    
+    def author_name(self):
+        if self.author:
+            return self.author.full_name
+        else:
+            return self.one_off_author
+    
     def get_absolute_url(self):
         if self.external_url:
             return self.external_url
@@ -127,12 +100,20 @@ class Media(models.Model):
         raise NotImplementedError
     
     def save(self, *args, **kwargs):
+        super(Media, self).save(*args, **kwargs) 
+        # That save needs to come before we look at the file otherwise the
+        # self.file.path is incorrect.
         if self.file and not self.mime_type:
             self.mime_type = mimetypes.guess_type(self.file.path)[0]
         if not(self.metadata) and self.file and extractMetadata:
-            print 'im tryin here'
-            self.metadata = [parse_metadata(self.file.path) or {}]
+            self.parse_metadata()
+        self.thumb()
         super(Media, self).save(*args, **kwargs)
+    
+    def thumb(self):
+        return '<p>No Thumbnail Available</p>'
+    thumb.allow_tags = True
+    thumb.short_description = 'Thumbnail'
     
     
     def get_mime_type(self):
@@ -180,7 +161,28 @@ class Media(models.Model):
             'media':self,
             'MEDIA_URL':settings.MEDIA_URL
         }))
+    
+    def parse_metadata(self):
+        path = self.file.path
         
+        try:
+            parser = createParser(unicode(path))
+            if not parser:
+                return
+            metadata = extractMetadata(parser, appsettings.INFO_QUALITY)
+            if not metadata:
+                return
+        except InputStreamError, HachoirError:
+            return
+        data = dict([(x.description, value_or_list([item.value for item in x.values])) for x in sorted(metadata) if x.values])
+        
+        if is_image(path) and iptc:
+            try:
+                data.update(IPTCInfo(path).__dict__['_data'])
+            except:
+                pass
+        self.metadata = Metadata(data)
+
 class Image(Media):
     file = models.ImageField(upload_to='img/%Y/%b/%d', blank=True, null=True)
     
@@ -216,6 +218,18 @@ class Image(Media):
     
     def absolute_url(self, format):
         return "%simg/%s/%s" % format
+    
+    def parse_metadata(self):
+        super(Image, self).parse_metadata()
+        self.width = self.metadata['Image width']
+        self.height = self.metadata['Image height']
+        self.one_off_author = self.metadata['Author'] or self.metadata['80'] or ''
+        self.caption = self.metadata['120'] or ''
+        tags = []
+        tags.extend(self.metadata["15"] or [])
+        tags.extend(self.metadata["20"] or [])
+        tags.extend(self.metadata["25"] or [])
+        self.categories = ", ".join(tags)
 
 class Video(Media):
     file = models.FileField(upload_to='video/%Y/%b/%d', blank=True, null=True)
