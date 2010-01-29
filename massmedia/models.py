@@ -35,18 +35,17 @@ except ImportError:
 try:
     import Image as PilImage
 except ImportError:
-    try:
-        from PIL import Image as PilImage
-    except ImportError:
-        PilImage = 0
+    from PIL import Image as PilImage
+
 
 try:
     from hachoir_core.error import HachoirError
     from hachoir_core.stream import InputStreamError
     from hachoir_parser import createParser
     from hachoir_metadata import extractMetadata
+    extract_metadata = True
 except ImportError:
-    extractMetadata = None
+    extract_metadata = False
 
 
 is_image = lambda s: os.path.splitext(s)[1][1:] in appsettings.IMAGE_EXTS
@@ -105,7 +104,7 @@ class Media(models.Model):
         # self.file.path is incorrect.
         if self.file and not self.mime_type:
             self.mime_type = mimetypes.guess_type(self.file.path)[0]
-        if not(self.metadata) and self.file and extractMetadata:
+        if not(self.metadata) and self.file and extract_metadata:
             self.parse_metadata()
         self.thumb()
         super(Media, self).save(*args, **kwargs)
@@ -172,7 +171,7 @@ class Media(models.Model):
             metadata = extractMetadata(parser, appsettings.INFO_QUALITY)
             if not metadata:
                 return
-        except InputStreamError, HachoirError:
+        except (InputStreamError, HachoirError):
             return
         data = dict([(x.description, value_or_list([item.value for item in x.values])) for x in sorted(metadata) if x.values])
         
@@ -236,12 +235,21 @@ class Video(Media):
     thumbnail = models.ForeignKey(Image, null=True, blank=True)
     
     def thumb(self):
-        return self.thumbnail.thumb()
+        if self.thumbnail:
+            return self.thumbnail.thumb()
+        else:
+            return ''
     thumb.allow_tags = True
     thumb.short_description = 'Thumbnail'
     
     def absolute_url(self, format):
         return "%svideo/%s/%s" % format
+    
+    def parse_metadata(self):
+        super(Video, self).parse_metadata()
+        self.width = self.metadata['Image width']
+        self.height = self.metadata['Image height']
+
 
 class GrabVideo(Video):
     asset_id = models.CharField(max_length=255,help_text='Grab video asset ID (the `a` parameter)')
@@ -259,11 +267,20 @@ class GrabVideo(Video):
     
 class Audio(Media):
     file = models.FileField(upload_to='audio/%Y/%b/%d', blank=True, null=True)
+    class Meta:
+        verbose_name="Audio Clip"
+        verbose_name_plural="Audio Clips"
+    
     def absolute_url(self, format):
         return "%saudio/%s/%s" % format
 
 class Flash(Media):
     file = models.FileField(upload_to='flash/%Y/%b/%d', blank=True, null=True)
+    
+    class Meta:
+        verbose_name="Flash Movie"
+        verbose_name_plural="Flash Movies"
+    
     def absolute_url(self, format):
         return "%sflash/%s/%s" % format
     
@@ -298,7 +315,7 @@ class Collection(models.Model):
         if self.zip_file and os.path.isfile(self.zip_file.path):
             zip = zipfile.ZipFile(self.zip_file.path)
             if zip.testzip():
-                raise Exception('"%s" in the .zip archive is corrupt.' % bad_file)
+                raise Exception('"%s" in the .zip archive is corrupt.' % zip)
             for filename in zip.namelist():
                 if filename.startswith('__'): # do not process meta files
                     continue

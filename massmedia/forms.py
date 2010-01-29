@@ -35,7 +35,6 @@ class ImageCreationForm(ContentCreationForm):
     class Meta:
         model = Image
 
-
 class VideoCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
         model = Video

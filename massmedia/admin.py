@@ -3,7 +3,6 @@ from django.contrib.admin.widgets import AdminFileWidget
 from django.contrib.contenttypes.models import ContentType
 from django import template
 from django.shortcuts import render_to_response
-from django.template.defaultfilters import slugify
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
@@ -61,6 +60,16 @@ class MediaAdmin(admin.ModelAdmin):
             'fields': ('slug','widget_template',)
         }),
     )
+    add_fieldsets = (
+        (None, {'fields': ('title', 'slug',)}),
+        ('Content',{'fields':('external_url','file')}),
+        ('Rights', {'fields': ('public','reproduction_allowed')}),
+        ('Additional Info', {
+            'classes': ('collapse',),
+            'fields': ('creation_date', 'sites')
+        })
+    )
+    
     list_display = ('title', 'author_name', 'mime_type', 'public', 'creation_date')
     list_filter = ('sites', 'creation_date','public')
     list_editable = ('public',)
@@ -147,10 +156,33 @@ class ImageAdmin(MediaAdmin):
             return db_field.formfield(**kwargs)
         return super(ImageAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 
-class VideoAdmin(MediaAdmin,admin.ModelAdmin):
-    list_display = ('title','thumb','author','mime_type','metadata','public','creation_date')
-    fieldsets = MediaAdmin.fieldsets + ( ('Thumbnail',{'fields':('thumbnail',)}), )
+class VideoAdmin(MediaAdmin):
+    list_display = ('title','thumb','author_name','mime_type','public','creation_date')
+    fieldsets = (
+        (None, {'fields':('title','caption')}),
+        ('Content',{'fields':(('file','external_url'),'thumbnail')}),
+        ('Credit',{'fields':('author','one_off_author','credit','reproduction_allowed')}),
+        ('Metadata',{'fields':('metadata','mime_type')}),
+        ('Connections',{'fields':('public','categories','sites')}),
+        ('Widget',{'fields':('width','height')}),
+        ('Advanced options', {
+            'classes': ('collapse',),
+            'fields': ('slug','widget_template',)
+        }),
+    )
+    
     raw_id_fields = ('thumbnail',)
+    add_fieldsets = (
+        (None, {'fields': ('title', 'slug',)}),
+        ('Content',{'fields':(('external_url','file'), 'thumbnail')}),
+        ('Rights', {'fields': ('public','reproduction_allowed')}),
+        ('Additional Info', {
+            'classes': ('collapse',),
+            'fields': ('creation_date', 'sites')
+        })
+    )
+    add_form = VideoCreationForm
+
 
 class GrabVideoAdmin(VideoAdmin):
     search_fields = ('title','caption','keywords')
@@ -162,9 +194,14 @@ class GrabVideoAdmin(VideoAdmin):
             continue
         fieldsets += (fieldset,)
     
-class AudioAdmin(MediaAdmin,admin.ModelAdmin): pass
-class FlashAdmin(MediaAdmin,admin.ModelAdmin): pass
-class DocumentAdmin(MediaAdmin,admin.ModelAdmin): pass
+class AudioAdmin(MediaAdmin,admin.ModelAdmin):
+    add_form = AudioCreationForm
+
+class FlashAdmin(MediaAdmin):
+    add_form = FlashCreationForm
+
+class DocumentAdmin(MediaAdmin):
+    add_form = DocumentCreationForm
 
 class CollectionInline(GenericCollectionTabularInline):
     model = CollectionRelation
