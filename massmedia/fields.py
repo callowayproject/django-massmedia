@@ -105,6 +105,12 @@ class Metadata():
     
     def __str___(self):
         return self.as_json()
+    
+    def __unicode__(self):
+        return unicode(self.as_json())
+    
+    def __repr__(self):
+        return self.as_json()
 
 
 class MetadataJSONEncoder(simplejson.JSONEncoder):
