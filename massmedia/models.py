@@ -6,7 +6,7 @@ from django.contrib.sites.models import Site
 from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.files.base import ContentFile
-from django.template.loader import get_template
+from django.template.loader import get_template, select_template
 from django.template import TemplateDoesNotExist,Template,Context
 from django.core.exceptions import ImproperlyConfigured
 
@@ -125,12 +125,12 @@ class Media(models.Model):
     def get_template(self):
         mime_type = self.get_mime_type()
         if self.widget_template:
-            if appsettings.TEMPLATE_MODE == 1:
+            if appsettings.FS_TEMPLATES:
                 return get_template(self.widget_template)
             else:
                 return MediaTemplate.objects.get(name=self.widget_template).template()
         elif mime_type is None:
-            if appsettings.TEMPLATE_MODE == 1:
+            if appsettings.FS_TEMPLATES:
                 if isinstance(self, GrabVideo):
                     return get_template('massmedia/grab.html')
                 else:
@@ -138,14 +138,12 @@ class Media(models.Model):
             else:
                 return MediaTemplate.objects.get(mimetype='').tempate()
         else:
-            if appsettings.TEMPLATE_MODE == 1:
-                try:
-                    return get_template('massmedia/%s.html'%mime_type)
-                except TemplateDoesNotExist:
-                    try:
-                        return get_template('massmedia/%s/generic.html'%mime_type.split('/')[0])
-                    except TemplateDoesNotExist:
-                        return get_template('massmedia/generic.html')
+            if appsettings.FS_TEMPLATES:
+                return select_template([
+                    'massmedia/%s.html'%mime_type,
+                    'massmedia/%s/generic.html'%mime_type.split('/')[0],
+                    'massmedia/generic.html'
+                ])
             else:
                 try:
                     return MediaTemplate.objects.get(mimetype=mime_type)
@@ -278,8 +276,8 @@ class Flash(Media):
     file = models.FileField(upload_to='flash/%Y/%b/%d', blank=True, null=True)
     
     class Meta:
-        verbose_name="Flash Movie"
-        verbose_name_plural="Flash Movies"
+        verbose_name="SWF File"
+        verbose_name_plural="SWF Files"
     
     def absolute_url(self, format):
         return "%sflash/%s/%s" % format

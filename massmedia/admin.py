@@ -225,5 +225,5 @@ admin.site.register(Flash, FlashAdmin)
 admin.site.register(Document, DocumentAdmin)
 admin.site.register(GrabVideo, GrabVideoAdmin)
 
-if settings.TEMPLATE_MODE == 0:
+if not settings.FS_TEMPLATES:
     admin.site.register(MediaTemplate)
