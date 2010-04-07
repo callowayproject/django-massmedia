@@ -1,0 +1,10 @@
+django-tagging
+PIL
+
+# Optional for IPTC metadata extraction
+IPTCInfo
+
+# Optional for general metadata extraction
+hachoir-metadata
+hachoir-core
+hachoir-parser
