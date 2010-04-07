@@ -1,14 +1,14 @@
 from setuptools import setup
+import os
 import massmedia
-
 try:
-    long_desc = open('README').read()
-except OSError:
+    long_desc = open(os.path.join(os.path.dirname(__file__),'README')).read()
+except (IOError, OSError):
     long_desc = ''
 
 try:
-    reqs = open('requirements.txt').read()
-except OSError:
+    reqs = open(os.path.join(os.path.dirname(__file__),'requirements.txt')).read()
+except (IOError, OSError):
     reqs = ''
 
 setup(
@@ -21,4 +21,7 @@ setup(
     packages = ['massmedia'],
     include_package_data=True,
     install_requires = reqs,
+    dependency_links=[
+        'http://opensource.washingtontimes.com/static/dist/IPTCInfo-1.9.5-1.tar.gz#md5=4d08413881d9bdb3c9c9466bb2bee7a4',
+    ]
 )
