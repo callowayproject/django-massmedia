@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuration Settings &mdash; massmedia v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="massmedia v0.1 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to app’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+<div id="docstitle">
+	<p>massmedia v0.1 documentation</p>
+</div>
+<div id="header">
+	<div id="title"><h1>Configuration Settings</h1></div>
+	<ul id="headerButtons">
+		<li id="toc_button"><div class="headerButton"><a href="#">Table of Contents</a></div></li>
+		<li id="page_buttons">
+			<div class="headerButton"><a href="genindex.html" title="General Index" accesskey="I">index</a></div>
+			<div class="headerButton"><a href="index.html" title="Welcome to app’s documentation!" accesskey="P">previous</a></div>
+		</li>
+	</ul>
+</div>
+
+<div id="sphinxsidebar">
+  <div class="sphinxsidebarwrapper">
+	<ul><li class="toctree-l1"><a href="index.html">Main Page</a></li></ul>
+	<ul class="current">
+<li class="toctree-l1 current"><a class="current reference external" href="">Configuration Settings</a><ul>
+<li class="toctree-l2"><a class="reference external" href="#mmedia-image-exts">MMEDIA_IMAGE_EXTS</a></li>
+<li class="toctree-l2"><a class="reference external" href="#mmedia-video-exts">MMEDIA_VIDEO_EXTS</a></li>
+<li class="toctree-l2"><a class="reference external" href="#mmedia-audio-exts">MMEDIA_AUDIO_EXTS</a></li>
+<li class="toctree-l2"><a class="reference external" href="#mmedia-flash-exts">MMEDIA_FLASH_EXTS</a></li>
+<li class="toctree-l2"><a class="reference external" href="#mmedia-doc-exts">MMEDIA_DOC_EXTS</a></li>
+<li class="toctree-l2"><a class="reference external" href="#mmedia-info-quality">MMEDIA_INFO_QUALITY</a></li>
+<li class="toctree-l2"><a class="reference external" href="#mmedia-thumb-size">MMEDIA_THUMB_SIZE</a></li>
+<li class="toctree-l2"><a class="reference external" href="#mmedia-extra-mime-types">MMEDIA_EXTRA_MIME_TYPES</a></li>
+<li class="toctree-l2"><a class="reference external" href="#mmedia-fs-templates">MMEDIA_FS_TEMPLATES</a></li>
+<li class="toctree-l2"><a class="reference external" href="#mmedia-local-import-tmp-dir">MMEDIA_LOCAL_IMPORT_TMP_DIR</a></li>
+<li class="toctree-l2"><a class="reference external" href="#grab-api-key">GRAB_API_KEY</a></li>
+<li class="toctree-l2"><a class="reference external" href="#grab-api-url">GRAB_API_URL</a></li>
+</ul>
+</li>
+</ul>
+
+    <div id="searchbox" style="display: none">
+      
+        <form class="search" action="search.html" method="get">
+			<div class="search-wrapper">
+			<span class="search-left"></span>
+			<input class="prettysearch" type="text" name="q" size="18" />
+			<span class="search-right">&nbsp;</span>
+			</div>
+          <input type="submit" value="Search" class="searchbutton" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        <p class="searchtip" style="font-size: 90%">
+        Enter search terms or a module, class or function name.
+        </p>
+    </div>
+    <script type="text/javascript">$('#searchbox').show(0);</script>
+  </div>
+</div>
+
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuration-settings">
+<span id="settings"></span><h1>Configuration Settings<a class="headerlink" href="#configuration-settings" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mmedia-image-exts">
+<h2>MMEDIA_IMAGE_EXTS<a class="headerlink" href="#mmedia-image-exts" title="Permalink to this headline">¶</a></h2>
+<p>Recognized extensions for image files. It should be a <tt class="docutils literal"><span class="pre">list</span></tt> or <tt class="docutils literal"><span class="pre">tuple</span></tt> of <tt class="docutils literal"><span class="pre">string</span></tt>s without the leading period. <strong>Default:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MMEDIA_IMAGE_EXTS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;bmp&#39;</span><span class="p">,</span><span class="s">&#39;gif&#39;</span><span class="p">,</span><span class="s">&#39;ico&#39;</span><span class="p">,</span><span class="s">&#39;cur&#39;</span><span class="p">,</span><span class="s">&#39;jpg&#39;</span><span class="p">,</span><span class="s">&#39;jpeg&#39;</span><span class="p">,</span><span class="s">&#39;pcx&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;png&#39;</span><span class="p">,</span><span class="s">&#39;psd&#39;</span><span class="p">,</span><span class="s">&#39;tga&#39;</span><span class="p">,</span><span class="s">&#39;tiff&#39;</span><span class="p">,</span><span class="s">&#39;wmf&#39;</span><span class="p">,</span><span class="s">&#39;xcf&#39;</span><span class="p">,</span><span class="s">&#39;bmp&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;wmf&#39;</span><span class="p">,</span><span class="s">&#39;apm&#39;</span><span class="p">,</span><span class="s">&#39;emf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mmedia-video-exts">
+<h2>MMEDIA_VIDEO_EXTS<a class="headerlink" href="#mmedia-video-exts" title="Permalink to this headline">¶</a></h2>
+<p>Recognized extensions for video files. It should be a <tt class="docutils literal"><span class="pre">list</span></tt> or <tt class="docutils literal"><span class="pre">tuple</span></tt> of <tt class="docutils literal"><span class="pre">string</span></tt>s without the leading period. <strong>Default:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MMEDIA_VIDEO_EXTS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;asf&#39;</span><span class="p">,</span><span class="s">&#39;wmv&#39;</span><span class="p">,</span><span class="s">&#39;flv&#39;</span><span class="p">,</span><span class="s">&#39;mov&#39;</span><span class="p">,</span><span class="s">&#39;mpeg&#39;</span><span class="p">,</span><span class="s">&#39;mpg&#39;</span><span class="p">,</span><span class="s">&#39;mpe&#39;</span><span class="p">,</span><span class="s">&#39;vob&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;qt&#39;</span><span class="p">,</span><span class="s">&#39;mp4&#39;</span><span class="p">,</span><span class="s">&#39;m4v&#39;</span><span class="p">,</span><span class="s">&#39;rm&#39;</span><span class="p">,</span><span class="s">&#39;avi&#39;</span><span class="p">,</span><span class="s">&#39;ogm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mmedia-audio-exts">
+<h2>MMEDIA_AUDIO_EXTS<a class="headerlink" href="#mmedia-audio-exts" title="Permalink to this headline">¶</a></h2>
+<p>Recognized extensions for audio files. It should be a <tt class="docutils literal"><span class="pre">list</span></tt> or <tt class="docutils literal"><span class="pre">tuple</span></tt> of <tt class="docutils literal"><span class="pre">string</span></tt>s without the leading period. <strong>Default:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MMEDIA_AUDIO_EXTS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;asf&#39;</span><span class="p">,</span><span class="s">&#39;aif&#39;</span><span class="p">,</span><span class="s">&#39;aiff&#39;</span><span class="p">,</span><span class="s">&#39;aifc&#39;</span><span class="p">,</span><span class="s">&#39;flac&#39;</span><span class="p">,</span><span class="s">&#39;au&#39;</span><span class="p">,</span><span class="s">&#39;snd&#39;</span><span class="p">,</span><span class="s">&#39;mid&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;midi&#39;</span><span class="p">,</span><span class="s">&#39;mpa&#39;</span><span class="p">,</span><span class="s">&#39;m4a&#39;</span><span class="p">,</span><span class="s">&#39;mp1&#39;</span><span class="p">,</span><span class="s">&#39;mp2&#39;</span><span class="p">,</span><span class="s">&#39;mp3&#39;</span><span class="p">,</span><span class="s">&#39;ra&#39;</span><span class="p">,</span><span class="s">&#39;xm&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;wav&#39;</span><span class="p">,</span><span class="s">&#39;ogg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mmedia-flash-exts">
+<h2>MMEDIA_FLASH_EXTS<a class="headerlink" href="#mmedia-flash-exts" title="Permalink to this headline">¶</a></h2>
+<p>Recognized extensions for SWF files. It should be a <tt class="docutils literal"><span class="pre">list</span></tt> or <tt class="docutils literal"><span class="pre">tuple</span></tt> of <tt class="docutils literal"><span class="pre">string</span></tt>s without the leading period. <strong>Default:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MMEDIA_FLASH_EXTS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;swf&#39;</span><span class="p">,)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mmedia-doc-exts">
+<h2>MMEDIA_DOC_EXTS<a class="headerlink" href="#mmedia-doc-exts" title="Permalink to this headline">¶</a></h2>
+<p>Recognized extensions for generic document files. It should be a <tt class="docutils literal"><span class="pre">list</span></tt> or <tt class="docutils literal"><span class="pre">tuple</span></tt> of <tt class="docutils literal"><span class="pre">string</span></tt>s without the leading period. <strong>Default:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MMEDIA_DOC_EXTS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;pdf&#39;</span><span class="p">,</span><span class="s">&#39;xls&#39;</span><span class="p">,</span><span class="s">&#39;doc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mmedia-info-quality">
+<h2>MMEDIA_INFO_QUALITY<a class="headerlink" href="#mmedia-info-quality" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">hachoir_metadata</span></tt> library allows you to specify how it parses metadata, from 0.0 (fastest) to 1.0 (best quality). <strong>Default:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MMEDIA_INFO_QUALITY</span> <span class="o">=</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mmedia-thumb-size">
+<h2>MMEDIA_THUMB_SIZE<a class="headerlink" href="#mmedia-thumb-size" title="Permalink to this headline">¶</a></h2>
+<p>The size of automatically generated thumbnails for images. It is a two integer tuple for width and height. The default is 100px wide by 80px high. <strong>Default:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MMEDIA_THUMB_SIZE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mmedia-extra-mime-types">
+<h2>MMEDIA_EXTRA_MIME_TYPES<a class="headerlink" href="#mmedia-extra-mime-types" title="Permalink to this headline">¶</a></h2>
+<p>The Python standard library includes a MIME types map of file extensions to MIME type. However, this map may be incomplete. This setting extends the default mapping. It is a <tt class="docutils literal"><span class="pre">dict</span></tt> of dot-extensions mapped to MIME type. <strong>Default:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MMEDIA_EXTRA_MIME_TYPES</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;.flv&#39;</span><span class="p">:</span><span class="s">&#39;video/x-flv&#39;</span><span class="p">,}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mmedia-fs-templates">
+<h2>MMEDIA_FS_TEMPLATES<a class="headerlink" href="#mmedia-fs-templates" title="Permalink to this headline">¶</a></h2>
+<p>There are two ways to manage the templates used to render content: via the admin or through files on the computer&#8217;s file system. If this setting is <tt class="xref docutils literal"><span class="pre">False</span></tt>, there will be a <tt class="docutils literal"><span class="pre">MediaTemplate</span></tt> model for managing the templates by MIME type. By default, this setting is <tt class="xref docutils literal"><span class="pre">True</span></tt> and templates are managed through the path <tt class="docutils literal"><span class="pre">massmedia/</span></tt>. Massmedia looks in a hierarchy for the correct template. For example, an image with a MIME type of <tt class="docutils literal"><span class="pre">image/jpeg</span></tt></p>
+<div class="highlight-python"><pre>/massmedia/image/jpeg.html
+/massmedia/image/generic.html
+/massmedia/generic.html</pre>
+</div>
+<p>Where it first looks for the most specific template, and then falls back to more generic templates. <strong>Default:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MMEDIA_FS_TEMPLATES</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mmedia-local-import-tmp-dir">
+<h2>MMEDIA_LOCAL_IMPORT_TMP_DIR<a class="headerlink" href="#mmedia-local-import-tmp-dir" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="grab-api-key">
+<h2>GRAB_API_KEY<a class="headerlink" href="#grab-api-key" title="Permalink to this headline">¶</a></h2>
+<p>In order to import items from Grab Network, you need an API key.</p>
+</div>
+<div class="section" id="grab-api-url">
+<h2>GRAB_API_URL<a class="headerlink" href="#grab-api-url" title="Permalink to this headline">¶</a></h2>
+<p>In order to import items from Grab Network, you&#8217;ll also need an API URL.</p>
+</div>
+</div>
+
+
+          </div> 
+        </div>
+      </div>
+    <div class="footer">
+    <p>
+      &copy; Copyright 2009, me.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.3.
+	</p>
+    </div>
+      <div class="clearer"></div>
+    </div>
+	<div id="breadcrumbs">
+		Configuration Settings
+		</ul>
+	</div>
+	<script type="text/javascript" charset="utf-8" src="_static/toc.js"></script>
+  </body>
+</html>
