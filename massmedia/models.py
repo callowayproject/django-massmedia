@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.files.base import ContentFile
@@ -51,6 +52,10 @@ except ImportError:
 is_image = lambda s: os.path.splitext(s)[1][1:] in appsettings.IMAGE_EXTS
 value_or_list = lambda x: len(x) == 1 and x[0] or x
 
+class PublicMediaManager(CurrentSiteManager):
+    def public(self):
+        return self.get_query_set().filter(public=True)
+
 class Media(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
@@ -71,7 +76,9 @@ class Media(models.Model):
     
     widget_template = models.CharField(max_length=255,blank=True,null=True,
                 help_text='The template name used to generate the widget (defaults to mime_type layout)')
-
+    
+    objects = PublicMediaManager()
+    
     class Meta:
         ordering = ('-creation_date',)
         abstract = True
@@ -297,6 +304,8 @@ class Collection(models.Model):
     public = models.BooleanField(help_text="this collection is publicly available", default=True)
     sites = models.ManyToManyField(Site)
     categories = TagField(null=True,blank=True)
+    
+    objects = PublicMediaManager()
     
     class Meta:
         ordering = ['-creation_date']
