@@ -391,14 +391,3 @@ class MediaTemplate(models.Model):
     
     def template(self):
         return Template(self.content)
-
-# Ellington Extras
-if 'ellington.news' in settings.INSTALLED_APPS:
-    from ellington.news.parts.inlines import register_inline,ObjectInline
-    
-    register_inline('massmedia-grabvideo', ObjectInline('massmedia-grabvideo','MassMedia -- Grab Videos','massmedia','grabvideo','grabvideo'))
-    register_inline('massmedia-video', ObjectInline('massmedia-video','MassMedia -- Videos','massmedia','video','video'))
-    register_inline('massmedia-audio', ObjectInline('massmedia-audio','MassMedia -- Audios','massmedia','audio','audio'))
-    register_inline('massmedia-image', ObjectInline('massmedia-image','MassMedia -- Images','massmedia','image','image'))
-    register_inline('massmedia-flash', ObjectInline('massmedia-flash','MassMedia -- Flashes','massmedia','flash','flash'))
-    register_inline('massmedia-document', ObjectInline('massmedia-document','MassMedia -- Documents','massmedia','document','document'))
