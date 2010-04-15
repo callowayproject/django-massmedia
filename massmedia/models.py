@@ -8,8 +8,9 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.template.loader import get_template, select_template
-from django.template import Template, Context
+from django.template import Template, Context, TemplateDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
+from sorl.thumbnail.fields import ImageWithThumbnailsField
 
 from massmedia import settings as appsettings
 from fields import Metadata, SerializedObjectField, MetadataJSONEncoder, MetadataJSONDecoder
@@ -98,7 +99,8 @@ class Media(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        return ('massmedia_detail', (),{'media_type': self.__class__.__name__.lower(), 'slug': self.slug})
+        return ('massmedia_detail', (),{'mediatype': self.__class__.__name__.lower(), 'slug': self.slug})
+    
     
     @property
     def media_url(self):
@@ -144,30 +146,42 @@ class Media(models.Model):
                 return MediaTemplate.objects.get(mimetype='').tempate()
         else:
             if appsettings.FS_TEMPLATES:
-                return select_template([
-                    'massmedia/%s_%s.html' % (mime_type, template_type),
-                    'massmedia/%s/generic_%s.html' % (mime_type.split('/')[0], template_type),
-                    'massmedia/generic_%s.html' % template_type
-                ])
+                lookups = [
+                    'massmedia/mediatypes/%s_%s.html' % (mime_type, template_type),
+                    'massmedia/mediatypes/%s/generic_%s.html' % (mime_type.split('/')[0], template_type),
+                    'massmedia/mediatypes/generic_%s.html' % template_type
+                ]
+                try:
+                    return select_template(lookups)
+                except TemplateDoesNotExist, e:
+                    raise TemplateDoesNotExist("Can't find a template to render the media. Looking in %s" % ", ".join(lookup))
             else:
                 lookups = [
                     dict(mimetype=mime_type, name=template_type),
                     dict(mimetype=mime_type.split('/')[0], name=template_type),
                     dict(mimetype='', name=template_type)
                 ]
-                try:
-                    return MediaTemplate.objects.get(mimetype=mime_type, name=template_type)
-                except MediaTemplate.DoesNotExist:
+                for kwargs in lookups:
                     try:
-                        return MediaTemplate.objects.get(mimetype=mime_type.split('/')[0])
+                        return MediaTemplate.objects.get(**kwargs)
                     except MediaTemplate.DoesNotExist:
-                        return MediaTemplate.objects.get(mimetype='').template()
+                        pass
+                return MediaTemplate.objects.get(mimetype='').template()
     
-    def render_detail(self): 
-        return self.get_template('detail').render(Context({
+    def _render(self, format):
+        t = self.get_template(format)
+        c = Context({
             'media':self,
-            'MEDIA_URL':settings.MEDIA_URL
-        }))
+            'MEDIA_URL':settings.MEDIA_URL,
+            'STATIC_URL': getattr(settings, 'STATIC_URL', settings.MEDIA_URL)
+        })
+        return t.render(c)
+    
+    def render_thumb(self):
+        return self._render('thumb')
+    
+    def render_detail(self):
+        return self._render('detail')
     
     def parse_metadata(self):
         path = self.file.path
@@ -191,40 +205,15 @@ class Media(models.Model):
         self.metadata = Metadata(data)
 
 class Image(Media):
-    file = models.ImageField(upload_to='img/%Y/%b/%d', blank=True, null=True)
-    
-    def thumb(self):
-        if self.file:
-            thumbnail = '%s.thumb%s'%os.path.splitext(self.file.path)
-            thumburl = thumbnail[len(os.path.abspath(settings.MEDIA_ROOT)):]
-            if not os.path.exists(thumbnail):
-                try:
-                    im = PilImage.open(self.file)
-                except:
-                    return ''
-                im.thumbnail(appsettings.THUMB_SIZE,PilImage.ANTIALIAS)
-                im.save(thumbnail,im.format)
-            return '<a href="%s" target="_blank"><img src="%s%s" alt="%s" title="%s. Click to see the full sized image." /></a>'%\
-                        (self.get_absolute_url(),settings.MEDIA_URL,thumburl, self.file, self.file)
-        elif self.external_url:
-            return '<a href="%s"><img src="%s"/></a>'%\
-                        (self.get_absolute_url(),self.get_absolute_url())
-        return ''
-    thumb.allow_tags = True
-    thumb.short_description = 'Thumbnail'
-    
-    def thumb_no_link(self):
-        self.thumb()
-        if self.file:
-            thumbnail = '%s.thumb%s'%os.path.splitext(self.file.path)
-            thumburl = thumbnail[len(os.path.abspath(settings.MEDIA_ROOT)):]
-            return '<img src="%s%s"/>' % (settings.MEDIA_URL, thumburl)
-        elif self.external_url:
-            return '<img src="%s"/>' % self.get_absolute_url()
-        return ''
+    file = ImageWithThumbnailsField(
+        upload_to = 'img/%Y/%b/%d', 
+        blank = True, 
+        null = True,
+        thumbnail = appsettings.THUMBNAIL_OPTS,
+        extra_thumbnails = appsettings.EXTRA_THUMBS)
     
     @property
-    def media_url(self, format):
+    def media_url(self):
         return self.external_url or self.file.url
     
     def parse_metadata(self):
