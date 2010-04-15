@@ -8,7 +8,7 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.template.loader import get_template, select_template
-from django.template import TemplateDoesNotExist,Template,Context
+from django.template import Template, Context
 from django.core.exceptions import ImproperlyConfigured
 
 from massmedia import settings as appsettings
@@ -53,6 +53,9 @@ is_image = lambda s: os.path.splitext(s)[1][1:] in appsettings.IMAGE_EXTS
 value_or_list = lambda x: len(x) == 1 and x[0] or x
 
 class PublicMediaManager(CurrentSiteManager):
+    def __init__(self):
+        super(PublicMediaManager, self).__init__('sites')
+    
     def public(self):
         return self.get_query_set().filter(public=True)
 
@@ -86,24 +89,20 @@ class Media(models.Model):
     def __unicode__(self):
         return self.title
     
+    @property
     def author_name(self):
         if self.author:
             return self.author.full_name
         else:
             return self.one_off_author
     
+    @models.permalink
     def get_absolute_url(self):
-        if self.external_url:
-            return self.external_url
-        if hasattr(self,'file') and getattr(self,'file',None):
-            return self.absolute_url((
-                settings.MEDIA_URL,
-                self.creation_date.strftime("%Y/%b/%d"),
-                os.path.basename(self.file.path)))
-        return ''
-        
-    def absolute_url(self, format):
-        raise NotImplementedError
+        return ('massmedia_detail', (),{'media_type': self.__class__.__name__.lower(), 'slug': self.slug})
+    
+    @property
+    def media_url(self):
+        return self.external_url
     
     def save(self, *args, **kwargs):
         super(Media, self).save(*args, **kwargs) 
@@ -121,15 +120,14 @@ class Media(models.Model):
     thumb.allow_tags = True
     thumb.short_description = 'Thumbnail'
     
-    
     def get_mime_type(self):
         if self.mime_type:
             return self.mime_type
         if self.metadata and 'mime_type' in self.metadata:
             return self.metadata['mime_type']
-        return
+        return None
     
-    def get_template(self):
+    def get_template(self, template_type):
         mime_type = self.get_mime_type()
         if self.widget_template:
             if appsettings.FS_TEMPLATES:
@@ -220,8 +218,9 @@ class Image(Media):
             return '<img src="%s"/>' % self.get_absolute_url()
         return ''
     
-    def absolute_url(self, format):
-        return "%simg/%s/%s" % format
+    @property
+    def media_url(self, format):
+        return self.external_url or self.file.url
     
     def parse_metadata(self):
         super(Image, self).parse_metadata()
@@ -247,8 +246,9 @@ class Video(Media):
     thumb.allow_tags = True
     thumb.short_description = 'Thumbnail'
     
-    def absolute_url(self, format):
-        return "%svideo/%s/%s" % format
+    @property
+    def media_url(self):
+        return self.external_url or self.file.url
     
     def parse_metadata(self):
         super(Video, self).parse_metadata()
@@ -266,18 +266,17 @@ class GrabVideo(Video):
         if self.asset_id and len(self.asset_id) and not self.asset_id[0] in 'PV':
             self.asset_id = 'V%s' % self.asset_id
         super(GrabVideo, self).save(*a, **kw)
-    
-    def absolute_url(self, format):
-        return "%sgrabvideo/%s/%s" % format
-    
+
+
 class Audio(Media):
     file = models.FileField(upload_to='audio/%Y/%b/%d', blank=True, null=True)
     class Meta:
         verbose_name="Audio Clip"
         verbose_name_plural="Audio Clips"
     
-    def absolute_url(self, format):
-        return "%saudio/%s/%s" % format
+    @property
+    def media_url(self):
+        return self.external_url or self.file.url
 
 class Flash(Media):
     file = models.FileField(upload_to='flash/%Y/%b/%d', blank=True, null=True)
@@ -286,13 +285,16 @@ class Flash(Media):
         verbose_name="SWF File"
         verbose_name_plural="SWF Files"
     
-    def absolute_url(self, format):
-        return "%sflash/%s/%s" % format
+    @property
+    def media_url(self):
+        return self.external_url or self.file.url
     
 class Document(Media):
     file = models.FileField(upload_to='docs/%Y/%b/%d', blank=True, null=True)
-    def absolute_url(self, format):
-        return "%sdocs/%s/%s" % format
+    
+    @property
+    def media_url(self):
+        return self.external_url or self.file.url
    
 class Collection(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
