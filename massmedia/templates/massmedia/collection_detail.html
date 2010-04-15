@@ -1,10 +1,10 @@
 {% extends "massmedia/massmedia_base.html" %}
 {% block content %}
+	<h1>{{object.title}}</h1>
 	<ul class="massmedia collection">
 	{% for item in object_list %}
 		<li>
-			<a href="{{ item.get_absolute_url }}" title="{{ item.title }}"><h3>{{ item.title }}</h3></a>
-			<p>{{ item.caption }}</p>
+			<a href="{{ item.get_absolute_url }}" title="{{ item.title }}">{{ item.render_thumb }}</a>
 		</li>
 	{% endfor %}
 	</ul>
