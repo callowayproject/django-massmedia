@@ -16,6 +16,7 @@ setup(
     version = massmedia.get_version(),
     url = 'http://opensource.washingtontimes.com/projects/django-massmedia/',
     author = 'Justin Quick',
+    author_email = 'jquick@washingtontimes.com',
     description = 'Allows for site staff can upload and edit the media files through the site, and the filesystem is maintained in the background.',
     long_description = long_desc,
     packages = ['massmedia'],
