@@ -27,3 +27,7 @@ GRAB_API_URL = getattr(settings, 'GRAB_API_URL', 'http://wasabi_v0.grabnetworks.
 
 
 IMPORT_LOCAL_TMP_DIR = getattr(settings, 'MMEDIA_LOCAL_IMPORT_TMP_DIR', '')
+
+DEFAULT_THUMBNAIL_OPTS = {'size': (50, 50), 'options': ('autocrop', 'upscale', 'sharpen')}
+THUMBNAIL_OPTS = getattr(settings, 'MMEDIA_THUMBNAIL_OPTS', DEFAULT_THUMBNAIL_OPTS)
+EXTRA_THUMBS = getattr(settings, 'MMEDIA_EXTRA_THUMBS', {})
