@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from django.views.generic.list_detail import object_list
+from django.views.generic.list_detail import object_list, object_detail
 from django.http import HttpResponseNotFound
 from models import GrabVideo, Collection, Image, Video, Audio, Flash, Document
 from views import mediatype_detail
@@ -20,12 +20,17 @@ def generic_wrapper(request, *args, **kwargs):
     This allows us to get the mediatype variable from the url and pass the 
     correct queryset to the generic view
     """
-    print kwargs['mediatype']
     if 'mediatype' in kwargs and kwargs['mediatype'] in media_dict:
         mediatype = kwargs.pop('mediatype')
         queryset = media_dict[mediatype]['queryset']
+        if 'extra_context' in kwargs:
+            kwargs['extra_context'].update({'mediatype': mediatype})
+        else:
+            kwargs['extra_context'] = {'mediatype': mediatype}
         if 'slug' in kwargs or 'object_id' in kwargs:
-            return mediatype_detail(request, queryset, *args, **kwargs)
+            return object_detail(request, queryset, *args, **kwargs)
+        if 'template_name' not in kwargs:
+            kwargs['template_name'] = 'massmedia/list.html'
         return object_list(request, queryset, *args, **kwargs)
     return HttpResponseNotFound()
 
