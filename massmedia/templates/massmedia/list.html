@@ -1,10 +1,30 @@
-
-{% if objects %}
-<ul>
-{% for media in objects %}
-    <li><b>{{ media }}</b><br><blockquote>{{ media.render_template }}</blockquote></li>
+{% extends "massmedia/massmedia_base.html" %}
+{% block content %}
+<h1>{{ mediatype|title }} Items</h2>
+{% if object_list %}
+<ul class="medialist {{mediatype}}list">
+{% for media in object_list %}
+    <li>{{ media.render_thumb }}</li>
 {% endfor %}
 </ul>
+{% if is_paginated %}
+	<div class="pagination">
+	    <span class="step-links">
+	        {% if page.has_previous %}
+	            <a href="?page={{ page.previous_page_number }}">&larr; Previous</a>
+	        {% endif %}
+
+	        <span class="current">
+	            Page {{ page.number }} of {{ page.paginator.num_pages }}.
+	        </span>
+
+	        {% if page.has_next %}
+	            <a href="?page={{ page.next_page_number }}">Next &rarr;</a>
+	        {% endif %}
+	    </span>
+	</div>
+{% endif %}
 {% else %}
 No media found
 {% endif %}
+{% endblock %}
