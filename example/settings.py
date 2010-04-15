@@ -84,4 +84,5 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'massmedia',
     'tagging',
+    'sorl.thumbnail',
 )
