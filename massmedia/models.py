@@ -276,8 +276,8 @@ class GrabVideo(Video):
 class Audio(Media):
     file = models.FileField(upload_to='audio/%Y/%b/%d', blank=True, null=True)
     class Meta:
-        verbose_name="Audio Clip"
-        verbose_name_plural="Audio Clips"
+        verbose_name="audio clip"
+        verbose_name_plural="audio clips"
     
     @property
     def media_url(self):
