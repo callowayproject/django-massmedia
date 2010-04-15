@@ -145,21 +145,26 @@ class Media(models.Model):
         else:
             if appsettings.FS_TEMPLATES:
                 return select_template([
-                    'massmedia/%s.html'%mime_type,
-                    'massmedia/%s/generic.html'%mime_type.split('/')[0],
-                    'massmedia/generic.html'
+                    'massmedia/%s_%s.html' % (mime_type, template_type),
+                    'massmedia/%s/generic_%s.html' % (mime_type.split('/')[0], template_type),
+                    'massmedia/generic_%s.html' % template_type
                 ])
             else:
+                lookups = [
+                    dict(mimetype=mime_type, name=template_type),
+                    dict(mimetype=mime_type.split('/')[0], name=template_type),
+                    dict(mimetype='', name=template_type)
+                ]
                 try:
-                    return MediaTemplate.objects.get(mimetype=mime_type)
+                    return MediaTemplate.objects.get(mimetype=mime_type, name=template_type)
                 except MediaTemplate.DoesNotExist:
                     try:
                         return MediaTemplate.objects.get(mimetype=mime_type.split('/')[0])
                     except MediaTemplate.DoesNotExist:
-                        return MediaTemplate.objects.get(mimetype='').tempate()
-       
-    def render_template(self): 
-        return self.get_template().render(Context({
+                        return MediaTemplate.objects.get(mimetype='').template()
+    
+    def render_detail(self): 
+        return self.get_template('detail').render(Context({
             'media':self,
             'MEDIA_URL':settings.MEDIA_URL
         }))
@@ -377,12 +382,12 @@ class CollectionRelation(models.Model):
         return unicode(self.content_object)
         
 class MediaTemplate(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, choices=(('detail', 'detail'),('thumb', 'thumb')))
     mimetype = models.CharField(max_length=255,null=True,blank=True)
     content = models.TextField()
     
     def __unicode__(self):
-        return self.name
+        return "%s_%s template" % (self.mimetype, self.name)
     
     def template(self):
         return Template(self.content)
