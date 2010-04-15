@@ -10,3 +10,4 @@ media/css/*.r*.css
 *DS_Store
 *.egg-info
 build/
+dist/
