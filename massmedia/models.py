@@ -314,7 +314,7 @@ class Collection(models.Model):
     def __unicode__(self):
         return self.title
 
-    @permalink
+    @models.permalink
     def get_absolute_url(self):
         return ('massmedia_detail', (),{'mediatype': self.__class__.__name__.lower(), 'slug': self.slug})
 
