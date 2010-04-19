@@ -313,7 +313,11 @@ class Collection(models.Model):
 
     def __unicode__(self):
         return self.title
- 
+
+    @permalink
+    def get_absolute_url(self):
+        return ('massmedia_detail', (),{'mediatype': self.__class__.__name__.lower(), 'slug': self.slug})
+
     def save(self, *args, **kwargs):
         super(Collection, self).save(*args, **kwargs)
         self.process_zipfile()

@@ -1,5 +1,4 @@
 django-tagging
-PIL
 sorl-thumbnail
 
 # Optional for IPTC metadata extraction
