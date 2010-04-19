@@ -214,7 +214,7 @@ class Image(Media):
         null = True,
         thumbnail = appsettings.THUMBNAIL_OPTS,
         extra_thumbnails = appsettings.EXTRA_THUMBS)
-    original = models.ForeignKey('self', related_name="variations")
+    original = models.ForeignKey('self', related_name="variations", blank=True, null=True)
     
     @property
     def media_url(self):
