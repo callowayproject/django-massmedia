@@ -51,7 +51,7 @@ class MediaAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields':('title','caption')}),
         ('Content',{'fields':(('file','external_url'),)}),
-        ('Credit',{'fields':('author','one_off_author','credit','reproduction_allowed')}),
+        ('Credit',{'fields':('author','one_off_author','reproduction_allowed')}),
         ('Metadata',{'fields':('metadata','mime_type')}),
         ('Connections',{'fields':('public','categories','sites')}),
         ('Widget',{'fields':('width','height')}),
@@ -161,7 +161,7 @@ class VideoAdmin(MediaAdmin):
     fieldsets = (
         (None, {'fields':('title','caption')}),
         ('Content',{'fields':(('file','external_url'),'thumbnail')}),
-        ('Credit',{'fields':('author','one_off_author','credit','reproduction_allowed')}),
+        ('Credit',{'fields':('author','one_off_author','reproduction_allowed')}),
         ('Metadata',{'fields':('metadata','mime_type')}),
         ('Connections',{'fields':('public','categories','sites')}),
         ('Widget',{'fields':('width','height')}),
