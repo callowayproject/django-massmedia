@@ -1,0 +1,6 @@
+.. _templatetags:
+
+=============
+Template Tags
+=============
+

@@ -61,12 +61,15 @@ class PublicMediaManager(CurrentSiteManager):
         return self.get_query_set().filter(public=True)
 
 class Media(models.Model):
+    """
+    The abstract base class for all media types. It includes all the common 
+    attributes and functions.
+    """
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, blank=True, null=True, limit_choices_to={'is_staff':True})
     one_off_author = models.CharField('one-off author', max_length=100, blank=True)
-    credit = models.CharField(max_length=150, blank=True)
     caption = models.TextField(blank=True)
     metadata = SerializedObjectField(blank=True, encoder=MetadataJSONEncoder, decoder=MetadataJSONDecoder)
     sites = models.ManyToManyField(Site,related_name='%(class)s_sites')
@@ -211,6 +214,7 @@ class Image(Media):
         null = True,
         thumbnail = appsettings.THUMBNAIL_OPTS,
         extra_thumbnails = appsettings.EXTRA_THUMBS)
+    original = models.ForeignKey('self', related_name="variations")
     
     @property
     def media_url(self):

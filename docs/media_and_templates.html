@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Rendering media in templates &mdash; MassMedia v0.3beta1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '0.3beta1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MassMedia v0.3beta1 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div id="docstitle">
+	<p>MassMedia v0.3beta1 documentation</p>
+</div>
+<div id="header">
+	<div id="title"><h1>Rendering media in templates</h1></div>
+	<ul id="headerButtons">
+		<li id="toc_button"><div class="headerButton"><a href="#">Table of Contents</a></div></li>
+		<li id="page_buttons">
+			<div class="headerButton"><a href="genindex.html" title="General Index" accesskey="I">index</a></div>
+			<div class="headerButton"><a href="modindex.html" title="Global Module Index" accesskey="M">modules</a></div>
+		</li>
+	</ul>
+</div>
+
+<div id="sphinxsidebar">
+  <div class="sphinxsidebarwrapper">
+	<ul><li class="toctree-l1"><a href="index.html">Main Page</a></li></ul>
+	<ul>
+<li class="toctree-l1"><a class="reference external" href="settings.html">Configuration Settings</a></li>
+<li class="toctree-l1"><a class="reference external" href="reference/index.html">Mass Media Reference</a></li>
+</ul>
+
+    <div id="searchbox" style="display: none">
+      
+        <form class="search" action="search.html" method="get">
+			<div class="search-wrapper">
+			<span class="search-left"></span>
+			<input class="prettysearch" type="text" name="q" size="18" />
+			<span class="search-right">&nbsp;</span>
+			</div>
+          <input type="submit" value="Search" class="searchbutton" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        <p class="searchtip" style="font-size: 90%">
+        Enter search terms or a module, class or function name.
+        </p>
+    </div>
+    <script type="text/javascript">$('#searchbox').show(0);</script>
+  </div>
+</div>
+
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rendering-media-in-templates">
+<span id="media-and-templates"></span><h1>Rendering media in templates<a class="headerlink" href="#rendering-media-in-templates" title="Permalink to this headline">¶</a></h1>
+<p>Each type of media has a customizable template for displaying a thumbnail version and a detail version</p>
+<p>They are stored in <tt class="docutils literal"><span class="pre">massmedia/mediatypes/</span></tt></p>
+<p>Templates for each type of media are based on MIME type</p>
+<p>Each item looks for a template in this order:</p>
+<p>For detail templates:</p>
+<div class="highlight-python"><pre>massmedia/mediatypes/&lt;base_type&gt;/&lt;specific_type&gt;_detail.html
+massmedia/mediatypes/&lt;base_type&gt;/generic_detail.html
+massmedia/mediatypes/generic_detail.html</pre>
+</div>
+<p>For thumbnail templates:</p>
+<div class="highlight-python"><pre>massmedia/mediatypes/&lt;base_type&gt;/&lt;specific_type&gt;_thumb.html
+massmedia/mediatypes/&lt;base_type&gt;/generic_thumb.html
+massmedia/mediatypes/generic_thumb.html</pre>
+</div>
+<p>As an example, an item with a MIME type of <tt class="docutils literal"><span class="pre">application/x-shockwave-flash</span></tt> would look for its templates in:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">massmedia</span><span class="o">/</span><span class="n">mediatypes</span><span class="o">/</span><span class="n">application</span><span class="o">/</span><span class="n">x</span><span class="o">-</span><span class="n">shockwave</span><span class="o">-</span><span class="n">flash_detail</span><span class="o">.</span><span class="n">html</span>
+<span class="n">massmedia</span><span class="o">/</span><span class="n">mediatypes</span><span class="o">/</span><span class="n">application</span><span class="o">/</span><span class="n">generic_detail</span><span class="o">.</span><span class="n">html</span>
+<span class="n">massmedia</span><span class="o">/</span><span class="n">mediatypes</span><span class="o">/</span><span class="n">generic_detail</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>These templates are only snippets of html for rendering one item and should not contain extra HTML tags (like <tt class="docutils literal"><span class="pre">&lt;head&gt;</span></tt> or <tt class="docutils literal"><span class="pre">&lt;body&gt;</span></tt>)</p>
+</div>
+
+
+          </div> 
+        </div>
+      </div>
+    <div class="footer">
+    <p>
+      &copy; Copyright 2009-2010, The Washington Times.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+	</p>
+    </div>
+      <div class="clearer"></div>
+    </div>
+	<div id="breadcrumbs">
+		Rendering media in templates
+		</ul>
+	</div>
+	<script type="text/javascript" charset="utf-8" src="_static/toc.js"></script>
+  </body>
+</html>

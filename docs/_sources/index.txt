@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to app's documentation!
-===============================
+MassMedia v|release|
+====================
 
 Contents:
 
@@ -13,6 +13,7 @@ Contents:
    :glob:
    
    settings
+   reference/index
 
 
 Indices and tables
