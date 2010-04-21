@@ -28,6 +28,25 @@ GRAB_API_URL = getattr(settings, 'GRAB_API_URL', 'http://wasabi_v0.grabnetworks.
 
 IMPORT_LOCAL_TMP_DIR = getattr(settings, 'MMEDIA_LOCAL_IMPORT_TMP_DIR', '')
 
-DEFAULT_THUMBNAIL_OPTS = {'size': (50, 50), 'options': ('autocrop', 'upscale', 'sharpen')}
+DEFAULT_THUMBNAIL_OPTS = {'size': (100, 80), 'options': ('autocrop', 'upscale', 'sharpen')}
 THUMBNAIL_OPTS = getattr(settings, 'MMEDIA_THUMBNAIL_OPTS', DEFAULT_THUMBNAIL_OPTS)
 EXTRA_THUMBS = getattr(settings, 'MMEDIA_EXTRA_THUMBS', {})
+
+
+# How to store the files. The ``DEFAULT_STORAGE`` is used for all media types
+# unless overridden by another setting.
+#
+# Should be a string in the format: 'module.Class'
+# **Default:** 'django.core.files.storage.FileSystemStorage'
+DEFAULT_STORAGE = getattr(settings, "MMEDIA_DEFAULT_STORAGE", settings.DEFAULT_FILE_STORAGE)
+IMAGE_STORAGE = getattr(settings, "MMEDIA_IMAGE_STORAGE", DEFAULT_STORAGE)
+VIDEO_STORAGE = getattr(settings, "MMEDIA_VIDEO_STORAGE", DEFAULT_STORAGE)
+AUDIO_STORAGE = getattr(settings, "MMEDIA_AUDIO_STORAGE", DEFAULT_STORAGE)
+FLASH_STORAGE = getattr(settings, "MMEDIA_FLASH_STORAGE", DEFAULT_STORAGE)
+DOC_STORAGE = getattr(settings, "MMEDIA_DOC_STORAGE", DEFAULT_STORAGE)
+
+IMAGE_UPLOAD_TO = getattr(settings, "MMEDIA_IMAGE_UPLOAD_TO", 'image/%Y/%b/%d')
+VIDEO_UPLOAD_TO = getattr(settings, "MMEDIA_VIDEO_UPLOAD_TO", 'video/%Y/%b/%d')
+AUDIO_UPLOAD_TO = getattr(settings, "MMEDIA_AUDIO_UPLOAD_TO", 'audio/%Y/%b/%d')
+FLASH_UPLOAD_TO = getattr(settings, "MMEDIA_FLASH_UPLOAD_TO", 'flash/%Y/%b/%d')
+DOC_UPLOAD_TO = getattr(settings, "MMEDIA_DOC_UPLOAD_TO", 'misc/%Y/%b/%d')

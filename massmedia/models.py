@@ -7,6 +7,7 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.files.base import ContentFile
+from django.core.files.storage import get_storage_class
 from django.template.loader import get_template, select_template
 from django.template import Template, Context, TemplateDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
@@ -49,6 +50,12 @@ try:
 except ImportError:
     extract_metadata = False
 
+
+IMAGE_STORAGE = get_storage_class(appsettings.IMAGE_STORAGE)
+VIDEO_STORAGE = get_storage_class(appsettings.VIDEO_STORAGE)
+AUDIO_STORAGE = get_storage_class(appsettings.AUDIO_STORAGE)
+FLASH_STORAGE = get_storage_class(appsettings.FLASH_STORAGE)
+DOC_STORAGE  = get_storage_class(appsettings.DOC_STORAGE)
 
 is_image = lambda s: os.path.splitext(s)[1][1:] in appsettings.IMAGE_EXTS
 value_or_list = lambda x: len(x) == 1 and x[0] or x
@@ -209,11 +216,13 @@ class Media(models.Model):
 
 class Image(Media):
     file = ImageWithThumbnailsField(
-        upload_to = 'img/%Y/%b/%d', 
+        upload_to = appsettings.IMAGE_UPLOAD_TO,
         blank = True, 
         null = True,
         thumbnail = appsettings.THUMBNAIL_OPTS,
-        extra_thumbnails = appsettings.EXTRA_THUMBS)
+        extra_thumbnails = appsettings.EXTRA_THUMBS,
+        storage=IMAGE_STORAGE(),
+        generate_on_save=True)
     original = models.ForeignKey('self', related_name="variations", blank=True, null=True)
     
     @property
@@ -233,7 +242,11 @@ class Image(Media):
         self.categories = ", ".join(tags)
 
 class Video(Media):
-    file = models.FileField(upload_to='video/%Y/%b/%d', blank=True, null=True)
+    file = models.FileField(
+        upload_to = appsettings.VIDEO_UPLOAD_TO,
+        blank = True, 
+        null = True,
+        storage=VIDEO_STORAGE())
     thumbnail = models.ForeignKey(Image, null=True, blank=True)
     
     def thumb(self):
@@ -267,7 +280,12 @@ class GrabVideo(Video):
 
 
 class Audio(Media):
-    file = models.FileField(upload_to='audio/%Y/%b/%d', blank=True, null=True)
+    file = models.FileField(
+        upload_to = appsettings.AUDIO_UPLOAD_TO,
+        blank = True, 
+        null = True,
+        storage=AUDIO_STORAGE())
+    
     class Meta:
         verbose_name="audio clip"
         verbose_name_plural="audio clips"
@@ -277,7 +295,12 @@ class Audio(Media):
         return self.external_url or self.file.url
 
 class Flash(Media):
-    file = models.FileField(upload_to='flash/%Y/%b/%d', blank=True, null=True)
+    file = models.FileField(
+    upload_to = appsettings.FLASH_UPLOAD_TO,
+    blank = True, 
+    null = True,
+    storage=FLASH_STORAGE())
+    
     
     class Meta:
         verbose_name="SWF File"
@@ -288,7 +311,11 @@ class Flash(Media):
         return self.external_url or self.file.url
     
 class Document(Media):
-    file = models.FileField(upload_to='docs/%Y/%b/%d', blank=True, null=True)
+    file = models.FileField(
+        upload_to = appsettings.DOC_UPLOAD_TO,
+        blank = True, 
+        null = True,
+        storage=DOC_STORAGE())
     
     @property
     def media_url(self):
