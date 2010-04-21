@@ -19,12 +19,10 @@ from forms import ImageCreationForm, VideoCreationForm, AudioCreationForm, \
 class AdminImageWidget(AdminFileWidget):
     def render(self, name, value, attrs=None):
         output = []
-        if value and getattr(value, "url", None):
-            pcs = os.path.splitext(value.url)
-            image_url = "".join([pcs[0], '.thumb', pcs[1]])
+        if value:
             file_name=str(value)
-            output.append(u' <a href="%s" target="_blank"><img src="%s" alt="%s" title="%s. Click to see the full-sized image."/></a> %s ' % \
-                (value.url, image_url, file_name, file_name, _('Change:')))
+            output.append(u'%s <a href="%s" target="_blank">%s</a> %s ' % \
+                (_('Currently:'), value.url, value.thumbnail_tag, _('Change:')))
         output.append(super(AdminFileWidget, self).render(name, value, attrs))
         return mark_safe(u''.join(output))
 
