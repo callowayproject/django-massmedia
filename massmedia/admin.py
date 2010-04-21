@@ -53,7 +53,7 @@ class MediaAdmin(admin.ModelAdmin):
         ('Content',{'fields':(('file','external_url'),)}),
         ('Credit',{'fields':('author','one_off_author','credit','reproduction_allowed')}),
         ('Metadata',{'fields':('metadata','mime_type')}),
-        ('Connections',{'fields':('public','categories','sites')}),
+        ('Connections',{'fields':('public','categories','site')}),
         ('Widget',{'fields':('width','height')}),
         ('Advanced options', {
             'classes': ('collapse',),
@@ -66,12 +66,12 @@ class MediaAdmin(admin.ModelAdmin):
         ('Rights', {'fields': ('public','reproduction_allowed')}),
         ('Additional Info', {
             'classes': ('collapse',),
-            'fields': ('creation_date', 'sites')
+            'fields': ('creation_date', 'site')
         })
     )
     
     list_display = ('title', 'author_name', 'mime_type', 'public', 'creation_date')
-    list_filter = ('sites', 'creation_date','public')
+    list_filter = ('site', 'creation_date','public')
     list_editable = ('public',)
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'creation_date'
@@ -144,7 +144,7 @@ class ImageAdmin(MediaAdmin):
         ('Rights', {'fields': ('public','reproduction_allowed')}),
         ('Additional Info', {
             'classes': ('collapse',),
-            'fields': ('creation_date', 'sites')
+            'fields': ('creation_date', 'site')
         })
     )
     add_form = ImageCreationForm
@@ -163,7 +163,7 @@ class VideoAdmin(MediaAdmin):
         ('Content',{'fields':(('file','external_url'),'thumbnail')}),
         ('Credit',{'fields':('author','one_off_author','credit','reproduction_allowed')}),
         ('Metadata',{'fields':('metadata','mime_type')}),
-        ('Connections',{'fields':('public','categories','sites')}),
+        ('Connections',{'fields':('public','categories','site')}),
         ('Widget',{'fields':('width','height')}),
         ('Advanced options', {
             'classes': ('collapse',),
@@ -178,7 +178,7 @@ class VideoAdmin(MediaAdmin):
         ('Rights', {'fields': ('public','reproduction_allowed')}),
         ('Additional Info', {
             'classes': ('collapse',),
-            'fields': ('creation_date', 'sites')
+            'fields': ('creation_date', 'site')
         })
     )
     add_form = VideoCreationForm
@@ -207,9 +207,9 @@ class CollectionInline(GenericCollectionTabularInline):
     model = CollectionRelation
 
 class CollectionAdmin(admin.ModelAdmin):
-    fields = ('title','slug','caption','zip_file','public','categories','sites')
+    fields = ('title','slug','caption','zip_file','public','categories','site')
     list_display = ('title','caption', 'public', 'creation_date')
-    list_filter = ('sites', 'creation_date','public')
+    list_filter = ('site', 'creation_date','public')
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'creation_date'
     search_fields = ('caption',)

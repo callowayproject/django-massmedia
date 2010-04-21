@@ -65,7 +65,7 @@ class Media(models.Model):
     credit = models.CharField(max_length=150, blank=True)
     caption = models.TextField(blank=True)
     metadata = SerializedObjectField(blank=True, encoder=MetadataJSONEncoder, decoder=MetadataJSONDecoder)
-    sites = models.ManyToManyField(Site,related_name='%(class)s_sites')
+    site = models.ForeignKey(Site, related_name='%(class)s_site')
     categories = TagField(blank=True,null=True)
     reproduction_allowed = models.BooleanField("we have reproduction rights for this media", default=True)
     public = models.BooleanField(help_text="this media is publicly available", default=True)
@@ -302,7 +302,7 @@ class Collection(models.Model):
     zip_file = models.FileField('Media files in a .zip', upload_to='tmp', blank=True,null=True,
                         help_text='Select a .zip file of media to upload into a the Collection.')
     public = models.BooleanField(help_text="this collection is publicly available", default=True)
-    sites = models.ManyToManyField(Site)
+    site = models.ForeignKey(Site)
     categories = TagField(null=True,blank=True)
     
     objects = PublicMediaManager()
@@ -357,7 +357,7 @@ class Collection(models.Model):
                         media = model(title=title, slug=slug)
                         media.file.save(filename, ContentFile(data))                      
                         # XXX: Make site relations possible, send signals
-                        media.sites.add(Site.objects.get_current())
+                        media.site = Site.objects.get_current()
                         CollectionRelation(content_object=media,collection=self).save()
             zip.close()
             os.remove(self.zip_file.path)
