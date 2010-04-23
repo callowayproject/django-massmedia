@@ -1,8 +1,67 @@
 from django import template
 from django.conf import settings
 from massmedia.models import GrabVideo,Image
-
+from sorl.thumbnail.main import DjangoThumbnail
 register = template.Library()
+
+class ThumbnailNode(template.Node):
+    """
+    A replacement for sorl-thumbnail's thumbnail tag that takes the object's
+    storage into account.
+    """
+    def __init__(self, source_var, size_var, opts=None,
+                 context_name=None, **kwargs):
+        self.source_var = source_var
+        self.size_var = size_var
+        self.opts = opts
+        self.context_name = context_name
+        self.kwargs = kwargs
+    
+    def render(self, context):
+        # Note that this isn't a global constant because we need to change the
+        # value for tests.
+        try:
+            # A file object will be allowed in DjangoThumbnail class
+            source = self.source_var.resolve(context)
+            if isinstance(source, basestring):
+                relative_source = source
+        except VariableDoesNotExist:
+                source = None
+                relative_source = None
+        try:
+            requested_size = self.size_var.resolve(context)
+        except VariableDoesNotExist:
+            requested_size = None
+        # Size variable can be either a tuple/list of two integers or a valid
+        # string, only the string is checked.
+        else:
+            if isinstance(requested_size, basestring):
+                m = size_pat.match(requested_size)
+                if m:
+                    requested_size = (int(m.group(1)), int(m.group(2)))
+                else:
+                    requested_size = None
+        if relative_source is None or requested_size is None:
+            thumbnail = ''
+        else:
+            try:
+                kwargs = {}
+                for key, value in self.kwargs.items():
+                    kwargs[key] = value.resolve(context)
+                opts = dict([(k, v and v.resolve(context))
+                             for k, v in self.opts.items()])
+                thumbnail = DjangoThumbnail(relative_source, requested_size,
+                                opts=opts, processors=PROCESSORS, **kwargs)
+            except:
+                thumbnail = ''
+        # Return the thumbnail class, or put it on the context
+        if self.context_name is None:
+            return thumbnail
+        # We need to get here so we don't have old values in the context
+        # variable.
+        context[self.context_name] = thumbnail
+        return ''
+    
 
 class MassMediaNode(template.Node):
     def __init__(self, *args):
@@ -25,7 +84,7 @@ class MassMediaNode(template.Node):
                 'media':self.args[0],
             })
         )
-        
+
 def show_media(parser, token):
     """
     Renders inclusion template for media
