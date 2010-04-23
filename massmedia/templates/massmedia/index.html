@@ -1,0 +1,19 @@
+{% extends "massmedia/massmedia_base.html" %}
+
+{% block content %}
+	<h1>Media</h1>
+	{% for media_type, objects in media.items %}
+		{% for object in objects.queryset|slice:":5" %}
+			{% ifequal forloop.counter0 0 %}
+			<div id="{{media_type}}_preview">
+			<h2><a href="{% url massmediatype_index mediatype=media_type %}">{{ objects.meta.verbose_name_plural|title }}</a></h2>
+			<ul class="massmedia media_list">
+			{% endifequal %}
+				<li class="{{media_type}}"><a href="{{object.get_absolute_url}}">{{object.title}}</a></li>
+			{% if forloop.last  %}
+			</ul>
+			</div>
+			{% endif %}
+		{% endfor %}
+	{% endfor %}
+{% endblock %}

@@ -7,9 +7,11 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.files.base import ContentFile
+from django.core.files.storage import get_storage_class
 from django.template.loader import get_template, select_template
-from django.template import TemplateDoesNotExist,Template,Context
+from django.template import Template, Context, TemplateDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
+from sorl.thumbnail.fields import ImageWithThumbnailsField
 
 from massmedia import settings as appsettings
 from fields import Metadata, SerializedObjectField, MetadataJSONEncoder, MetadataJSONDecoder
@@ -49,20 +51,32 @@ except ImportError:
     extract_metadata = False
 
 
+IMAGE_STORAGE = get_storage_class(appsettings.IMAGE_STORAGE)
+VIDEO_STORAGE = get_storage_class(appsettings.VIDEO_STORAGE)
+AUDIO_STORAGE = get_storage_class(appsettings.AUDIO_STORAGE)
+FLASH_STORAGE = get_storage_class(appsettings.FLASH_STORAGE)
+DOC_STORAGE  = get_storage_class(appsettings.DOC_STORAGE)
+
 is_image = lambda s: os.path.splitext(s)[1][1:] in appsettings.IMAGE_EXTS
 value_or_list = lambda x: len(x) == 1 and x[0] or x
 
 class PublicMediaManager(CurrentSiteManager):
+    def __init__(self):
+        super(PublicMediaManager, self).__init__('sites')
+    
     def public(self):
         return self.get_query_set().filter(public=True)
 
 class Media(models.Model):
+    """
+    The abstract base class for all media types. It includes all the common 
+    attributes and functions.
+    """
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, blank=True, null=True, limit_choices_to={'is_staff':True})
     one_off_author = models.CharField('one-off author', max_length=100, blank=True)
-    credit = models.CharField(max_length=150, blank=True)
     caption = models.TextField(blank=True)
     metadata = SerializedObjectField(blank=True, encoder=MetadataJSONEncoder, decoder=MetadataJSONDecoder)
     site = models.ForeignKey(Site, related_name='%(class)s_site')
@@ -86,24 +100,21 @@ class Media(models.Model):
     def __unicode__(self):
         return self.title
     
+    @property
     def author_name(self):
         if self.author:
             return self.author.full_name
         else:
             return self.one_off_author
     
+    @models.permalink
     def get_absolute_url(self):
-        if self.external_url:
-            return self.external_url
-        if hasattr(self,'file') and getattr(self,'file',None):
-            return self.absolute_url((
-                settings.MEDIA_URL,
-                self.creation_date.strftime("%Y/%b/%d"),
-                os.path.basename(self.file.path)))
-        return ''
-        
-    def absolute_url(self, format):
-        raise NotImplementedError
+        return ('massmedia_detail', (),{'mediatype': self.__class__.__name__.lower(), 'slug': self.slug})
+    
+    
+    @property
+    def media_url(self):
+        return self.external_url
     
     def save(self, *args, **kwargs):
         super(Media, self).save(*args, **kwargs) 
@@ -121,15 +132,14 @@ class Media(models.Model):
     thumb.allow_tags = True
     thumb.short_description = 'Thumbnail'
     
-    
     def get_mime_type(self):
         if self.mime_type:
             return self.mime_type
         if self.metadata and 'mime_type' in self.metadata:
             return self.metadata['mime_type']
-        return
+        return None
     
-    def get_template(self):
+    def get_template(self, template_type):
         mime_type = self.get_mime_type()
         if self.widget_template:
             if appsettings.FS_TEMPLATES:
@@ -146,25 +156,42 @@ class Media(models.Model):
                 return MediaTemplate.objects.get(mimetype='').tempate()
         else:
             if appsettings.FS_TEMPLATES:
-                return select_template([
-                    'massmedia/%s.html'%mime_type,
-                    'massmedia/%s/generic.html'%mime_type.split('/')[0],
-                    'massmedia/generic.html'
-                ])
-            else:
+                lookups = [
+                    'massmedia/mediatypes/%s_%s.html' % (mime_type, template_type),
+                    'massmedia/mediatypes/%s/generic_%s.html' % (mime_type.split('/')[0], template_type),
+                    'massmedia/mediatypes/generic_%s.html' % template_type
+                ]
                 try:
-                    return MediaTemplate.objects.get(mimetype=mime_type)
-                except MediaTemplate.DoesNotExist:
+                    return select_template(lookups)
+                except TemplateDoesNotExist, e:
+                    raise TemplateDoesNotExist("Can't find a template to render the media. Looking in %s" % ", ".join(lookup))
+            else:
+                lookups = [
+                    dict(mimetype=mime_type, name=template_type),
+                    dict(mimetype=mime_type.split('/')[0], name=template_type),
+                    dict(mimetype='', name=template_type)
+                ]
+                for kwargs in lookups:
                     try:
-                        return MediaTemplate.objects.get(mimetype=mime_type.split('/')[0])
+                        return MediaTemplate.objects.get(**kwargs)
                     except MediaTemplate.DoesNotExist:
-                        return MediaTemplate.objects.get(mimetype='').tempate()
-       
-    def render_template(self): 
-        return self.get_template().render(Context({
+                        pass
+                return MediaTemplate.objects.get(mimetype='').template()
+    
+    def _render(self, format):
+        t = self.get_template(format)
+        c = Context({
             'media':self,
-            'MEDIA_URL':settings.MEDIA_URL
-        }))
+            'MEDIA_URL':settings.MEDIA_URL,
+            'STATIC_URL': getattr(settings, 'STATIC_URL', settings.MEDIA_URL)
+        })
+        return t.render(c)
+    
+    def render_thumb(self):
+        return self._render('thumb')
+    
+    def render_detail(self):
+        return self._render('detail')
     
     def parse_metadata(self):
         path = self.file.path
@@ -188,40 +215,19 @@ class Media(models.Model):
         self.metadata = Metadata(data)
 
 class Image(Media):
-    file = models.ImageField(upload_to='img/%Y/%b/%d', blank=True, null=True)
+    file = ImageWithThumbnailsField(
+        upload_to = appsettings.IMAGE_UPLOAD_TO,
+        blank = True, 
+        null = True,
+        thumbnail = appsettings.THUMBNAIL_OPTS,
+        extra_thumbnails = appsettings.EXTRA_THUMBS,
+        storage=IMAGE_STORAGE(),
+        generate_on_save=True)
+    original = models.ForeignKey('self', related_name="variations", blank=True, null=True)
     
-    def thumb(self):
-        if self.file:
-            thumbnail = '%s.thumb%s'%os.path.splitext(self.file.path)
-            thumburl = thumbnail[len(os.path.abspath(settings.MEDIA_ROOT)):]
-            if not os.path.exists(thumbnail):
-                try:
-                    im = PilImage.open(self.file)
-                except:
-                    return ''
-                im.thumbnail(appsettings.THUMB_SIZE,PilImage.ANTIALIAS)
-                im.save(thumbnail,im.format)
-            return '<a href="%s" target="_blank"><img src="%s%s" alt="%s" title="%s. Click to see the full sized image." /></a>'%\
-                        (self.get_absolute_url(),settings.MEDIA_URL,thumburl, self.file, self.file)
-        elif self.external_url:
-            return '<a href="%s"><img src="%s"/></a>'%\
-                        (self.get_absolute_url(),self.get_absolute_url())
-        return ''
-    thumb.allow_tags = True
-    thumb.short_description = 'Thumbnail'
-    
-    def thumb_no_link(self):
-        self.thumb()
-        if self.file:
-            thumbnail = '%s.thumb%s'%os.path.splitext(self.file.path)
-            thumburl = thumbnail[len(os.path.abspath(settings.MEDIA_ROOT)):]
-            return '<img src="%s%s"/>' % (settings.MEDIA_URL, thumburl)
-        elif self.external_url:
-            return '<img src="%s"/>' % self.get_absolute_url()
-        return ''
-    
-    def absolute_url(self, format):
-        return "%simg/%s/%s" % format
+    @property
+    def media_url(self):
+        return self.external_url or self.file.url
     
     def parse_metadata(self):
         super(Image, self).parse_metadata()
@@ -236,7 +242,11 @@ class Image(Media):
         self.categories = ", ".join(tags)
 
 class Video(Media):
-    file = models.FileField(upload_to='video/%Y/%b/%d', blank=True, null=True)
+    file = models.FileField(
+        upload_to = appsettings.VIDEO_UPLOAD_TO,
+        blank = True, 
+        null = True,
+        storage=VIDEO_STORAGE())
     thumbnail = models.ForeignKey(Image, null=True, blank=True)
     
     def thumb(self):
@@ -247,8 +257,9 @@ class Video(Media):
     thumb.allow_tags = True
     thumb.short_description = 'Thumbnail'
     
-    def absolute_url(self, format):
-        return "%svideo/%s/%s" % format
+    @property
+    def media_url(self):
+        return self.external_url or self.file.url
     
     def parse_metadata(self):
         super(Video, self).parse_metadata()
@@ -266,33 +277,49 @@ class GrabVideo(Video):
         if self.asset_id and len(self.asset_id) and not self.asset_id[0] in 'PV':
             self.asset_id = 'V%s' % self.asset_id
         super(GrabVideo, self).save(*a, **kw)
-    
-    def absolute_url(self, format):
-        return "%sgrabvideo/%s/%s" % format
-    
+
+
 class Audio(Media):
-    file = models.FileField(upload_to='audio/%Y/%b/%d', blank=True, null=True)
-    class Meta:
-        verbose_name="Audio Clip"
-        verbose_name_plural="Audio Clips"
+    file = models.FileField(
+        upload_to = appsettings.AUDIO_UPLOAD_TO,
+        blank = True, 
+        null = True,
+        storage=AUDIO_STORAGE())
     
-    def absolute_url(self, format):
-        return "%saudio/%s/%s" % format
+    class Meta:
+        verbose_name="audio clip"
+        verbose_name_plural="audio clips"
+    
+    @property
+    def media_url(self):
+        return self.external_url or self.file.url
 
 class Flash(Media):
-    file = models.FileField(upload_to='flash/%Y/%b/%d', blank=True, null=True)
+    file = models.FileField(
+    upload_to = appsettings.FLASH_UPLOAD_TO,
+    blank = True, 
+    null = True,
+    storage=FLASH_STORAGE())
+    
     
     class Meta:
         verbose_name="SWF File"
         verbose_name_plural="SWF Files"
     
-    def absolute_url(self, format):
-        return "%sflash/%s/%s" % format
+    @property
+    def media_url(self):
+        return self.external_url or self.file.url
     
 class Document(Media):
-    file = models.FileField(upload_to='docs/%Y/%b/%d', blank=True, null=True)
-    def absolute_url(self, format):
-        return "%sdocs/%s/%s" % format
+    file = models.FileField(
+        upload_to = appsettings.DOC_UPLOAD_TO,
+        blank = True, 
+        null = True,
+        storage=DOC_STORAGE())
+    
+    @property
+    def media_url(self):
+        return self.external_url or self.file.url
    
 class Collection(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -313,7 +340,11 @@ class Collection(models.Model):
 
     def __unicode__(self):
         return self.title
- 
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('massmedia_detail', (),{'mediatype': self.__class__.__name__.lower(), 'slug': self.slug})
+
     def save(self, *args, **kwargs):
         super(Collection, self).save(*args, **kwargs)
         self.process_zipfile()
@@ -375,23 +406,12 @@ class CollectionRelation(models.Model):
         return unicode(self.content_object)
         
 class MediaTemplate(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, choices=(('detail', 'detail'),('thumb', 'thumb')))
     mimetype = models.CharField(max_length=255,null=True,blank=True)
     content = models.TextField()
     
     def __unicode__(self):
-        return self.name
+        return "%s_%s template" % (self.mimetype, self.name)
     
     def template(self):
         return Template(self.content)
-
-# Ellington Extras
-if 'ellington.news' in settings.INSTALLED_APPS:
-    from ellington.news.parts.inlines import register_inline,ObjectInline
-    
-    register_inline('massmedia-grabvideo', ObjectInline('massmedia-grabvideo','MassMedia -- Grab Videos','massmedia','grabvideo','grabvideo'))
-    register_inline('massmedia-video', ObjectInline('massmedia-video','MassMedia -- Videos','massmedia','video','video'))
-    register_inline('massmedia-audio', ObjectInline('massmedia-audio','MassMedia -- Audios','massmedia','audio','audio'))
-    register_inline('massmedia-image', ObjectInline('massmedia-image','MassMedia -- Images','massmedia','image','image'))
-    register_inline('massmedia-flash', ObjectInline('massmedia-flash','MassMedia -- Flashes','massmedia','flash','flash'))
-    register_inline('massmedia-document', ObjectInline('massmedia-document','MassMedia -- Documents','massmedia','document','document'))

@@ -1,9 +1,9 @@
 <div id="container"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</div>
 <script type="text/javascript" src="/media/js/swfobject.js"></script>
 <script type="text/javascript">
-	var s1 = new SWFObject("/media/swf/player.swf","ply","{{ args.0 }}","{{ args.1 }}","9","#FFFFFF");
+	var s1 = new SWFObject("{{ STATIC_MEDIA }}massmedia/swf/player.swf","ply","{{ args.0 }}","{{ args.1 }}","9","#FFFFFF");
 	s1.addParam("allowfullscreen","true");
 	s1.addParam("allowscriptaccess","always");
-	s1.addParam("flashvars","file={{ media.get_absolute_url }}&image={{ media.thumbnail.get_absolute_url }}");
+	s1.addParam("flashvars","file={{ media.media_url }}&image={{ media.thumbnail.url }}");
 	s1.write("container");
 </script>

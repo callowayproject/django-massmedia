@@ -1,13 +1,72 @@
 from django.conf.urls.defaults import *
-from models import GrabVideo
+from django.views.generic.list_detail import object_list, object_detail
+from django.http import HttpResponseNotFound
+from models import GrabVideo, Collection, Image, Video, Audio, Flash, Document
+from views import mediatype_detail
+
+
+media_dict = {
+    'collection': {'queryset':Collection.objects.public(),'meta':Collection._meta},
+    'image': {'queryset':Image.objects.public(),'meta':Image._meta},
+    'audio': {'queryset':Audio.objects.public(),'meta':Audio._meta},
+    'video': {'queryset':Video.objects.public(),'meta':Video._meta},
+    'flash': {'queryset':Flash.objects.public(),'meta':Flash._meta},
+    'document': {'queryset':Document.objects.public(),'meta':Document._meta},
+    'grabvideo': {'queryset':GrabVideo.objects.public(),'meta':GrabVideo._meta},
+}
+
+def generic_wrapper(request, *args, **kwargs):
+    """
+    This allows us to get the mediatype variable from the url and pass the 
+    correct queryset to the generic view
+    """
+    if 'mediatype' in kwargs and kwargs['mediatype'] in media_dict:
+        mediatype = kwargs.pop('mediatype')
+        queryset = media_dict[mediatype]['queryset']
+        if 'extra_context' in kwargs:
+            kwargs['extra_context'].update({'mediatype': mediatype})
+        else:
+            kwargs['extra_context'] = {'mediatype': mediatype}
+        if 'slug' in kwargs or 'object_id' in kwargs:
+            return object_detail(request, queryset, *args, **kwargs)
+        if 'template_name' not in kwargs:
+            kwargs['template_name'] = 'massmedia/list.html'
+        return object_list(request, queryset, *args, **kwargs)
+    return HttpResponseNotFound()
 
 urlpatterns = patterns('',
-    (r'^type/(?P<type>[-\w]+)/$', 'massmedia.views.list_by_type'),
-    (r'^collection/(?P<id>\d+)/(?P<type>[-\w]+)/$', 'massmedia.views.list_by_collection_by_type'),
-    (r'^collection/(?P<id>\d+)/$', 'massmedia.views.list_by_collection'),
+    url(
+        r'^$',
+        'django.views.generic.simple.direct_to_template',
+        kwargs={
+            'template': 'massmedia/index.html',
+            'extra_context': {'media': media_dict}
+        },
+        name="massmedia_index"),
+    url(
+        r'^grabvideo/$',
+        'massmedia.views.grab_categorized',
+        name="massmedia_grab_categorized"),
+    url(
+        r'^(?P<mediatype>\w+)/$',
+        generic_wrapper,
+        kwargs={'paginate_by': 15,},
+        name='massmediatype_index'),
+    url(
+        r'^(?P<mediatype>\w+)/(?P<slug>[-\w]+)/$', 
+        generic_wrapper,
+        name="massmedia_detail"),
+    url(
+        r'^(?P<mediatype>\w+)/(?P<object_id>\d+)/$',
+        generic_wrapper,
+        name="massmedia_detail_pk"),
+    url(
+        r'^collection/(?P<slug>[-\w]+)/(?P<type>[-\w]+)/$', 
+        'massmedia.views.list_by_collection_by_type',
+        name="massmedia_collection_by_type"),
+    url(
+        r'^snipshot/(?P<pk>\d+)/$', 
+        'massmedia.views.snipshot_callback', 
+        name='massmedia_snipshot_callback'),
     (r'^widget/(?P<id>\d+)/(?P<type>[-\w]+)/$','massmedia.views.widget'),
-    url(r'^snipshot/(?P<pk>\d+)/$', 'massmedia.views.snipshot_callback', name='massmedia_snipshot_callback'),
-    url(r'^grab/(?P<object_id>\d+)/$','django.views.generic.list_detail.object_detail',{'queryset':GrabVideo.objects.filter(public=True)}),
-    (r'^grab/$','massmedia.views.grab_categorized'),
-    (r'','massmedia.views.list'),
 )
