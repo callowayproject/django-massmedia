@@ -62,7 +62,7 @@ value_or_list = lambda x: len(x) == 1 and x[0] or x
 
 class PublicMediaManager(CurrentSiteManager):
     def __init__(self):
-        super(PublicMediaManager, self).__init__('sites')
+        super(PublicMediaManager, self).__init__('site')
     
     def public(self):
         return self.get_query_set().filter(public=True)
