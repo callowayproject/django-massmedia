@@ -147,6 +147,9 @@ class ImageAdmin(MediaAdmin):
     )
     add_form = ImageCreationForm
     
+    def thumb(self):
+        return 'WTF'
+    
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'file':
             kwargs['widget'] = AdminImageWidget

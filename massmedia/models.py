@@ -116,7 +116,7 @@ class Media(models.Model):
         return self.external_url
     
     def save(self, *args, **kwargs):
-        if not self.site:
+        if self.site_id is None:
             self.site = Site.objects.get_current()
         super(Media, self).save(*args, **kwargs) 
         # That save needs to come before we look at the file otherwise the
