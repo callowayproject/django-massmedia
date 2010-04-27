@@ -24,7 +24,7 @@ class ContentCreationForm(forms.ModelForm):
         if not instance and (initial is not None and not initial.has_key('creation_date')):
             initial['creation_date'] = datetime.datetime.now()
         if not instance and (initial is not None and not initial.has_key('sites')):
-            initial['sites'] = [Site.objects.get_current().id,]
+            initial['site'] = Site.objects.get_current().id
         
         super(ContentCreationForm, self).__init__(data, files, auto_id, prefix, initial, 
                                         error_class, label_suffix, 
