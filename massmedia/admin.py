@@ -147,8 +147,8 @@ class ImageAdmin(MediaAdmin):
     )
     add_form = ImageCreationForm
     
-    def thumb(self):
-        return 'WTF'
+    def thumb(self, value):
+        return 'WTF %s' % value
     
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'file':
