@@ -124,6 +124,8 @@ class Media(models.Model):
             self.mime_type = mimetypes.guess_type(self.file.path)[0]
         if not(self.metadata) and self.file and extract_metadata:
             self.parse_metadata()
+        if not self.site:
+            self.site = Site.objects.get_current()
         self.thumb()
         super(Media, self).save(*args, **kwargs)
     
@@ -296,10 +298,10 @@ class Audio(Media):
 
 class Flash(Media):
     file = models.FileField(
-    upload_to = appsettings.FLASH_UPLOAD_TO,
-    blank = True, 
-    null = True,
-    storage=FLASH_STORAGE())
+        upload_to = appsettings.FLASH_UPLOAD_TO,
+        blank = True, 
+        null = True,
+        storage=FLASH_STORAGE())
     
     
     class Meta:
@@ -388,7 +390,6 @@ class Collection(models.Model):
                         media = model(title=title, slug=slug)
                         media.file.save(filename, ContentFile(data))                      
                         # XXX: Make site relations possible, send signals
-                        media.site = Site.objects.get_current()
                         CollectionRelation(content_object=media,collection=self).save()
             zip.close()
             os.remove(self.zip_file.path)
