@@ -111,12 +111,13 @@ class Media(models.Model):
     def get_absolute_url(self):
         return ('massmedia_detail', (),{'mediatype': self.__class__.__name__.lower(), 'slug': self.slug})
     
-    
     @property
     def media_url(self):
         return self.external_url
     
     def save(self, *args, **kwargs):
+        if not self.site:
+            self.site = Site.objects.get_current()
         super(Media, self).save(*args, **kwargs) 
         # That save needs to come before we look at the file otherwise the
         # self.file.path is incorrect.
@@ -124,8 +125,6 @@ class Media(models.Model):
             self.mime_type = mimetypes.guess_type(self.file.path)[0]
         if not(self.metadata) and self.file and extract_metadata:
             self.parse_metadata()
-        if not self.site:
-            self.site = Site.objects.get_current()
         self.thumb()
         super(Media, self).save(*args, **kwargs)
     
