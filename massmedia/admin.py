@@ -103,6 +103,7 @@ class MediaAdmin(admin.ModelAdmin):
         opts = self.model._meta
         app_label = opts.app_label
         ordered_objects = opts.get_ordered_objects()
+        is_popup = '_popup' in request.REQUEST or 'pop' in request.REQUEST
         context.update({
             'add': add,
             'change': change,
@@ -118,6 +119,7 @@ class MediaAdmin(admin.ModelAdmin):
             'save_as': self.save_as,
             'save_on_top': self.save_on_top,
             'root_path': self.admin_site.root_path,
+            'is_popup': is_popup,
         })
         context_instance = template.RequestContext(request, current_app=self.admin_site.name)
         if add:
