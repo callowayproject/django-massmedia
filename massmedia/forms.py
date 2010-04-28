@@ -15,7 +15,6 @@ class ContentCreationForm(forms.ModelForm):
         help_text="If this URLField is set, the media will be pulled externally")
     file = forms.FileField(required=False)
     creation_date = forms.DateTimeField()
-    sites = forms.ModelMultipleChoiceField(queryset=Site.objects.all())
     
     def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,
                      initial=None, error_class=forms.util.ErrorList, label_suffix=':',
@@ -23,8 +22,8 @@ class ContentCreationForm(forms.ModelForm):
         # set a default creation date and add the current site
         if not instance and (initial is not None and not initial.has_key('creation_date')):
             initial['creation_date'] = datetime.datetime.now()
-        if not instance and (initial is not None and not initial.has_key('sites')):
-            initial['sites'] = [Site.objects.get_current().id,]
+        if not instance and (initial is not None and not initial.has_key('site')):
+            initial['site'] = Site.objects.get_current().id
         
         super(ContentCreationForm, self).__init__(data, files, auto_id, prefix, initial, 
                                         error_class, label_suffix, 

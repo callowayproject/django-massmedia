@@ -111,12 +111,13 @@ class Media(models.Model):
     def get_absolute_url(self):
         return ('massmedia_detail', (),{'mediatype': self.__class__.__name__.lower(), 'slug': self.slug})
     
-    
     @property
     def media_url(self):
         return self.external_url
     
     def save(self, *args, **kwargs):
+        if self.site_id is None:
+            self.site = Site.objects.get_current()
         super(Media, self).save(*args, **kwargs) 
         # That save needs to come before we look at the file otherwise the
         # self.file.path is incorrect.
@@ -296,10 +297,10 @@ class Audio(Media):
 
 class Flash(Media):
     file = models.FileField(
-    upload_to = appsettings.FLASH_UPLOAD_TO,
-    blank = True, 
-    null = True,
-    storage=FLASH_STORAGE())
+        upload_to = appsettings.FLASH_UPLOAD_TO,
+        blank = True, 
+        null = True,
+        storage=FLASH_STORAGE())
     
     
     class Meta:
@@ -388,7 +389,6 @@ class Collection(models.Model):
                         media = model(title=title, slug=slug)
                         media.file.save(filename, ContentFile(data))                      
                         # XXX: Make site relations possible, send signals
-                        media.site = Site.objects.get_current()
                         CollectionRelation(content_object=media,collection=self).save()
             zip.close()
             os.remove(self.zip_file.path)
