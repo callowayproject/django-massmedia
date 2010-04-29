@@ -11,7 +11,7 @@ from django.core.files.storage import get_storage_class
 from django.template.loader import get_template, select_template
 from django.template import Template, Context, TemplateDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
-from sorl.thumbnail.fields import ImageWithThumbnailsField
+from easy_thumbnails.fields import ThumbnailerImageField
 
 from massmedia import settings as appsettings
 from fields import Metadata, SerializedObjectField, MetadataJSONEncoder, MetadataJSONDecoder
@@ -183,15 +183,18 @@ class Media(models.Model):
     
     def _render(self, format):
         t = self.get_template(format)
+        print t
         c = Context({
             'media':self,
             'MEDIA_URL':settings.MEDIA_URL,
             'STATIC_URL': getattr(settings, 'STATIC_URL', settings.MEDIA_URL)
         })
+        print c
         return t.render(c)
     
     def render_thumb(self):
         return self._render('thumb')
+    render_thumb.allow_tags=True
     
     def render_detail(self):
         return self._render('detail')
@@ -218,15 +221,47 @@ class Media(models.Model):
         self.metadata = Metadata(data)
 
 class Image(Media):
-    file = ImageWithThumbnailsField(
+    file = ThumbnailerImageField(
         upload_to = appsettings.IMAGE_UPLOAD_TO,
         blank = True, 
         null = True,
-        thumbnail = appsettings.THUMBNAIL_OPTS,
-        extra_thumbnails = appsettings.EXTRA_THUMBS,
+        width_field='width',
+        height_field='height',
         storage=IMAGE_STORAGE(),
-        generate_on_save=True)
+        thumbnail_storage=IMAGE_STORAGE())
     original = models.ForeignKey('self', related_name="variations", blank=True, null=True)
+    
+    def smart_fit(self, width=20000, height=20000):
+        im_width = self.width
+        im_height = self.height
+
+        if width==20000 and height==20000:
+            return im_width, im_height
+        elif width is None:
+            width = 20000
+        elif height is None:
+            height = 20000
+        
+        if width < height:
+            scale = float(width)/float(im_width)
+            height = int(round(scale * im_height))
+        else:
+            scale = float(height)/float(im_height)
+            width = int(round(scale * im_width))
+        
+        return width, height
+    
+    def thumb(self):
+        return "HELLO!" + self.render_thumb()
+    
+    def render_thumb(self):
+        print self.thumbnail
+        self.thumbnail = self.file.get_thumbnail(settings.DEFAULT_THUMBNAIL_OPTS)
+        #self.thumbnail_size = settings.DEFAULT_THUMBNAIL_OPTS['size']
+        out = self._render('thumb')
+        print "************************", out
+        return "Hello"
+    render_thumb.allow_tags=True
     
     @property
     def media_url(self):

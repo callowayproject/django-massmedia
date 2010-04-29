@@ -4,7 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 import os, sys
 APP = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-PROJ_ROOT = os.path.abspath(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(APP)
 
 ADMINS = (
@@ -73,7 +73,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJ_ROOT,'templates')
+    os.path.join(PROJECT_ROOT,'templates')
 )
 
 INSTALLED_APPS = (
@@ -84,5 +84,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'massmedia',
     'tagging',
-    'sorl.thumbnail',
+    'easy_thumbnails',
 )
+
+MMEDIA_IMAGE_STORAGE = 'media_storage.MediaStorage'

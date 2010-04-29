@@ -50,3 +50,5 @@ VIDEO_UPLOAD_TO = getattr(settings, "MMEDIA_VIDEO_UPLOAD_TO", 'video/%Y/%b/%d')
 AUDIO_UPLOAD_TO = getattr(settings, "MMEDIA_AUDIO_UPLOAD_TO", 'audio/%Y/%b/%d')
 FLASH_UPLOAD_TO = getattr(settings, "MMEDIA_FLASH_UPLOAD_TO", 'flash/%Y/%b/%d')
 DOC_UPLOAD_TO = getattr(settings, "MMEDIA_DOC_UPLOAD_TO", 'misc/%Y/%b/%d')
+
+MOGRIFY_KEY = getattr(settings, "MOGRIFY_KEY", settings.SECRET_KEY)

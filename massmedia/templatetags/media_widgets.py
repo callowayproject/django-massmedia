@@ -1,8 +1,17 @@
 from django import template
 from django.conf import settings
 from massmedia.models import GrabVideo,Image
-from sorl.thumbnail.main import DjangoThumbnail
+#from sorl.thumbnail.main import DjangoThumbnail
 register = template.Library()
+
+from massmedia.settings import MOGRIFY_KEY
+
+import os
+
+try:
+    from hashlib import sha1 as sha
+except ImportError:
+    from sha import sha
 
 class ThumbnailNode(template.Node):
     """
