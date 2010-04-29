@@ -245,7 +245,7 @@ class Image(Media):
         self.categories = ", ".join(tags)
 
 class Embed(Media):
-    code = models.TextField(help_text='Embed HTML source code')
+    code = models.TextField(help_text='Embed HTML source code',blank=True,null=True)
 
     @property
     def media_url(self):
