@@ -1,6 +1,12 @@
+{% if media.code %}
+    {{ media.code }}
+{% else %}
+    {% if media.external_url %}
 <object {% if media.width %}width="{{ media.width }}"{% endif %} {% if media.height %}height="{{ media.height }}"{% endif %} >
     <param name="movie" value="{{ media.external_url }}"></param>
     <param name="allowFullScreen" value="true"></param>
     <param name="allowscriptaccess" value="always"></param>
     <embed src="{{ media.external_url }}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" {% if media.width %}width="{{ media.width }}"{% endif %}  {% if media.height %}height="{{ media.height }}"{% endif %} ></embed>
 </object>
+    {% endif %}
+{% endif %}
