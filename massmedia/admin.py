@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 import os
 
 from models import Image,Video,Audio,Flash,Collection,\
-    CollectionRelation,MediaTemplate,GrabVideo,Document
+    CollectionRelation,MediaTemplate,GrabVideo,Document,Embed
 import settings
 from forms import ImageCreationForm, VideoCreationForm, AudioCreationForm, \
     FlashCreationForm, DocumentCreationForm
@@ -227,6 +227,7 @@ admin.site.register(Audio, AudioAdmin)
 admin.site.register(Flash, FlashAdmin)
 admin.site.register(Document, DocumentAdmin)
 admin.site.register(GrabVideo, GrabVideoAdmin)
+admin.site.register(Embed)
 
 if not settings.FS_TEMPLATES:
     admin.site.register(MediaTemplate)

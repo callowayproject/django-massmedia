@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from django.views.generic.list_detail import object_list, object_detail
 from django.http import HttpResponseNotFound
-from models import GrabVideo, Collection, Image, Video, Audio, Flash, Document
+from models import GrabVideo, Collection, Image, Video, Audio, Flash, Document, Embed
 from views import mediatype_detail
 
 
@@ -13,6 +13,7 @@ media_dict = {
     'flash': {'queryset':Flash.objects.public(),'meta':Flash._meta},
     'document': {'queryset':Document.objects.public(),'meta':Document._meta},
     'grabvideo': {'queryset':GrabVideo.objects.public(),'meta':GrabVideo._meta},
+    'embed': {'queryset':Embed.objects.public(),'meta':Embed._meta},
 }
 
 def generic_wrapper(request, *args, **kwargs):

@@ -121,9 +121,9 @@ class Media(models.Model):
         super(Media, self).save(*args, **kwargs) 
         # That save needs to come before we look at the file otherwise the
         # self.file.path is incorrect.
-        if self.file and not self.mime_type:
+        if hasattr(self,'file') and self.file and not self.mime_type:
             self.mime_type = mimetypes.guess_type(self.file.path)[0]
-        if not(self.metadata) and self.file and extract_metadata:
+        if not self.metadata and hasattr(self,'file') and self.file and extract_metadata:
             self.parse_metadata()
         self.thumb()
         super(Media, self).save(*args, **kwargs)
@@ -142,7 +142,9 @@ class Media(models.Model):
     
     def get_template(self, template_type):
         mime_type = self.get_mime_type()
-        if self.widget_template:
+        if isinstance(self, Embed):
+            return get_template('massmedia/embed.html')   
+        elif self.widget_template:
             if appsettings.FS_TEMPLATES:
                 return get_template(self.widget_template)
             else:
@@ -241,6 +243,13 @@ class Image(Media):
         tags.extend(self.metadata["20"] or [])
         tags.extend(self.metadata["25"] or [])
         self.categories = ", ".join(tags)
+
+class Embed(Media):
+    code = models.TextField(help_text='Embed HTML source code')
+
+    @property
+    def media_url(self):
+        return self.external_url 
 
 class Video(Media):
     file = models.FileField(
