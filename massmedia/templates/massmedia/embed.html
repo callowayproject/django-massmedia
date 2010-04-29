@@ -1,5 +1,5 @@
 {% if media.code %}
-    {{ media.code }}
+    {{ media.code|safe }}
 {% else %}
     {% if media.external_url %}
 <object {% if media.width %}width="{{ media.width }}"{% endif %} {% if media.height %}height="{{ media.height }}"{% endif %} >
