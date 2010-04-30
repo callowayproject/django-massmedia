@@ -84,7 +84,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'massmedia',
     'tagging',
-    'easy_thumbnails',
 )
 
 MMEDIA_IMAGE_STORAGE = 'media_storage.MediaStorage'
