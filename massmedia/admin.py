@@ -5,6 +5,7 @@ from django import template
 from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
+from django.utils.html import escape
 
 import os
 
@@ -19,11 +20,13 @@ from forms import ImageCreationForm, VideoCreationForm, AudioCreationForm, \
 class AdminImageWidget(AdminFileWidget):
     def render(self, name, value, attrs=None):
         output = []
+        thumbnail = value.instance.thumbnail.url
+        width = value.instance.thumb_width
+        height = value.instance.thumb_height
+        tag = '<img src="%s" width="%s" height="%s"/>' % (thumbnail, width, height)
         if value:
             file_name=str(value)
-            output.append(u'%s <a href="%s" target="_blank">%s</a> %s ' % \
-                (_('Currently:'), value.url, value.thumbnail_tag, _('Change:')))
-        output.append(super(AdminFileWidget, self).render(name, value, attrs))
+            output.append(u'<a href="%s" target="_blank">%s</a>' % (value.url, tag))
         return mark_safe(u''.join(output))
 
 
@@ -137,7 +140,9 @@ class MediaAdmin(admin.ModelAdmin):
     
 
 class ImageAdmin(MediaAdmin):
-    list_display = ('title','thumb','author_name','mime_type','public','creation_date')
+    list_display = ('render_thumb','title','creation_date')
+    list_display_links = ('title',)
+    list_editable = tuple()
     add_fieldsets = (
         (None, {'fields': ('title', 'slug',)}),
         ('Content',{'fields':('external_url','file')}),
@@ -148,9 +153,6 @@ class ImageAdmin(MediaAdmin):
         })
     )
     add_form = ImageCreationForm
-    
-    def thumb(self, value):
-        return 'WTF %s' % value
     
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'file':

@@ -1,0 +1,27 @@
+{% if results %}
+<table cellspacing="0">
+{# <thead> #}
+{# <tr> #}
+{# {% for header in result_headers %}<th{{ header.class_attrib }}> #}
+{# {% if header.sortable %}<a href="{{ header.url }}">{% endif %} #}
+{# {{ header.text|capfirst }} #}
+{# {% if header.sortable %}</a>{% endif %}</th>{% endfor %} #}
+{# </tr> #}
+{# </thead> #}
+<tbody>
+<tr class="thumb_row">
+{% for result in results %}
+	<td>
+	{% for item in result %}
+		{{ item }}<br />
+	{% endfor %}
+	</td>
+	{% if forloop.counter|divisibleby:"5" %}
+		</tr><tr class="thumb_row">
+	{% else %}
+	{% endif %}
+{% endfor %}
+</tr>
+</tbody>
+</table>
+{% endif %}
