@@ -11,12 +11,14 @@ from django.core.files.storage import get_storage_class
 from django.template.loader import get_template, select_template
 from django.template import Template, Context, TemplateDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
-from easy_thumbnails.fields import ThumbnailerImageField
 
 from massmedia import settings as appsettings
 from fields import Metadata, SerializedObjectField, MetadataJSONEncoder, MetadataJSONDecoder
 
-from cStringIO import StringIO
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
 import mimetypes
 import os
 import zipfile
@@ -167,7 +169,7 @@ class Media(models.Model):
                 try:
                     return select_template(lookups)
                 except TemplateDoesNotExist, e:
-                    raise TemplateDoesNotExist("Can't find a template to render the media. Looking in %s" % ", ".join(lookup))
+                    raise TemplateDoesNotExist("Can't find a template to render the media. Looking in %s" % ", ".join(lookups))
             else:
                 lookups = [
                     dict(mimetype=mime_type, name=template_type),
@@ -183,13 +185,11 @@ class Media(models.Model):
     
     def _render(self, format):
         t = self.get_template(format)
-        print t
         c = Context({
             'media':self,
             'MEDIA_URL':settings.MEDIA_URL,
             'STATIC_URL': getattr(settings, 'STATIC_URL', settings.MEDIA_URL)
         })
-        print c
         return t.render(c)
     
     def render_thumb(self):
@@ -221,17 +221,51 @@ class Media(models.Model):
         self.metadata = Metadata(data)
 
 class Image(Media):
-    file = ThumbnailerImageField(
+    file = models.ImageField(
         upload_to = appsettings.IMAGE_UPLOAD_TO,
         blank = True, 
         null = True,
         width_field='width',
         height_field='height',
-        storage=IMAGE_STORAGE(),
-        thumbnail_storage=IMAGE_STORAGE())
+        storage=IMAGE_STORAGE())
+    thumbnail = models.ImageField(
+        upload_to = appsettings.THUMB_UPLOAD_TO,
+        blank = True,
+        null = True,
+        width_field = 'thumb_width',
+        height_field = 'thumb_height',
+        editable=False,
+        storage = IMAGE_STORAGE())
+    thumb_width = models.IntegerField(blank=True, null=True, editable=False)
+    thumb_height = models.IntegerField(blank=True, null=True, editable=False)
     original = models.ForeignKey('self', related_name="variations", blank=True, null=True)
     
+    def save(self, *args, **kwargs):
+        generate_thumb = self.id is None
+        super(Image, self).save(*args, **kwargs)
+        if generate_thumb:
+            self._generate_thumbnail()
+        
+    def _generate_thumbnail(self):
+        from django.core.files.base import ContentFile
+        
+        image = PilImage.open(self.file.path)
+        filename = os.path.basename(self.file.name)
+        if image.mode not in ('L', 'RGB'):
+            image = image.convert('RGB')
+        image.thumbnail(appsettings.THUMB_SIZE, PilImage.ANTIALIAS)
+        
+        destination = StringIO()
+        image.save(destination, format='JPEG')
+        destination.seek(0)
+        
+        self.thumbnail.save(filename, ContentFile(destination.read()))
+    
     def smart_fit(self, width=20000, height=20000):
+        """
+        Given a width, height or both, it will return the width and height to 
+        fit in the given area.
+        """
         im_width = self.width
         im_height = self.height
 
@@ -250,18 +284,6 @@ class Image(Media):
             width = int(round(scale * im_width))
         
         return width, height
-    
-    def thumb(self):
-        return "HELLO!" + self.render_thumb()
-    
-    def render_thumb(self):
-        print self.thumbnail
-        self.thumbnail = self.file.get_thumbnail(settings.DEFAULT_THUMBNAIL_OPTS)
-        #self.thumbnail_size = settings.DEFAULT_THUMBNAIL_OPTS['size']
-        out = self._render('thumb')
-        print "************************", out
-        return "Hello"
-    render_thumb.allow_tags=True
     
     @property
     def media_url(self):
