@@ -156,7 +156,7 @@ class Media(models.Model):
                 if isinstance(self, GrabVideo):
                     return get_template('massmedia/grab.html')
                 else:
-                    return get_template('massmedia/generic.html')
+                    return get_template('massmedia/mediatypes/generic_%s.html' % template_type)
             else:
                 return MediaTemplate.objects.get(mimetype='').tempate()
         else:
