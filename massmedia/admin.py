@@ -145,7 +145,7 @@ class ImageAdmin(MediaAdmin):
     list_editable = tuple()
     add_fieldsets = (
         (None, {'fields': ('title', 'slug',)}),
-        ('Content',{'fields':('external_url','file')}),
+        ('Content',{'fields':('external_url','file','caption')}),
         ('Rights', {'fields': ('public','reproduction_allowed')}),
         ('Additional Info', {
             'classes': ('collapse',),
