@@ -248,9 +248,14 @@ class Image(Media):
         
     def _generate_thumbnail(self):
         from django.core.files.base import ContentFile
-        
-        image = PilImage.open(self.file.path)
-        filename = os.path.basename(self.file.name)
+        if self.file:
+            image = PilImage.open(self.file.path)
+            filename = os.path.basename(self.file.name)
+        elif self.external_url:
+            import urllib
+            filepath, headers = urllib.urlretrieve(self.external_url)
+            image = PilImage.open(filepath)
+            filename = os.path.basename(filepath)
         if image.mode not in ('L', 'RGB'):
             image = image.convert('RGB')
         image.thumbnail(appsettings.THUMB_SIZE, PilImage.ANTIALIAS)

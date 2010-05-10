@@ -20,10 +20,13 @@ from forms import ImageCreationForm, VideoCreationForm, AudioCreationForm, \
 class AdminImageWidget(AdminFileWidget):
     def render(self, name, value, attrs=None):
         output = []
-        thumbnail = value.instance.thumbnail.url
-        width = value.instance.thumb_width
-        height = value.instance.thumb_height
-        tag = '<img src="%s" width="%s" height="%s"/>' % (thumbnail, width, height)
+        try:
+            thumbnail = value.instance.thumbnail.url
+            width = value.instance.thumb_width
+            height = value.instance.thumb_height
+            tag = '<img src="%s" width="%s" height="%s"/>' % (thumbnail, width, height)
+        except:
+            tag = "<strong>No Thumbnail available</strong>"
         if value:
             file_name=str(value)
             output.append(u'<a href="%s" target="_blank">%s</a>' % (value.url, tag))
@@ -144,12 +147,11 @@ class ImageAdmin(MediaAdmin):
     list_display_links = ('title',)
     list_editable = tuple()
     add_fieldsets = (
-        (None, {'fields': ('title', 'slug',)}),
         ('Content',{'fields':('external_url','file','caption')}),
         ('Rights', {'fields': ('public','reproduction_allowed')}),
         ('Additional Info', {
             'classes': ('collapse',),
-            'fields': ('creation_date', 'site')
+            'fields': ('title', 'slug', 'creation_date', 'site')
         })
     )
     add_form = ImageCreationForm

@@ -1,9 +1,10 @@
 import django
 from django import forms
 from django.contrib.sites.models import Site
+import os, datetime
 
 from models import Image, Video, Audio, Flash, Document
-import datetime
+
 
 class ContentCreationForm(forms.ModelForm):
     """
@@ -31,8 +32,37 @@ class ContentCreationForm(forms.ModelForm):
 
 
 class ImageCreationForm(ContentCreationForm):
+    title = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'size':85}), required=False)
+    slug = forms.CharField(required=False)
+    file = forms.FileField(required=False)
     class Meta:
         model = Image
+    
+    def set_title_and_slug(self):
+        """
+        If the title is empty, set it to the name of the uploaded or external file
+        """
+        from django.template.defaultfilters import slugify
+
+        if not self.cleaned_data['title']:
+            filepath = self.cleaned_data['file'] or self.cleaned_data['external_url'].split('?')[0]
+            filename = os.path.basename(filepath)
+            self.cleaned_data['title'] = filename
+        
+        if not self.cleaned_data['slug']:
+            slug = slugify(self.cleaned_data['title'])
+        
+        try:
+            Image.objects.get(slug=slug)
+            slug = "%s_%d" % (slug, datetime.datetime.now().toordinal())
+        except Image.DoesNotExist:
+            pass
+        self.cleaned_data['slug'] = slug
+    
+    
+    def clean(self):
+        self.set_title_and_slug()
+        return super(ImageCreationForm, self).clean()
 
 class VideoCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
