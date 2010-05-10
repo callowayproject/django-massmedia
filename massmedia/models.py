@@ -390,7 +390,7 @@ class Document(Media):
    
 class Collection(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=255, unique=True)
+    title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     caption = models.TextField(blank=True)
     zip_file = models.FileField('Media files in a .zip', upload_to='tmp', blank=True,null=True,
