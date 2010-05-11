@@ -45,8 +45,13 @@ class ImageCreationForm(ContentCreationForm):
         from django.template.defaultfilters import slugify
 
         if not self.cleaned_data['title']:
-            filepath = self.cleaned_data['file'] or self.cleaned_data['external_url'].split('?')[0]
-            filename = os.path.basename(filepath)
+            if self.cleaned_data.has_key('file') and hasattr(self.cleaned_data['file'], 'name'):
+                filename = self.cleaned_data['file'].name
+            elif self.cleaned_data['external_url']:
+                filepath = self.cleaned_data['file'] or self.cleaned_data['external_url'].split('?')[0]
+                filename = os.path.basename(filepath)
+            else:
+                return
             self.cleaned_data['title'] = filename
         
         if not self.cleaned_data['slug']:

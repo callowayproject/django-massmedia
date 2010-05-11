@@ -299,7 +299,8 @@ class Image(Media):
         self.width = self.metadata['Image width']
         self.height = self.metadata['Image height']
         self.one_off_author = self.metadata['Author'] or self.metadata['80'] or ''
-        self.caption = self.metadata['120'] or ''
+        if not self.caption:
+            self.caption = self.metadata['120'] or ''
         tags = []
         tags.extend(self.metadata["15"] or [])
         tags.extend(self.metadata["20"] or [])
