@@ -140,8 +140,12 @@ def thumbnail_result_list(context, cl):
     else:
         static_url = 'MEDIA_URL'
     result_list = list(results(cl))
+    if len(result_list) % 4:
+        empty_spaces = range(4 - (len(result_list) % 4))
+    else:
+        empty_spaces = []
     return {'cl': cl,
             'results': result_list,
-            'empty_spaces': range(4 - (len(result_list) % 4)),
+            'empty_spaces': empty_spaces,
             'STATIC_URL': context[static_url]}
 thumbnail_result_list = register.inclusion_tag("admin/massmedia/change_list_results.html", takes_context=True)(thumbnail_result_list)
