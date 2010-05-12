@@ -125,6 +125,8 @@ class Media(models.Model):
         # self.file.path is incorrect.
         if hasattr(self,'file') and self.file and not self.mime_type:
             self.mime_type = mimetypes.guess_type(self.file.path)[0]
+        if self.external_url and not self.mime_type:
+            self.mime_type, blank = mimetypes.guess_type(self.external_url)
         if not self.metadata and hasattr(self,'file') and self.file and extract_metadata:
             self.parse_metadata()
         self.thumb()

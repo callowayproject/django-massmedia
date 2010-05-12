@@ -16,9 +16,14 @@
 		{{ item }}<br />
 	{% endfor %}
 	</td>
-	{% if forloop.counter|divisibleby:"5" %}
-		</tr><tr class="thumb_row">
+	{% if forloop.last %}
+		{% for item in empty_spaces %}
+		<td>&nbsp;</td>
+		{% endfor %}
 	{% else %}
+		{% if forloop.counter|divisibleby:"4" %}
+		</tr><tr class="thumb_row">
+		{% endif %}
 	{% endif %}
 {% endfor %}
 </tr>

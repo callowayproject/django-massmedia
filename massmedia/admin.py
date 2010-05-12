@@ -65,17 +65,17 @@ class MediaAdmin(admin.ModelAdmin):
         }),
     )
     add_fieldsets = (
-        (None, {'fields': ('title', 'slug',)}),
-        ('Content',{'fields':('external_url','file')}),
+        (None, {'fields': ('title',)}),
+        ('Content',{'fields':('external_url','file', 'caption')}),
         ('Rights', {'fields': ('public','reproduction_allowed')}),
         ('Additional Info', {
             'classes': ('collapse',),
-            'fields': ('creation_date', 'site')
+            'fields': ('slug', 'creation_date', 'site')
         })
     )
     
     list_display = ('title', 'author_name', 'mime_type', 'public', 'creation_date')
-    list_filter = ('site', 'creation_date','public')
+    list_filter = ('site', 'creation_date', 'public')
     list_editable = ('public',)
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'creation_date'
@@ -144,7 +144,7 @@ class MediaAdmin(admin.ModelAdmin):
 
 class ImageAdmin(MediaAdmin):
     list_display = ('render_thumb','title','creation_date')
-    list_display_links = ('title',)
+    list_display_links = ('render_thumb','title',)
     list_editable = tuple()
     add_fieldsets = (
         ('Content',{'fields':('external_url','file','caption')}),
