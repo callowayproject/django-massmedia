@@ -144,7 +144,7 @@ class MediaAdmin(admin.ModelAdmin):
 
 class ImageAdmin(MediaAdmin):
     list_display = ('render_thumb','title','creation_date')
-    list_display_links = ('title',)
+    list_display_links = ('render_thumb','title',)
     list_editable = tuple()
     add_fieldsets = (
         ('Content',{'fields':('external_url','file','caption')}),

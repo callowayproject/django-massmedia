@@ -139,7 +139,9 @@ def thumbnail_result_list(context, cl):
         static_url = 'STATIC_URL'
     else:
         static_url = 'MEDIA_URL'
+    result_list = list(results(cl))
     return {'cl': cl,
-            'results': list(results(cl)),
+            'results': result_list,
+            'empty_spaces': range(4 - (len(result_list) % 4)),
             'STATIC_URL': context[static_url]}
 thumbnail_result_list = register.inclusion_tag("admin/massmedia/change_list_results.html", takes_context=True)(thumbnail_result_list)
