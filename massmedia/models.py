@@ -457,7 +457,8 @@ class Collection(models.Model):
                     elif ext in appsettings.DOC_EXTS:
                         model = Document
                     else:
-                        raise TypeError, 'Unknown media extension %s'%ext
+                        continue
+                        #raise TypeError, 'Unknown media extension %s'%ext
                     try:
                         media = model.objects.get(slug=slug) #XXX
                     except model.DoesNotExist:
