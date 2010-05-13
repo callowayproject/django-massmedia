@@ -46,7 +46,7 @@ def snipshot_url(media):
     from django.contrib.sites.models import Site
     from django.core.urlresolvers import reverse
     return 'http://services.snipshot.com/?snipshot_input=%s&snipshot_callback=http%%3A//%s%s&snipshot_output=fileupload&snipshot_callback_agent=user' % (
-        quote(media.get_absolute_url()),
+        media.file.url,
         Site.objects.get_current().domain,
         reverse('massmedia_snipshot_callback',None,(media.pk,))
     )
