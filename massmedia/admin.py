@@ -25,13 +25,15 @@ class AdminImageWidget(AdminFileWidget):
             width = value.instance.thumb_width
             height = value.instance.thumb_height
             snipshot = snipshot_url(value.instance)
-            crop_tag = '''<a class="addlink" href="#" onclick="var win = window.open('{% snipshot_url original %}','snipshot', 'height=500,width=800,resizable=yes,scrollbars=yes');win.focus();">Crop image with snipshot</a>'''
-            tag = '<img src="%s" width="%s" height="%s"/>' % (thumbnail, width, height)
+            crop_tag = '''<br /><a class="link" href="#" onclick="var win = window.open('%s','snipshot', 'height=500,width=800,resizable=yes,scrollbars=yes');win.focus();">Crop image with snipshot</a>'''%snipshot
+            tag = u'<img src="%s" width="%s" height="%s"/>' % (thumbnail, width, height)
         except:
-            tag = "<strong>No Thumbnail available</strong>"
+            crop_tag = u""
+            tag = u"<strong>No Thumbnail available</strong>"
         if value:
             file_name=str(value)
             output.append(u'<a href="%s" target="_blank">%s</a>' % (value.url, tag))
+            output.append(crop_tag)
         return mark_safe(u''.join(output))
 
 
