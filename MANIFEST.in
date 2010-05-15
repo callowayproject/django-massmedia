@@ -1,6 +1,0 @@
-recursive-include massmedia *.json *.js *.png *.swf *.html *.ajax *.py
-include requirements.txt
-include docs_src/Makefile
-include docs_src/make.bat
-recursive-include docs_src *.rst *.png *.html *.js *.css
-recursive-include docs *.png *.html *.js *.css

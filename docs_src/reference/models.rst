@@ -11,12 +11,11 @@ Models
    
    .. attribute:: title
       
-      A headline or short descriptive sentence. Used in creating the slug field.
-      *CharField*  * ``max_length`` - 255
+      ``CharField(max_length 255)`` A headline or short descriptive sentence. Used in creating the slug field.
 
    .. attribute:: slug
 
-      *SlugField* A variation of the title attribute that can be used in URLs. They must be unique.
+      ``SlugField`` A variation of the title attribute that can be used in URLs. They must be unique.
 
       ``unique=True``
 

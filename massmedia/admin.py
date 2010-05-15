@@ -15,7 +15,7 @@ import settings
 from forms import ImageCreationForm, VideoCreationForm, AudioCreationForm, \
     FlashCreationForm, DocumentCreationForm
 
-
+from templatetags.media_widgets import snipshot_url
 
 class AdminImageWidget(AdminFileWidget):
     def render(self, name, value, attrs=None):
@@ -24,6 +24,8 @@ class AdminImageWidget(AdminFileWidget):
             thumbnail = value.instance.thumbnail.url
             width = value.instance.thumb_width
             height = value.instance.thumb_height
+            snipshot = snipshot_url(value.instance)
+            crop_tag = '''<a class="addlink" href="#" onclick="var win = window.open('{% snipshot_url original %}','snipshot', 'height=500,width=800,resizable=yes,scrollbars=yes');win.focus();">Crop image with snipshot</a>'''
             tag = '<img src="%s" width="%s" height="%s"/>' % (thumbnail, width, height)
         except:
             tag = "<strong>No Thumbnail available</strong>"
