@@ -123,9 +123,19 @@ class Metadata():
 
 class MetadataJSONEncoder(simplejson.JSONEncoder):
     def default(self, obj):
-        if not isinstance(obj, Metadata):
-            return super(MetadataJSONEncoder, self).default(obj)
-        return obj.as_json()
+        value = obj
+        if isinstance(value, datetime.datetime):
+            return 'new Date(Date.UTC(%d,%d,%d,%d,%d,%d))'%(value.year, value.month, value.day,value.hour,value.minute,value.second)
+        elif isinstance(value, datetime.date):
+            return 'new Date(Date.UTC(%d,%d,%d))'%(value.year, value.month, value.day)
+        elif isinstance(value, time.struct_time):
+            return 'new Date(Date.UTC(%d,%d,%d,%d,%d,%d))'%(value.tm_year, value.tm_mon, value.tm_mday, value.tm_hour, value.tm_min, value.tm_sec)
+        elif isinstance(value, datetime.timedelta):
+            return str(value)
+        elif isinstance(value, Metadata):
+            return value.as_json()
+        else:
+            return super(MetadataJSONEncoder, self).default(value)
 
 class MetadataJSONDecoder(simplejson.JSONDecoder):
     def decode(self, json_str):

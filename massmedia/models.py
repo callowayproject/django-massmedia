@@ -430,7 +430,8 @@ class Collection(models.Model):
             if zip.testzip():
                 raise Exception('"%s" in the .zip archive is corrupt.' % zip)
             for filename in zip.namelist():
-                if filename.startswith('__'): # do not process meta files
+                if filename.startswith('__') or filename.startswith('.'):
+                    # do not process hidden or meta files
                     continue
                 data = zip.read(filename)
                 size = len(data)
@@ -456,7 +457,8 @@ class Collection(models.Model):
                     elif ext in appsettings.DOC_EXTS:
                         model = Document
                     else:
-                        raise TypeError, 'Unknown media extension %s'%ext
+                        continue
+                        #raise TypeError, 'Unknown media extension %s'%ext
                     try:
                         media = model.objects.get(slug=slug) #XXX
                     except model.DoesNotExist:

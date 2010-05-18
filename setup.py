@@ -12,7 +12,7 @@ except (IOError, OSError):
     reqs = ''
 
 setup(
-    name = "django-massmedia",
+    name = "massmedia",
     version = massmedia.get_version(),
     url = 'http://opensource.washingtontimes.com/projects/django-massmedia/',
     author = 'Justin Quick',

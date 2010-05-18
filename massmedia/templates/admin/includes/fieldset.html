@@ -18,7 +18,7 @@
               {% ifequal fieldset.name 'Content' %}
                 {% ifequal title 'Change image' %}
                 <div>{{ original.thumb|safe }}<br>
-                <a href="#" onclick="var win = window.open('{% snipshot_url original %}','snipshot', 'height=500,width=800,resizable=yes,scrollbars=yes');win.focus();">Do snipshot thingy</a>
+                <a href="#" onclick="var win = window.open('{% snipshot_url original %}','snipshot', 'height=500,width=800,resizable=yes,scrollbars=yes');win.focus();">Crop image with snipshot</a>
                 </div>
                 {% endifequal %}
               {% endifequal %}
