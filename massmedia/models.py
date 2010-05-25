@@ -223,12 +223,16 @@ class Media(models.Model):
         self.metadata = Metadata(data)
 
 class Image(Media):
-    file = models.ImageField(
+    """
+    We are using a File field instead of Image field because the Image field will 
+    cause a problem if the file doesn't exist and you merely access the record.
+    """
+    file = models.FileField( #ImageField(
         upload_to = appsettings.IMAGE_UPLOAD_TO,
         blank = True, 
         null = True,
-        width_field='width',
-        height_field='height',
+        #width_field='width',
+        #height_field='height',
         storage=IMAGE_STORAGE())
     thumbnail = models.ImageField(
         upload_to = appsettings.THUMB_UPLOAD_TO,
