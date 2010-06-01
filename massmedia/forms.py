@@ -66,6 +66,8 @@ class ImageCreationForm(ContentCreationForm):
     
     
     def clean(self):
+        if (not self.cleaned_data.has_key('file') or not self.cleaned_data['file']) and not self.cleaned_data['external_url']:
+            raise forms.ValidationError("You must include either a file or external url")
         self.set_title_and_slug()
         return super(ImageCreationForm, self).clean()
 

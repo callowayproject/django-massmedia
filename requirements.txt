@@ -1,5 +1,4 @@
 django-tagging
-sorl-thumbnail
 
 # Optional for IPTC metadata extraction
 # Also available at http://opensource.washingtontimes.com/static/dist/IPTCInfo-1.9.5-1.tar.gz#md5=4d08413881d9bdb3c9c9466bb2bee7a4
