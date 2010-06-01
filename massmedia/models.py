@@ -441,7 +441,7 @@ class Collection(models.Model):
                 size = len(data)
                 if size:
                     title,ext = os.path.splitext(os.path.basename(filename))
-                    ext = ext[1:]
+                    ext = ext[1:].lower()
                     slug = slugify(title)
                     if ext in appsettings.IMAGE_EXTS:
                         model = Image
@@ -472,7 +472,10 @@ class Collection(models.Model):
                         CollectionRelation(content_object=media,collection=self).save()
             zip.close()
             os.remove(self.zip_file.path)
-            self.zip_file.delete()
+            try:
+                self.zip_file.delete()
+            except ValueError:
+                pass
             super(Collection, self).save(*(), **{})
 
 collection_limits = {'model__in':('image','audio','video','flash')}
