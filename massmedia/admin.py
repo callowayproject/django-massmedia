@@ -79,7 +79,7 @@ class GenericCollectionInlineModelAdmin(admin.options.InlineModelAdmin):
         return result
 
 class GenericCollectionTabularInline(GenericCollectionInlineModelAdmin):
-    template = 'admin/edit_inline/gen_coll_tabular.html'
+    template = 'admin/edit_inlines/gen_coll_tabular.html'
 
 class MediaAdmin(admin.ModelAdmin):
     fieldsets = (
