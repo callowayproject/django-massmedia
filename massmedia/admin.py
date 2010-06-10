@@ -39,29 +39,12 @@ class AdminImageWidget(AdminFileWidget):
 class AdminExternalURLWidget(AdminURLFieldWidget):
     def render(self, name, value, attrs=None):
         output = []
-        print name, value, attrs, dir(self)
-        try:
-            thumbnail = value.instance.thumbnail.url
-            width = value.instance.thumb_width
-            height = value.instance.thumb_height
-            tag = u'<img src="%s" width="%s" height="%s"/>' % (thumbnail, width, height)
-        except:
-            tag = u"<strong>No Thumbnail available</strong>"
+        tag = u"<strong>No Thumbnail available</strong>"
         if value:
             file_name=str(value)
             output.append(u'<a href="%s" target="_blank">%s</a>' % (value, tag))
             output.append(u'<br /><a href="%s" target="_blank">%s</a>' % (value, value))
         return mark_safe(u''.join(output))
-    
-    def value_from_datadict(self, data, files, name):
-        print "value_from_datadict",data
-        return {
-            'url': data.get(name, None), 
-            'thumbnail': data.get('thumbnail', None),
-            'thumb_width': data.get('thumb_width', None),
-            'thumb_height': data.get('thumb_height', None)
-        }
-
 
 class GenericCollectionInlineModelAdmin(admin.options.InlineModelAdmin):
     ct_field = "content_type"
