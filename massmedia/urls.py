@@ -28,6 +28,9 @@ def generic_wrapper(request, *args, **kwargs):
             kwargs['extra_context'].update({'mediatype': mediatype})
         else:
             kwargs['extra_context'] = {'mediatype': mediatype}
+        if 'enlarge' in kwargs:
+            kwargs.pop('enlarge')
+            kwargs['template_name'] = 'massmedia/enlarge_%s_detail.html' % mediatype
         if 'slug' in kwargs or 'object_id' in kwargs:
             return object_detail(request, queryset, *args, **kwargs)
         if 'template_name' not in kwargs:
@@ -48,6 +51,14 @@ urlpatterns = patterns('',
         r'^grabvideo/$',
         'massmedia.views.grab_categorized',
         name="massmedia_grab_categorized"),
+    url(
+        r'^(?P<enlarge>enlarge)/(?P<mediatype>\w+)/(?P<slug>[-\w]+)/$',
+        generic_wrapper,
+        name="massmedia_enlarge_detail"),
+    url(
+        r'^(?P<enlarge>enlarge)/(?P<mediatype>\w+)/(?P<object_id>\d+)/$',
+        generic_wrapper,
+        name="massmedia_enlarge_detail_pk"),
     url(
         r'^(?P<mediatype>\w+)/$',
         generic_wrapper,
