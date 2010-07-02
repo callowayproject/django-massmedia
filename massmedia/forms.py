@@ -56,7 +56,8 @@ class ImageCreationForm(ContentCreationForm):
         
         if not self.cleaned_data['slug']:
             slug = slugify(self.cleaned_data['title'])
-        
+        else:
+            slug = self.cleaned_data['slug']
         try:
             Image.objects.get(slug=slug)
             slug = "%s_%d" % (slug, datetime.datetime.now().toordinal())

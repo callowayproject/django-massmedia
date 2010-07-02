@@ -311,7 +311,7 @@ class Image(Media):
         tags.extend(self.metadata["15"] or [])
         tags.extend(self.metadata["20"] or [])
         tags.extend(self.metadata["25"] or [])
-        self.categories = ", ".join(tags)
+        self.categories = ", ".join([x[:50] for x in tags])
 
 class Embed(Media):
     code = models.TextField(help_text='Embed HTML source code',blank=True,null=True)
