@@ -11,6 +11,17 @@
 			margin-bottom: 5px;
 		}
 	</style>
+{% ifequal cl.params.pop '2' %}
+
+<script type="text/javascript" src="{% url massmedia.views.tinymcepopup_url %}"></script>
+{% if STATIC_URL %}
+<script type="text/javascript" src="{{ STATIC_URL }}massmedia/js/mm_tinymce.js">
+{% else %}
+<script type="text/javascript" src="{{ MEDIA_URL }}massmedia/js/mm_tinymce.js">
+{% endif %}
+
+</script>
+{% endifequal %}
 {% endblock %}
 {% block result_list %}
     {% if action_form and actions_on_top and cl.full_result_count %}{% admin_actions %}{% endif %}
