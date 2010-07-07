@@ -84,6 +84,46 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'massmedia',
     'tagging',
+    'django.contrib.flatpages',
+    'tinymce',
+    'testapp',
 )
 
 MMEDIA_IMAGE_STORAGE = 'media_storage.MediaStorage'
+
+TINYMCE_DEFAULT_CONFIG = {
+    'mode': "textareas",
+    'theme': "advanced",
+    'language': "en",
+    'skin': "o2k7",
+    'dialog_type': "modal",
+    'object_resizing': True,
+    'cleanup_on_startup': True,
+    'forced_root_block': "p",
+    'remove_trailing_nbsp': True,
+    'theme_advanced_toolbar_location': "top",
+    'theme_advanced_toolbar_align': "left",
+    'theme_advanced_statusbar_location': "none",
+    'theme_advanced_buttons1': "formatselect,bold,italic,underline,bullist,numlist,undo,redo,link,unlink,image,code,fullscreen,pasteword,media,charmap",
+    'theme_advanced_buttons2': "",
+    'theme_advanced_buttons3': "",
+    'theme_advanced_path': False,
+    'theme_advanced_blockformats': "p,h2,h3,h4,h5,h6",
+    'width': '700',
+    'height': '200',
+    'plugins': "advimage,advlink,fullscreen,visualchars,paste,media,template,searchreplace",
+    'advimage_update_dimensions_onchange': True,
+    'file_browser_callback': "myFileBrowser",
+    'relative_urls': False,
+    'valid_elements' : "" +"-p," + "a[href|target=_blank|class]," +"-strong/-b," +"-em/-i," +"-u," + "-ol," + "-ul," + "-li," + "br," + "img[class|src|alt=|width|height]," + "-h2,-h3,-h4," + "-pre," +"-code," + "-div",
+    'extended_valid_elements': "" + 
+        "a[name|class|href|target|title|onclick]," + 
+        "img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]," + 
+        "br[clearfix]," + 
+        "-p[class<clearfix?summary?code]," + 
+        "h2[class<clearfix],h3[class<clearfix],h4[class<clearfix]," + 
+        "ul[class<clearfix],ol[class<clearfix]," + 
+        "div[class],"
+}
+TINYMCE_FILEBROWSER = True
+TINYMCE_JS_URL = os.path.join(MEDIA_URL, "js/tiny_mce/tiny_mce_src.js")
