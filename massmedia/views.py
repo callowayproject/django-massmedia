@@ -1,10 +1,12 @@
 from massmedia import models
-from django.template import RequestContext
-from django.shortcuts import render_to_response,get_object_or_404
-from django.core.xheaders import populate_xheaders
-from django.http import Http404,HttpResponse
+
 from django.contrib.contenttypes.models import ContentType
+from django.core.xheaders import populate_xheaders
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404,HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response,get_object_or_404
+from django.template import RequestContext
+from django.views.decorators.cache import cache_page
 
 def widget(request, id, type):
     try:
