@@ -101,7 +101,6 @@ def browse(request):
     from django.core import urlresolvers
     path = request.path.strip('/').split('/')
     if len(path) > 1:
-        print "I HAZ A PATH!!!!!!!! ", path[-1]
         return HttpResponse('You want an %s with an id of %s' % ('idk', path[-1]))
     if not request.GET.has_key('pop'):
         return HttpResponse('Incorrect parameters. Need pop=1')
