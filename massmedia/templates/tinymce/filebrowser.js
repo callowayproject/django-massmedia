@@ -6,7 +6,7 @@ function djangoFileBrowser (field_name, url, type, win) {
     var param1 = {
         file : cmsURL,
         title : 'Massmedia Image Browser',
-        width : 1053,  // Your dimensions may differ - toy around with them!
+        width : 900,  // Your dimensions may differ - toy around with them!
         height : 600,
         resizable : "yes",
         inline : "yes",  // This parameter only has an effect if you use the inlinepopups plugin!
