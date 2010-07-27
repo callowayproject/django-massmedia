@@ -1,39 +1,10 @@
-function myFileBrowser (field_name, url, type, win) {
-    // alert("Field_Name: " + field_name + "\nURL: " + url + "\nType: " + type + "\nWin: " + win); // debug/testing
-    
-    var cmsURL = window.location.toString();    // script URL - use an absolute path!
-    if (cmsURL.indexOf("?") < 0) {
-        cmsURL = cmsURL + "?type=" + type;
-    } else {
-        cmsURL = cmsURL + "&type=" + type;
-    }
-    
-    var param1 = {
-        file : cmsURL,
-        title : 'My File Browser',
-        width : 420,  // Your dimensions may differ - toy around with them!
-        height : 400,
-        resizable : "yes",
-        inline : "yes",  // This parameter only has an effect if you use the inlinepopups plugin!
-        close_previous : "no"
-    };
-    var param2 = {
-        window : win,
-        input : field_name,
-        editor_id: tinyMCE.selectedInstance.editorId
-    };
-    alert("I'm in myFileBrowser!");
-    tinyMCE.activeEditor.windowManager.open(param1, param2);
-    return false;
-}
-
 var FileBrowserDialogue = {
     init : function () {
         // remove tinymce stylesheet.
         var allLinks = document.getElementsByTagName("link");
         allLinks[allLinks.length-1].parentNode.removeChild(allLinks[allLinks.length-1]);
     },
-    fileSubmit : function (FileURL) {
+    fileSubmit : function (FileURL, caption, linkURL) {
         var URL = FileURL;
         var win = tinyMCEPopup.getWindowArg("window");
         
@@ -44,6 +15,8 @@ var FileBrowserDialogue = {
         if (win.ImageDialog){
             if (win.ImageDialog.getImageData)
                 win.ImageDialog.getImageData();
+            if (win.ImageDialog.setImageData)
+                win.ImageDialog.setImageData(caption, linkURL);
             if (win.ImageDialog.showPreviewImage)
                 win.ImageDialog.showPreviewImage(URL);
         }
