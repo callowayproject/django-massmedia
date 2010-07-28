@@ -1,5 +1,5 @@
 {% extends "admin/change_list.html" %}
-{% load massmedia_admin admin_list %}
+{% load massmedia_admin admin_list i18n %}
 {% block extrastyle %}
 {{block.super}}
 	<style type="text/css" media="screen">
@@ -12,17 +12,37 @@
 		}
 	</style>
 {% ifequal cl.params.pop '2' %}
-
 <script type="text/javascript" src="{% url massmedia.views.tinymcepopup_url %}"></script>
+<script type="text/javascript" charset="utf-8">
+function dismissAddAnotherPopup(win, newId, newRepr) {
+	win.close();
+	document.location.reload();
+}
+</script>
 {% if STATIC_URL %}
 <script type="text/javascript" src="{{ STATIC_URL }}massmedia/js/mm_tinymce.js">
 {% else %}
 <script type="text/javascript" src="{{ MEDIA_URL }}massmedia/js/mm_tinymce.js">
 {% endif %}
-
 </script>
 {% endifequal %}
 {% endblock %}
+{% block object-tools %}
+{% ifequal cl.params.pop '2' %}
+{% if has_add_permission %}
+  <ul class="object-tools">
+    <li>
+      <a href="{% url admin:massmedia_image_add %}{% if is_popup %}?_popup=1{% endif %}" class="addlink" target="_blank">
+        {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
+      </a>
+    </li>
+  </ul>
+{% endif %}
+{% else %}
+{{ block.super }}
+{% endifequal %}
+{% endblock %}
+
 {% block result_list %}
     {% if action_form and actions_on_top and cl.full_result_count %}{% admin_actions %}{% endif %}
     {% thumbnail_result_list cl %}
