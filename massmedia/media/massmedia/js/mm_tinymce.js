@@ -12,13 +12,13 @@ var FileBrowserDialogue = {
         win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = URL;
         
         // change width/height & show preview
-        if (win.ImageDialog){
-            if (win.ImageDialog.getImageData)
-                win.ImageDialog.getImageData();
-            if (win.ImageDialog.setImageData)
-                win.ImageDialog.setImageData(caption, linkURL);
-            if (win.ImageDialog.showPreviewImage)
-                win.ImageDialog.showPreviewImage(URL);
+        if (win.MMImageDialog){
+            if (win.MMImageDialog.getImageData)
+                win.MMImageDialog.getImageData();
+            if (win.MMImageDialog.setImageData)
+                win.MMImageDialog.setImageData(caption, linkURL);
+            if (win.MMImageDialog.showPreviewImage)
+                win.MMImageDialog.showPreviewImage(URL);
         }
         
         // close popup window
