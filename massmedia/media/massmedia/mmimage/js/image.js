@@ -5,6 +5,7 @@ var MMImageDialog = {
 		tinyMCEPopup.requireLangPack();
 
 		if (url = tinyMCEPopup.getParam("external_image_list_url")) document.write('<script language="javascript" type="text/javascript" src="' + tinyMCEPopup.editor.documentBaseURI.toAbsolute(url) + '"></script>');
+		this.use_transmogrify = tinyMCEPopup.getParam("use_transmogrify", false);
 	},
 
 	isNew: true,
@@ -102,7 +103,22 @@ var MMImageDialog = {
         }
         return null;
 	},
-
+    getImageUrl: function() {
+        var f = document.forms[0];
+        var link = f.elements.src.value;
+        var width = f.elements.width.value;
+        var height = f.elements.height.value;
+        if (this.use_transmogrify) {
+            link = link.replace(/_r(\d+x\d+|x\d+|\d+)/, '');
+            var sizeString = '_r' + width + 'x' + height;
+            var prefix = link.substring(0, link.length - 4);
+            var suffix = link.substring(link.length-4, link.length);
+            return  prefix + sizeString + suffix;
+        } else {
+            return f.elements.src.value;
+        }
+    },
+    
 	getCaption: function(el) {
 		// Given the container, return the <p> tag with the caption
         if (typeof(el) == "undefined") return null;
@@ -180,7 +196,7 @@ var MMImageDialog = {
 		var id = nl.id;
         var caption = nl.caption.value;
 		tinymce.extend(img_args, {
-			src: nl.src.value,
+			src: this.getImageUrl(),
 			width: nl.width.value,
 			height: nl.height.value,
 			alt: nl.alt.value,
