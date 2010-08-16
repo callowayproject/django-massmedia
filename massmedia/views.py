@@ -22,10 +22,11 @@ def widget(request, id, type):
 
 
 def list_by_collection_by_type(request, slug, type):
+    ctype = get_object_or_404(ContentType, name=type)
     return render_to_response('massmedia/list.html',{
-        'objects': [x.content_object for x in models.CollectionRelation.objects.all(
+        'objects': [x.content_object for x in models.CollectionRelation.objects.filter(
             collection=get_object_or_404(models.Collection, slug=slug),
-            content_type=ContentType.objects.get(name=type),
+            content_type=ctype,
         )]
     }, context_instance=RequestContext(request))
 
