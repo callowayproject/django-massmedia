@@ -20,7 +20,7 @@
 				ed.windowManager.open({
 					file : url + '/image.htm',
 					width : 480 + parseInt(ed.getLang('mmimage.delta_width', 0), 10),
-					height : 640 + parseInt(ed.getLang('mmimage.delta_height', 0), 10),
+					height : 480 + parseInt(ed.getLang('mmimage.delta_height', 0), 10),
 					inline : 1
 				}, {
 					plugin_url : url
