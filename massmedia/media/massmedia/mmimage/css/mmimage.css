@@ -11,3 +11,4 @@
 input {width: 280px;}
 #constrain, #onmousemovecheck {width:auto;}
 #id, #dir, #lang, #usemap, #longdesc {width:200px;}
+#mmimage fieldset {background: #fff;}

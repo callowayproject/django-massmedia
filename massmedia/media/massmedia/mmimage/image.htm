@@ -12,8 +12,6 @@
 </head>
 <body id="mmimage" style="display: none">
     <form onsubmit="MMImageDialog.insert();return false;" action="#"> 
-		<div class="panel_wrapper">
-			<div id="general_panel">
 				<fieldset>
 						<legend>{#mmimage_dlg.general}</legend>
 						<table class="properties">
@@ -98,14 +96,6 @@
 						<tr><td class="column1">&nbsp;</td><td>&nbsp;</td></tr>
 					</table>
 				</fieldset>
-
-
-				<fieldset>
-					<legend>{#mmimage_dlg.preview}</legend>
-					<div id="prev"></div>
-				</fieldset>
-			</div>
-		</div>
 
 		<div class="mceActionPanel">
 			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
