@@ -110,7 +110,12 @@ def thumbnails_for_result(cl, result, form):
                 attr = pk
             value = result.serializable_value(attr)
             result_id = repr(force_unicode(value))[1:]
-            yield mark_safe(u'<a href="%s"%s>%s</a>' % \
+            if cl.is_popup and cl.params['pop'] == u'2':
+                yield mark_safe(u'<a href="%s"%s>%s</a>' % \
+                ('#', (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\', \'%s\', \'%s\'); return false;"' % (result.media_url or '', result.caption or '', result.get_absolute_url())), conditional_escape(result_repr)))
+                #(url, (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\'); return false;"' % result.get_absolute_url() or ''), conditional_escape(result_repr)))
+            else:
+                yield mark_safe(u'<a href="%s"%s>%s</a>' % \
                 (url, (cl.is_popup and ' onclick="opener.dismissRelatedLookupPopup(window, %s); return false;"' % result_id or ''), conditional_escape(result_repr)))
         else:
             # By default the fields come from ModelAdmin.list_editable, but if we pull

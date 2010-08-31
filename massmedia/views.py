@@ -1,10 +1,12 @@
 from massmedia import models
-from django.template import RequestContext
-from django.shortcuts import render_to_response,get_object_or_404
-from django.core.xheaders import populate_xheaders
-from django.http import Http404,HttpResponse
+
 from django.contrib.contenttypes.models import ContentType
+from django.core.xheaders import populate_xheaders
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404,HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response,get_object_or_404
+from django.template import RequestContext
+from django.views.decorators.cache import cache_page
 
 def widget(request, id, type):
     try:
@@ -84,7 +86,8 @@ def grab_categorized(request):
     return render_to_response('massmedia/grab_list.html',{
         'videos': videos,
     }, context_instance=RequestContext(request))
-        
+
+
 def snipshot_callback(request, pk):
     from django.core.files.base import ContentFile
     from urllib import urlopen
@@ -92,3 +95,28 @@ def snipshot_callback(request, pk):
     if 'fileupload' in request.GET:
         img.file.save(img.file.path, ContentFile(urlopen(request.GET['fileupload']).read()))
     return HttpResponse(str(img.file.size))
+
+
+def browse(request):
+    from django.core import urlresolvers
+    path = request.path.strip('/').split('/')
+    if len(path) > 1:
+        return HttpResponse('You want an %s with an id of %s' % ('idk', path[-1]))
+    if not request.GET.has_key('pop'):
+        return HttpResponse('Incorrect parameters. Need pop=1')
+    getcopy = request.GET.copy()
+    if 'type' in getcopy:
+        get_type = getcopy['type']
+        del getcopy['type']
+    else:
+        get_type = 'image'
+    request.GET = getcopy
+    view_func, args, kwargs = urlresolvers.resolve(urlresolvers.reverse("admin:massmedia_%s_changelist" % get_type))
+    return view_func(request)
+
+def tinymcepopup_url(request):
+    from django.conf import settings
+    import os
+    tinymce_root = os.path.join(getattr(settings, 'TINYMCE_JS_ROOT', os.path.join(settings.MEDIA_ROOT, 'js', 'tiny_mce')), 'tiny_mce_popup.js')
+    
+    return HttpResponse(open(tinymce_root, 'r').read(), mimetype="application/javascript")

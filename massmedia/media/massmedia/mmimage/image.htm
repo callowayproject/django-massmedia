@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{#mmimage_dlg.dialog_title}</title>
+	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="../../utils/mctabs.js"></script>
+	<script type="text/javascript" src="../../utils/form_utils.js"></script>
+	<script type="text/javascript" src="../../utils/validate.js"></script>
+	<script type="text/javascript" src="../../utils/editable_selects.js"></script>
+	<script type="text/javascript" src="js/image.js"></script>
+	<link href="css/mmimage.css" rel="stylesheet" type="text/css" />
+</head>
+<body id="mmimage" style="display: none">
+    <form onsubmit="MMImageDialog.insert();return false;" action="#"> 
+		<fieldset>
+				<legend>{#mmimage_dlg.general}</legend>
+				<table class="properties">
+					<tr>
+						<td class="column1"><label id="srclabel" for="src">{#mmimage_dlg.src}</label></td>
+						<td colspan="2"><table border="0" cellspacing="0" cellpadding="0">
+							<tr> 
+							  <td><input name="src" type="text" id="src" value="" class="mceFocus" onchange="MMImageDialog.showPreviewImage(this.value);" /></td> 
+							  <td id="srcbrowsercontainer">&nbsp;</td>
+							</tr>
+						  </table></td>
+					</tr>
+					<tr>
+						<td class="column1"><label id="linklabel" for="linkurl">{#mmimage_dlg.link}</label></td>
+						<td colspan="2"><input id="linkurl" name="linkurl" type="text" value="" /></td>
+					</tr>
+					<tr> 
+						<td class="column1"><label id="altlabel" for="alt">{#mmimage_dlg.alt}</label></td> 
+						<td colspan="2"><input id="alt" name="alt" type="text" value="" /></td> 
+					</tr> 
+					<tr> 
+						<td class="column1"><label id="titlelabel" for="title">{#mmimage_dlg.title}</label></td> 
+						<td colspan="2"><input id="title" name="title" type="text" value="" /></td> 
+					</tr>
+					<tr>
+						<td class="column1"><label id="captionlabel" for="caption">{#mmimage_dlg.caption}</label></td>
+						<td colspan="2"><textarea name="caption" id="caption" rows="8" cols="50"></textarea></td>
+					</tr>
+				</table>
+		</fieldset>
+
+		<fieldset>
+			<legend>{#mmimage_dlg.tab_appearance}</legend>
+
+			<table border="0" cellpadding="4" cellspacing="0">
+				<tr>
+					<td class="column1"><label id="classeslabel" for="classes">{#mmimage_dlg.classes}</label></td> 
+					<td colspan="2"><input id="classes" name="classes" type="text" value="" /></td> 
+				</tr>
+
+				<tr> 
+					<td class="column1"><label id="alignlabel" for="align">{#mmimage_dlg.align}</label></td> 
+					<td><select id="align" name="align" onchange="MMImageDialog.updateStyle('align');MMImageDialog.changeAppearance();"> 
+							<option value="">{#not_set}</option> 
+							<option value="left">{#mmimage_dlg.align_left}</option>
+							<option value="right">{#mmimage_dlg.align_right}</option>
+						</select> 
+					</td>
+					<td rowspan="6" valign="top">
+						<div class="alignPreview">
+							<img id="alignSampleImg" src="img/sample.gif" alt="{#mmimage_dlg.example_img}" />
+							Lorem ipsum, Dolor sit amet, consectetuer adipiscing loreum ipsum edipiscing elit, sed diam
+							nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Loreum ipsum
+							edipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
+							erat volutpat.
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="column1"><label id="widthlabel" for="width">{#mmimage_dlg.dimensions}</label></td>
+					<td class="nowrap">
+						<input name="width" type="text" id="width" value="" size="5" maxlength="5" class="size" onchange="MMImageDialog.changeHeight();" /> x 
+						<input name="height" type="text" id="height" value="" size="5" maxlength="5" class="size" onchange="MMImageDialog.changeWidth();" /> px
+					</td>
+				</tr>
+
+				<tr>
+					<td>&nbsp;</td>
+					<td><table border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><input id="constrain" type="checkbox" name="constrain" class="checkbox" /></td>
+								<td><label id="constrainlabel" for="constrain">{#mmimage_dlg.constrain_proportions}</label></td>
+							</tr>
+						</table></td>
+				</tr>
+				<tr>
+					<td class="column1"><label id="idlabel" for="id">{#mmimage_dlg.id}</label></td> 
+					<td><input id="id" name="id" type="text" value="" /></td> 
+				</tr>
+				<tr><td class="column1">&nbsp;</td><td>&nbsp;</td></tr>
+				<tr><td class="column1">&nbsp;</td><td>&nbsp;</td></tr>
+			</table>
+		</fieldset>
+
+		<div class="mceActionPanel">
+			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+			<input type="submit" id="insert" name="insert" value="{#insert}" />
+		</div>
+    </form>
+</body> 
+</html> 

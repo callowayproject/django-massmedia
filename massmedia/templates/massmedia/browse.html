@@ -1,0 +1,6 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+{% for item in objs %}
+	{{item.render_thumb|safe}}<br />
+{% endfor %}
+{% endblock %}
