@@ -1,3 +1,4 @@
+import sys
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -42,6 +43,7 @@ try:
 except ImportError:
     from PIL import Image as PilImage
 
+out,err = sys.stdout,sys.stderr
 
 try:
     from hachoir_core.error import HachoirError
@@ -52,6 +54,7 @@ try:
 except ImportError:
     extract_metadata = False
 
+sys.stdout,sys.stderr = out,err
 
 IMAGE_STORAGE = get_storage_class(appsettings.IMAGE_STORAGE)
 VIDEO_STORAGE = get_storage_class(appsettings.VIDEO_STORAGE)
