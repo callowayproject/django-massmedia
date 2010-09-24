@@ -1,3 +1,4 @@
+# Optional
 django-tagging
 
 # Optional for IPTC metadata extraction
