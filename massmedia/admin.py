@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin.widgets import AdminFileWidget, AdminURLFieldWidget
 from django.contrib.contenttypes.models import ContentType
+from django.http import HttpResponse
 from django import template
 from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
@@ -179,6 +180,21 @@ class ImageAdmin(MediaAdmin):
             request = kwargs.pop('request')
             return db_field.formfield(**kwargs)
         return super(ImageAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+    
+    def response_add(self, request, obj, post_url_continue='../%s/'):
+        """
+        Determines the HttpResponse for the add_view stage.
+        
+        Returns a different result only if pop=2
+        """
+        if request.GET.has_key('pop'):
+            pk_value = obj._get_pk_val()
+            return HttpResponse('<script type="text/javascript">opener.myDismissAddAnotherPopup(window, "%s", "%s");</script>' % \
+                # escape() calls force_unicode.
+                (escape(pk_value), escape(obj)))
+        else:
+            return super(ImageAdmin, self).response_add(request, obj, post_url_continue)
+    
 
 class VideoAdmin(MediaAdmin):
     list_display = ('title','thumb','author_name','mime_type','public','creation_date')

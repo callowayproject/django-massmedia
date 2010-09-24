@@ -33,10 +33,11 @@ try:
 except ImportError:
     iptc = 0
 
-try:
+if tagging in settings.INSTALLED_APPS:
     from tagging.fields import TagField
-except ImportError:
-    raise ImproperlyConfigured('You must have django-tagging installed!')
+    HAS_TAGGING = True
+else:
+    HAS_TAGGING = False
         
 try:
     import Image as PilImage
@@ -85,7 +86,8 @@ class Media(models.Model):
     caption = models.TextField(blank=True)
     metadata = SerializedObjectField(blank=True, encoder=MetadataJSONEncoder, decoder=MetadataJSONDecoder)
     site = models.ForeignKey(Site, related_name='%(class)s_site')
-    categories = TagField(blank=True,null=True)
+    if HAS_TAGGING:
+        categories = TagField(blank=True,null=True)
     reproduction_allowed = models.BooleanField("we have reproduction rights for this media", default=True)
     public = models.BooleanField(help_text="this media is publicly available", default=True)
     external_url = models.URLField(blank=True,null=True,help_text="If this URLField is set, the media will be pulled externally")
@@ -353,7 +355,8 @@ class GrabVideo(Video):
     asset_id = models.CharField(max_length=255,help_text='Grab video asset ID (the `a` parameter)')
     layout_id = models.CharField(max_length=255,help_text='Grab video asset ID (the `m` parameter)')
     
-    keywords = TagField(null=True,blank=True)
+    if HAS_TAGGING:
+        keywords = TagField(null=True,blank=True)
     
     def save(self, *a, **kw):
         if self.asset_id and len(self.asset_id) and not self.asset_id[0] in 'PV':
@@ -412,7 +415,9 @@ class Collection(models.Model):
                         help_text='Select a .zip file of media to upload into a the Collection.')
     public = models.BooleanField(help_text="this collection is publicly available", default=True)
     site = models.ForeignKey(Site)
-    categories = TagField(null=True,blank=True)
+    
+    if HAS_TAGGING:
+        categories = TagField(null=True,blank=True)
     
     objects = PublicMediaManager()
     
