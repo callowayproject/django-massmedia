@@ -33,7 +33,7 @@ try:
 except ImportError:
     iptc = 0
 
-if tagging in settings.INSTALLED_APPS:
+if 'tagging' in settings.INSTALLED_APPS:
     from tagging.fields import TagField
     HAS_TAGGING = True
 else:
