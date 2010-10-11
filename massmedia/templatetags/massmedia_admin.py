@@ -14,6 +14,8 @@ import datetime
 
 register = Library()
 
+quo_esc = lambda x: x.replace("'", r"\'")
+
 def thumbnails_for_result(cl, result, form):
     """
     Basically does the same thing as django's items_for_result, but makes all the
@@ -112,7 +114,7 @@ def thumbnails_for_result(cl, result, form):
             result_id = repr(force_unicode(value))[1:]
             if cl.is_popup and cl.params['pop'] == u'2':
                 yield mark_safe(u'<a href="%s"%s>%s</a>' % \
-                ('#', (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\', \'%s\', \'%s\'); return false;"' % (result.media_url or '', result.caption or '', result.get_absolute_url())), conditional_escape(result_repr)))
+                ('#', (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\', \'%s\', \'%s\'); return false;"' % (result.media_url or '', quo_esc(result.caption) or '', result.get_absolute_url())), conditional_escape(result_repr)))
                 #(url, (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\'); return false;"' % result.get_absolute_url() or ''), conditional_escape(result_repr)))
             else:
                 yield mark_safe(u'<a href="%s"%s>%s</a>' % \
