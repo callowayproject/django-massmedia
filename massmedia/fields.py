@@ -25,7 +25,10 @@ class SerializedObjectField(models.TextField):
     def get_db_prep_save(self, value):
         if value is not None:# and not isinstance(value, SerializedObject):
             if self.encoder:
-                value = self.encoder().encode(value)
+                try:
+                    value = self.encoder().encode(value)
+                except UnicodeDecodeError:
+                    return '{}'
             else:
                 value = dumps(value)
         return str(value)
