@@ -219,6 +219,9 @@ class Media(models.Model):
         except (InputStreamError, HachoirError):
             return
         data = dict([(x.description, value_or_list([item.value for item in x.values])) for x in sorted(metadata) if x.values])
+        for key, val in data.items():
+            if isinstance(val, basestring):
+                data[key] = val.encode('latin-1').decode('cp1252')
         
         if is_image(path) and iptc:
             try:
