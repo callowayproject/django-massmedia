@@ -75,15 +75,37 @@ class ImageCreationForm(ContentCreationForm):
 class VideoCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
         model = Video
+    
+    def clean(self):
+        if (not self.cleaned_data.has_key('file') or not self.cleaned_data['file']) and not self.cleaned_data['external_url']:
+            raise forms.ValidationError("You must include either a file or external url")
+        return super(VideoCreationForm, self).clean()
+    
 
 class AudioCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
         model = Audio
-
+    
+    def clean(self):
+        if (not self.cleaned_data.has_key('file') or not self.cleaned_data['file']) and not self.cleaned_data['external_url']:
+            raise forms.ValidationError("You must include either a file or external url")
+        return super(AudioCreationForm, self).clean()
+    
 class FlashCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
         model = Flash
+    
+    def clean(self):
+        if (not self.cleaned_data.has_key('file') or not self.cleaned_data['file']) and not self.cleaned_data['external_url']:
+            raise forms.ValidationError("You must include either a file or external url")
+        return super(FlashCreationForm, self).clean()
+    
 
 class DocumentCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
         model = Document
+    
+    def clean(self):
+        if (not self.cleaned_data.has_key('file') or not self.cleaned_data['file']) and not self.cleaned_data['external_url']:
+            raise forms.ValidationError("You must include either a file or external url")
+        return super(DocumentCreationForm, self).clean()
