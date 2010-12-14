@@ -225,7 +225,9 @@ class Media(models.Model):
         
         if is_image(path) and iptc:
             try:
-                data.update(IPTCInfo(path).__dict__['_data'])
+                for key, val in IPTCInfo(path).__dict__['_data']:
+                    if isinstance(val, basestring):
+                        data[key] = val.encode('latin-1', 'ignore').decode('cp1252', 'ignore')
             except:
                 pass
         self.metadata = Metadata(data)
