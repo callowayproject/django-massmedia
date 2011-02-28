@@ -1,4 +1,5 @@
 import sys
+from time import strftime
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -65,6 +66,21 @@ DOC_STORAGE  = get_storage_class(appsettings.DOC_STORAGE)
 
 is_image = lambda s: os.path.splitext(s)[1][1:] in appsettings.IMAGE_EXTS
 value_or_list = lambda x: len(x) == 1 and x[0] or x
+
+def custom_upload_to(prefix_path):
+    """ Clean the initial file name and build a destination path based settings as prefix_path"""
+    def upload_callback(instance, filename):
+        #-- Split and clean the filename with slugify
+        filename = os.path.basename(filename)
+        name, dot, extension = filename.rpartition('.')
+        slug = slugify(name)
+        clean_filename = '%s.%s' % (slug, extension.lower())
+        #-- Build a destination path with previous cleaned string.
+        destination_path = os.path.join(strftime(prefix_path), clean_filename)
+
+        return destination_path
+
+    return upload_callback
 
 class PublicMediaManager(CurrentSiteManager):
     def __init__(self):
@@ -236,14 +252,14 @@ class Image(Media):
     cause a problem if the file doesn't exist and you merely access the record.
     """
     file = models.FileField( #ImageField(
-        upload_to = appsettings.IMAGE_UPLOAD_TO,
+        upload_to =  custom_upload_to(appsettings.IMAGE_UPLOAD_TO),
         blank = True, 
         null = True,
         #width_field='width',
         #height_field='height',
         storage=IMAGE_STORAGE())
     thumbnail = models.ImageField(
-        upload_to = appsettings.THUMB_UPLOAD_TO,
+        upload_to = custom_upload_to(appsettings.THUMB_UPLOAD_TO),
         blank = True,
         null = True,
         width_field = 'thumb_width',
@@ -330,7 +346,7 @@ class Embed(Media):
 
 class Video(Media):
     file = models.FileField(
-        upload_to = appsettings.VIDEO_UPLOAD_TO,
+        upload_to = custom_upload_to(appsettings.VIDEO_UPLOAD_TO),
         blank = True, 
         null = True,
         storage=VIDEO_STORAGE())
@@ -369,7 +385,7 @@ class GrabVideo(Video):
 
 class Audio(Media):
     file = models.FileField(
-        upload_to = appsettings.AUDIO_UPLOAD_TO,
+        upload_to = custom_upload_to(appsettings.AUDIO_UPLOAD_TO),
         blank = True, 
         null = True,
         storage=AUDIO_STORAGE())
@@ -384,7 +400,7 @@ class Audio(Media):
 
 class Flash(Media):
     file = models.FileField(
-        upload_to = appsettings.FLASH_UPLOAD_TO,
+        upload_to = custom_upload_to(appsettings.FLASH_UPLOAD_TO),
         blank = True, 
         null = True,
         storage=FLASH_STORAGE())
@@ -400,10 +416,14 @@ class Flash(Media):
     
 class Document(Media):
     file = models.FileField(
-        upload_to = appsettings.DOC_UPLOAD_TO,
+        upload_to = custom_upload_to(appsettings.DOC_UPLOAD_TO),
         blank = True, 
         null = True,
         storage=DOC_STORAGE())
+    
+    class Meta:
+        verbose_name="document"
+        verbose_name_plural="documents"
     
     @property
     def media_url(self):
@@ -489,7 +509,7 @@ class Collection(models.Model):
                 pass
             super(Collection, self).save(*(), **{})
 
-collection_limits = {'model__in':('image','audio','video','flash')}
+collection_limits = {'model__in':('image','audio','video','document','flash')}
 class CollectionRelation(models.Model):
     collection = models.ForeignKey(Collection)
     content_type = models.ForeignKey(ContentType, limit_choices_to=collection_limits)
