@@ -68,7 +68,7 @@ is_image = lambda s: os.path.splitext(s)[1][1:] in appsettings.IMAGE_EXTS
 value_or_list = lambda x: len(x) == 1 and x[0] or x
 
 def custom_upload_to(prefix_path):
-    """ Clean the initial file name and build a destination path based settings as prefix_path"""
+    """ Clean the initial file name and build a destination path based on settings as prefix_path"""
     def upload_callback(instance, filename):
         #-- Split and clean the filename with slugify
         filename = os.path.basename(filename)
