@@ -1,0 +1,166 @@
+# French translation for django-massmedia.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <franckbret@gmail.com>, 2011.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-02-28 19:23+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+
+#: admin.py:33 admin.py:43
+msgid "<strong>No Thumbnail available</strong>"
+msgstr "<strong>Pas de vignettes disponible</strong>"
+
+#: admin.py:73 admin.py:85 admin.py:166 admin.py:205 admin.py:219
+msgid "Content"
+msgstr "Contenu"
+
+#: admin.py:74 admin.py:206
+msgid "Credit"
+msgstr "Crédits"
+
+#: admin.py:75 admin.py:207
+msgid "Metadata"
+msgstr "Meta-données"
+
+#: admin.py:76 admin.py:208
+msgid "Connections"
+msgstr "Visibilité"
+
+#: admin.py:77 admin.py:209
+msgid "Widget"
+msgstr ""
+
+#: admin.py:78 admin.py:210
+msgid "Advanced options"
+msgstr "Options avancées"
+
+#: admin.py:86 admin.py:167 admin.py:220
+msgid "Rights"
+msgstr "Droits"
+
+#: admin.py:87 admin.py:168 admin.py:221
+msgid "Additional Info"
+msgstr "Informations complémentaires"
+
+#: admin.py:233
+msgid "Grab"
+msgstr ""
+
+#: models.py:108
+msgid "we have reproduction rights for this media"
+msgstr "nous possédons les droits de reproduction pour ce média"
+
+#: models.py:109
+msgid "this media is publicly available"
+msgstr "ce média est disponible publiquement"
+
+#: models.py:110
+msgid "If this URLField is set, the media will be pulled externally"
+msgstr "Si ce champs d'Url est renseigné, le media sera directement rendu via son Url externe"
+
+#: models.py:112
+msgid "The width of the widget for the media"
+msgstr "La largeur du widget pour ce média"
+
+#: models.py:113
+msgid "The height of the widget for the media"
+msgstr "La hauteur du widget pour ce média"
+
+#: models.py:116
+msgid ""
+"The template name used to generate the widget (defaults to mime_type layout)"
+msgstr "Le nom du template utilisé pour généré ce widget (Par défaut mime_type layout)"
+
+#: models.py:158
+msgid "No Thumbnail Available"
+msgstr "Pas de vignette disponible"
+
+#: models.py:160 models.py:362
+msgid "Thumbnail"
+msgstr "Vignette"
+
+#: models.py:196
+#, python-format
+msgid "Can't find a template to render the media. Looking in %s"
+msgstr "Impossible de trouver un modèle pour afficher ce média. En regardant dans %s"
+
+#: models.py:342
+msgid "Embed HTML source code"
+msgstr "Incorporer du code source HTML"
+
+#: models.py:374
+msgid "Grab video asset ID (the `a` parameter)"
+msgstr ""
+
+#: models.py:375
+msgid "Grab video asset ID (the `m` parameter)"
+msgstr ""
+
+#: models.py:394
+msgid "audio clip"
+msgstr "extrait audio"
+
+#: models.py:395
+msgid "audio clips"
+msgstr "extraits audio"
+
+#: models.py:410
+msgid "SWF File"
+msgstr "fichier Swf"
+
+#: models.py:411
+msgid "SWF Files"
+msgstr "fichiers Swf"
+
+#: models.py:425
+msgid "Document"
+msgstr ""
+
+#: models.py:426
+msgid "Documents"
+msgstr ""
+
+#: models.py:437
+msgid "Media files in a .zip"
+msgstr "Fichiers media dans un .zip"
+
+#: models.py:438
+msgid "Select a .zip file of media to upload into a the Collection."
+msgstr "Sélectionnez un fichier .zip pour ajouter son contenu à la collection"
+
+#: models.py:439
+msgid "this collection is publicly available"
+msgstr "Cette collection est visible publiquement"
+
+#: models.py:466
+#, python-format
+msgid "\"%s\" in the .zip archive is corrupt."
+msgstr "\"%s\" dans l'archive .zip est corrompu."
+
+#: models.py:518
+msgid "Position"
+msgstr ""
+
+#: templates/admin/edit_inlines/gen_coll_tabular.html:15
+msgid "Delete?"
+msgstr "Supprimer ?"
+
+#: templates/admin/edit_inlines/gen_coll_tabular.html:27
+msgid "View on site"
+msgstr "Prévisualiser"
+
+#: templates/admin/massmedia/image/change_list.html:36
+#, python-format
+msgid "Add %(name)s"
+msgstr "Ajouter %(name)s"

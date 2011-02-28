@@ -2,10 +2,14 @@
 django-tagging
 
 # Optional for IPTC metadata extraction
-# Also available at http://opensource.washingtontimes.com/static/dist/IPTCInfo-1.9.5-1.tar.gz#md5=4d08413881d9bdb3c9c9466bb2bee7a4
-IPTCInfo
+# As IPTCInfo isn't reachable through Pypi on 2011/02/28 install through pip
+# pip install hg+http://bitbucket.org/gthomas/iptcinfo@iptcinfo-1.9.5-4
+# IPTCInfo
 
 # Optional for general metadata extraction
 hachoir-metadata
 hachoir-core
 hachoir-parser
+
+# Optional for south migration
+south
