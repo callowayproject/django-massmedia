@@ -105,15 +105,15 @@ class Media(models.Model):
     site = models.ForeignKey(Site, related_name='%(class)s_site')
     if HAS_TAGGING:
         categories = TagField(blank=True,null=True)
-    reproduction_allowed = models.BooleanField("we have reproduction rights for this media", default=True)
-    public = models.BooleanField(help_text="this media is publicly available", default=True)
-    external_url = models.URLField(blank=True,null=True,help_text="If this URLField is set, the media will be pulled externally")
+    reproduction_allowed = models.BooleanField(_("we have reproduction rights for this media"), default=True)
+    public = models.BooleanField(help_text=_("this media is publicly available"), default=True)
+    external_url = models.URLField(blank=True,null=True,help_text=_("If this URLField is set, the media will be pulled externally"))
     mime_type = models.CharField(max_length=150,blank=True,null=True)
-    width = models.IntegerField(blank=True, null=True, help_text="The width of the widget for the media")
-    height = models.IntegerField(blank=True, null=True, help_text="The height of the widget for the media")
+    width = models.IntegerField(blank=True, null=True, help_text=_("The width of the widget for the media"))
+    height = models.IntegerField(blank=True, null=True, help_text=_("The height of the widget for the media"))
     
     widget_template = models.CharField(max_length=255,blank=True,null=True,
-                help_text='The template name used to generate the widget (defaults to mime_type layout)')
+                help_text=_("The template name used to generate the widget (defaults to mime_type layout)"))
     
     objects = PublicMediaManager()
     
@@ -155,9 +155,9 @@ class Media(models.Model):
         super(Media, self).save(*args, **kwargs)
     
     def thumb(self):
-        return '<p>No Thumbnail Available</p>'
+        return "<p>" + _("No Thumbnail Available") + "</p>"
     thumb.allow_tags = True
-    thumb.short_description = 'Thumbnail'
+    thumb.short_description = _("Thumbnail")
     
     def get_mime_type(self):
         if self.mime_type:
@@ -193,7 +193,7 @@ class Media(models.Model):
                 try:
                     return select_template(lookups)
                 except TemplateDoesNotExist, e:
-                    raise TemplateDoesNotExist("Can't find a template to render the media. Looking in %s" % ", ".join(lookups))
+                    raise TemplateDoesNotExist(_("Can't find a template to render the media. Looking in %s") % ", ".join(lookups))
             else:
                 lookups = [
                     dict(mimetype=mime_type, name=template_type),
@@ -339,7 +339,7 @@ class Image(Media):
         self.categories = ", ".join([x[:50] for x in tags])
 
 class Embed(Media):
-    code = models.TextField(help_text='Embed HTML source code',blank=True,null=True)
+    code = models.TextField(help_text=_("Embed HTML source code"),blank=True,null=True)
 
     @property
     def media_url(self):
@@ -359,8 +359,7 @@ class Video(Media):
         else:
             return ''
     thumb.allow_tags = True
-    thumb.short_description = 'Thumbnail'
-    
+    thumb.short_description = _("Thumbnail")    
     @property
     def media_url(self):
         return self.external_url or self.file.url
@@ -372,8 +371,8 @@ class Video(Media):
 
 
 class GrabVideo(Video):
-    asset_id = models.CharField(max_length=255,help_text='Grab video asset ID (the `a` parameter)')
-    layout_id = models.CharField(max_length=255,help_text='Grab video asset ID (the `m` parameter)')
+    asset_id = models.CharField(max_length=255,help_text=_("Grab video asset ID (the `a` parameter)"))
+    layout_id = models.CharField(max_length=255,help_text=_("Grab video asset ID (the `m` parameter)"))
     
     if HAS_TAGGING:
         keywords = TagField(null=True,blank=True)
@@ -392,8 +391,8 @@ class Audio(Media):
         storage=AUDIO_STORAGE())
     
     class Meta:
-        verbose_name="audio clip"
-        verbose_name_plural="audio clips"
+        verbose_name=_("audio clip")
+        verbose_name_plural=_("audio clips")
     
     @property
     def media_url(self):
@@ -408,8 +407,8 @@ class Flash(Media):
     
     
     class Meta:
-        verbose_name="SWF File"
-        verbose_name_plural="SWF Files"
+        verbose_name=_("SWF File")
+        verbose_name_plural=_("SWF Files")
     
     @property
     def media_url(self):
@@ -423,8 +422,8 @@ class Document(Media):
         storage=DOC_STORAGE())
     
     class Meta:
-        verbose_name="document"
-        verbose_name_plural="documents"
+        verbose_name=_("Document")
+        verbose_name_plural=_("Documents")
     
     @property
     def media_url(self):
@@ -435,9 +434,9 @@ class Collection(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     caption = models.TextField(blank=True)
-    zip_file = models.FileField('Media files in a .zip', upload_to='tmp', blank=True,null=True,
-                        help_text='Select a .zip file of media to upload into a the Collection.')
-    public = models.BooleanField(help_text="this collection is publicly available", default=True)
+    zip_file = models.FileField(_("Media files in a .zip"), upload_to='tmp', blank=True,null=True,
+                        help_text=_("Select a .zip file of media to upload into a the Collection."))
+    public = models.BooleanField(help_text=_("this collection is publicly available"), default=True)
     site = models.ForeignKey(Site)
     
     if HAS_TAGGING:
@@ -464,7 +463,7 @@ class Collection(models.Model):
         if self.zip_file and os.path.isfile(self.zip_file.path):
             zip = zipfile.ZipFile(self.zip_file.path)
             if zip.testzip():
-                raise Exception('"%s" in the .zip archive is corrupt.' % zip)
+                raise Exception(_('"%s" in the .zip archive is corrupt.') % zip)
             for filename in zip.namelist():
                 if filename.startswith('__') or filename.startswith('.'):
                     # do not process hidden or meta files
@@ -516,7 +515,7 @@ class CollectionRelation(models.Model):
     content_type = models.ForeignKey(ContentType, limit_choices_to=collection_limits)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    position = models.PositiveSmallIntegerField(_("position"), default = 0, blank = True, null=True, editable=True)
+    position = models.PositiveSmallIntegerField(_("Position"), default = 0, blank = True, null=True, editable=True)
     
     class Meta:
         ordering = ['position']

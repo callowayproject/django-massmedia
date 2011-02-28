@@ -30,7 +30,7 @@ class AdminImageWidget(AdminFileWidget):
             tag = u'<img src="%s" width="%s" height="%s"/>' % (thumbnail, width, height)
         except:
             crop_tag = u""
-            tag = u"<strong>No Thumbnail available</strong>"
+            tag = _("<strong>No Thumbnail available</strong>")
         if value:
             file_name=str(value)
             output.append(u'<a href="%s" target="_blank">%s</a>' % (value.url, tag))
@@ -40,7 +40,7 @@ class AdminImageWidget(AdminFileWidget):
 class AdminExternalURLWidget(AdminURLFieldWidget):
     def render(self, name, value, attrs=None):
         output = []
-        tag = u"<strong>No Thumbnail available</strong>"
+        tag = _("<strong>No Thumbnail available</strong>")
         if value:
             file_name=str(value)
             output.append(u'<a href="%s" target="_blank">%s</a>' % (value, tag))
@@ -70,21 +70,21 @@ class GenericCollectionTabularInline(GenericCollectionInlineModelAdmin):
 class MediaAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields':('title','caption')}),
-        ('Content',{'fields':(('file','external_url'),)}),
-        ('Credit',{'fields':('author','one_off_author','reproduction_allowed')}),
-        ('Metadata',{'fields':('metadata','mime_type')}),
-        ('Connections',{'fields':('public','categories','site')}),
-        ('Widget',{'fields':('width','height')}),
-        ('Advanced options', {
+        (_("Content"),{'fields':(('file','external_url'),)}),
+        (_("Credit"),{'fields':('author','one_off_author','reproduction_allowed')}),
+        (_("Metadata"),{'fields':('metadata','mime_type')}),
+        (_("Connections"),{'fields':('public','categories','site')}),
+        (_("Widget"),{'fields':('width','height')}),
+        (_("Advanced options"), {
             'classes': ('collapse',),
             'fields': ('slug','widget_template',)
         }),
     )
     add_fieldsets = (
         (None, {'fields': ('title',)}),
-        ('Content',{'fields':('external_url','file', 'caption')}),
-        ('Rights', {'fields': ('public','reproduction_allowed')}),
-        ('Additional Info', {
+        (_("Content"),{'fields':('external_url','file', 'caption')}),
+        (_("Rights"), {'fields': ('public','reproduction_allowed')}),
+        (_("Additional Info"), {
             'classes': ('collapse',),
             'fields': ('slug', 'creation_date', 'site')
         })
@@ -163,9 +163,9 @@ class ImageAdmin(MediaAdmin):
     list_display_links = ('render_thumb','title',)
     list_editable = tuple()
     add_fieldsets = (
-        ('Content',{'fields':('external_url','file','caption')}),
-        ('Rights', {'fields': ('public','reproduction_allowed')}),
-        ('Additional Info', {
+        (_("Content"),{'fields':('external_url','file','caption')}),
+        (_("Rights"), {'fields': ('public','reproduction_allowed')}),
+        (_("Additional Info"), {
             'classes': ('collapse',),
             'fields': ('title', 'slug', 'creation_date', 'site')
         })
@@ -202,12 +202,12 @@ class VideoAdmin(MediaAdmin):
     list_display = ('title','thumb','author_name','mime_type','public','creation_date')
     fieldsets = (
         (None, {'fields':('title','caption')}),
-        ('Content',{'fields':(('file','external_url'),'thumbnail')}),
-        ('Credit',{'fields':('author','one_off_author','reproduction_allowed')}),
-        ('Metadata',{'fields':('metadata','mime_type')}),
-        ('Connections',{'fields':('public','categories','site')}),
-        ('Widget',{'fields':('width','height')}),
-        ('Advanced options', {
+        (_("Content"),{'fields':(('file','external_url'),'thumbnail')}),
+        (_("Credit"),{'fields':('author','one_off_author','reproduction_allowed')}),
+        (_("Metadata"),{'fields':('metadata','mime_type')}),
+        (_("Connections"),{'fields':('public','categories','site')}),
+        (_("Widget"),{'fields':('width','height')}),
+        (_("Advanced options"), {
             'classes': ('collapse',),
             'fields': ('slug','widget_template',)
         }),
@@ -216,9 +216,9 @@ class VideoAdmin(MediaAdmin):
     raw_id_fields = ('thumbnail',)
     add_fieldsets = (
         (None, {'fields': ('title', 'slug',)}),
-        ('Content',{'fields':(('external_url','file'), 'thumbnail')}),
-        ('Rights', {'fields': ('public','reproduction_allowed')}),
-        ('Additional Info', {
+        (_("Content"),{'fields':(('external_url','file'), 'thumbnail')}),
+        (_("Rights"), {'fields': ('public','reproduction_allowed')}),
+        (_("Additional Info"), {
             'classes': ('collapse',),
             'fields': ('creation_date', 'site')
         })
@@ -230,7 +230,7 @@ class GrabVideoAdmin(VideoAdmin):
     search_fields = ('title','caption','keywords')
     list_filter = VideoAdmin.list_filter + ('one_off_author',)
     list_display = ('asset_id','layout_id','title','thumb','one_off_author','public','creation_date','categories')
-    fieldsets = ( ('Grab',{'fields':('asset_id','layout_id','keywords')}), )
+    fieldsets = ( (_("Grab"),{'fields':('asset_id','layout_id','keywords')}), )
     for fieldset in VideoAdmin.fieldsets:
         if fieldset[0] == 'Content':
             continue
