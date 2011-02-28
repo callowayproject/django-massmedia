@@ -48,8 +48,10 @@ class AdminExternalURLWidget(AdminURLFieldWidget):
         return mark_safe(u''.join(output))
 
 class GenericCollectionInlineModelAdmin(admin.options.InlineModelAdmin):
-    ct_field = "content_type"
-    ct_fk_field = "object_id"
+    ct_field = 'content_type'
+    ct_fk_field = 'object_id'
+    fields = ('content_type', 'object_id', 'position')
+    extra = 3
     def __init__(self, parent_model, admin_site):
         super(GenericCollectionInlineModelAdmin, self).__init__(parent_model, admin_site)
         ctypes = ContentType.objects.all().order_by('id').values_list('id', 'app_label', 'model')
@@ -255,7 +257,11 @@ class CollectionAdmin(admin.ModelAdmin):
     search_fields = ('caption',)
     inlines = (CollectionInline,)
     class Media:
-        js = ('js/genericcollections.js',)
+        js = (
+            'http://code.jquery.com/jquery-1.4.2.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js',
+            'js/genericcollections.js',
+            )
 
 admin.site.register(Collection , CollectionAdmin)
 admin.site.register(Image, ImageAdmin)

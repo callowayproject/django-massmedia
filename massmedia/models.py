@@ -13,6 +13,7 @@ from django.core.files.storage import get_storage_class
 from django.template.loader import get_template, select_template
 from django.template import Template, Context, TemplateDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
+from django.utils.translation import ugettext as _
 
 from massmedia import settings as appsettings
 from fields import Metadata, SerializedObjectField, MetadataJSONEncoder, MetadataJSONDecoder
@@ -515,6 +516,10 @@ class CollectionRelation(models.Model):
     content_type = models.ForeignKey(ContentType, limit_choices_to=collection_limits)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
+    position = models.PositiveSmallIntegerField(_("position"), default = 0, blank = True, null=True, editable=True)
+    
+    class Meta:
+        ordering = ['position']
     
     def __unicode__(self):
         return unicode(self.content_object)
