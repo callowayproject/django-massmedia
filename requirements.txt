@@ -10,3 +10,6 @@ django-tagging
 hachoir-metadata
 hachoir-core
 hachoir-parser
+
+# Optional for south migration
+south

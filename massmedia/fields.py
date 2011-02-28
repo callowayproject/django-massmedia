@@ -146,3 +146,6 @@ class MetadataJSONDecoder(simplejson.JSONDecoder):
         md.from_json(json_str)
         return md
     
+from south.modelsinspector import add_introspection_rules
+add_introspection_rules([], ["^massmedia\.fields\.SerializedObjectField"])
+    

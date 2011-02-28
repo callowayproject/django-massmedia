@@ -529,3 +529,6 @@ class MediaTemplate(models.Model):
     
     def template(self):
         return Template(self.content)
+        
+        
+
