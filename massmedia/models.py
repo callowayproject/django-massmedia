@@ -68,6 +68,17 @@ DOC_STORAGE  = get_storage_class(appsettings.DOC_STORAGE)
 is_image = lambda s: os.path.splitext(s)[1][1:] in appsettings.IMAGE_EXTS
 value_or_list = lambda x: len(x) == 1 and x[0] or x
 
+def super_force_ascii(bad_string):
+    """
+    For unicode strings that are improperly encoded, 1. convert to latin-1 to 
+    make it a regular string, convert it back to a unicode string, assuming that
+    the string is encoded using default windows encoding. Then return an ascii
+    string using xmlcharrefreplace for oddball characters
+    """
+    bs1 = bad_string.encode('latin-1', 'ignore')
+    bs2 = bs1.decode('cp1252', 'ignore')
+    return bs2.encode('ascii', 'xmlcharrefreplace')
+
 def custom_upload_to(prefix_path):
     """ Clean the initial file name and build a destination path based on settings as prefix_path"""
     def upload_callback(instance, filename):
@@ -245,7 +256,7 @@ class Media(models.Model):
         
         for key, val in data.items():
             if isinstance(val, basestring):
-                data[key] = val.encode('latin-1', 'ignore').decode('cp1252', 'ignore').encode('ascii', 'xmlcharrefreplace')
+                data[key] = super_force_ascii(val)
         
         self.metadata = Metadata(data)
 
@@ -338,7 +349,8 @@ class Image(Media):
         tags.extend(self.metadata["15"] or [])
         tags.extend(self.metadata["20"] or [])
         tags.extend(self.metadata["25"] or [])
-        self.categories = ", ".join([x[:50] for x in tags])
+        categories = ", ".join([x[:50] for x in tags])
+        self.categories = super_force_ascii(categories)
 
 class Embed(Media):
     code = models.TextField(help_text=_("Embed HTML source code"),blank=True,null=True)
