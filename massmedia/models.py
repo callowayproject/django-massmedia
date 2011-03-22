@@ -75,9 +75,21 @@ def super_force_ascii(bad_string):
     the string is encoded using default windows encoding. Then return an ascii
     string using xmlcharrefreplace for oddball characters
     """
-    bs1 = bad_string.encode('latin-1', 'ignore')
-    bs2 = bs1.decode('cp1252', 'ignore')
-    return bs2.encode('ascii', 'xmlcharrefreplace')
+    output = u''
+    for char in bad_string:
+        try:
+            if ord(char) > 127:
+                if isinstance(char, unicode):
+                    bs1 = char.encode('latin-1', 'ignore')
+                else:
+                    bs1 = char
+                bs2 = bs1.decode('cp1252', 'ignore')
+                output = u"%s%s" % (output, bs2)
+            else:
+                output = u"%s%s" % (output, char)
+        except UnicodeDecodeError:
+            continue
+    return output.encode('ascii', 'xmlcharrefreplace')
 
 def custom_upload_to(prefix_path):
     """ Clean the initial file name and build a destination path based on settings as prefix_path"""
