@@ -68,6 +68,29 @@ DOC_STORAGE  = get_storage_class(appsettings.DOC_STORAGE)
 is_image = lambda s: os.path.splitext(s)[1][1:] in appsettings.IMAGE_EXTS
 value_or_list = lambda x: len(x) == 1 and x[0] or x
 
+def super_force_ascii(bad_string):
+    """
+    For unicode strings that are improperly encoded, 1. convert to latin-1 to 
+    make it a regular string, convert it back to a unicode string, assuming that
+    the string is encoded using default windows encoding. Then return an ascii
+    string using xmlcharrefreplace for oddball characters
+    """
+    output = u''
+    for char in bad_string:
+        try:
+            if ord(char) > 127:
+                if isinstance(char, unicode):
+                    bs1 = char.encode('latin-1', 'ignore')
+                else:
+                    bs1 = char
+                bs2 = bs1.decode('cp1252', 'ignore')
+                output = u"%s%s" % (output, bs2)
+            else:
+                output = u"%s%s" % (output, char)
+        except UnicodeDecodeError:
+            continue
+    return output.encode('ascii', 'xmlcharrefreplace')
+
 def custom_upload_to(prefix_path):
     """ Clean the initial file name and build a destination path based on settings as prefix_path"""
     def upload_callback(instance, filename):
@@ -236,15 +259,17 @@ class Media(models.Model):
         except (InputStreamError, HachoirError):
             return
         data = dict([(x.description, value_or_list([item.value for item in x.values])) for x in sorted(metadata) if x.values])
-        for key, val in data.items():
-            if isinstance(val, basestring):
-                data[key] = val.encode('latin-1', 'ignore').decode('cp1252', 'ignore')
         
         if is_image(path) and iptc:
             try:
                 data.update(IPTCInfo(path).__dict__['_data'])
             except:
                 pass
+        
+        for key, val in data.items():
+            if isinstance(val, basestring):
+                data[key] = super_force_ascii(val)
+        
         self.metadata = Metadata(data)
 
 class Image(Media):
@@ -336,7 +361,8 @@ class Image(Media):
         tags.extend(self.metadata["15"] or [])
         tags.extend(self.metadata["20"] or [])
         tags.extend(self.metadata["25"] or [])
-        self.categories = ", ".join([x[:50] for x in tags])
+        categories = ", ".join([x[:50] for x in tags])
+        self.categories = super_force_ascii(categories)
 
 class Embed(Media):
     code = models.TextField(help_text=_("Embed HTML source code"),blank=True,null=True)
