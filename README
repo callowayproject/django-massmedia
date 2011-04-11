@@ -1,5 +1,14 @@
 Django-MassMedia
 
+New in 0.8
+==========
+
+* New settings format
+	All settings are contained within ``MASSMEDIA_SETTINGS``\ , ``MASSMEDIA_STORAGE``\ , and ``MASSMEDIA_UPLOAD_TO``\ . Old settings will work, but will raise a deprecation warning.
+
+* New settings
+	``MASSMEDIA_SETTINGS["USE_TAGGING"]``
+
 Requires:
 	django-tagging
 
