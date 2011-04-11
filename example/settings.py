@@ -87,6 +87,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'tinymce',
     'testapp',
+    #'south',
 )
 
 MMEDIA_IMAGE_STORAGE = 'media_storage.MediaStorage'
