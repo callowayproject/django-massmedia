@@ -91,7 +91,7 @@ expected_widgets = """<a href="/media/audio/2009/Jan/14/04_California_Soul_Diplo
 class CollectionTestCase(unittest.TestCase):
     def setUp(self):
         shutil.copy(
-            os.path.join(settings.MEDIA_ROOT,'Archive.zip.test'),
+            os.path.join(settings.MEDIA_ROOT,'MWG_Test_Files.zip'),
             os.path.join(settings.MEDIA_ROOT,'Archive.zip')
         )
         site = Site.objects.create(domain='example.com',name='Example')
