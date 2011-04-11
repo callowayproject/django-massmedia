@@ -544,7 +544,7 @@ class CollectionRelation(models.Model):
     position = models.PositiveSmallIntegerField(_("Position"), default = 0, blank = True, null=True, editable=True)
     
     class Meta:
-        ordering = ['position']
+        ordering = ['position', 'id']
     
     def __unicode__(self):
         return unicode(self.content_object)
