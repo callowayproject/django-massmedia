@@ -69,17 +69,21 @@ class GenericCollectionTabularInline(GenericCollectionInlineModelAdmin):
 
 class MediaAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {'fields':('title','caption')}),
-        (_("Content"),{'fields':(('file','external_url'),)}),
-        (_("Credit"),{'fields':('author','one_off_author','reproduction_allowed')}),
-        (_("Metadata"),{'fields':('metadata','mime_type')}),
-        (_("Connections"),{'fields':('public','categories','site')}),
-        (_("Widget"),{'fields':('width','height')}),
+        (None, {'fields':('title', 'caption')}),
+        (_("Content"), {'fields':(('file', 'external_url'),)}),
+        (_("Credit"), {'fields':('author', 'one_off_author', 'reproduction_allowed')}),
+        (_("Metadata"), {'fields':('metadata', 'mime_type')}),
+        (_("Connections"), {'fields':('public', 'site')}),
+        (_("Widget"), {'fields':('width', 'height')}),
         (_("Advanced options"), {
             'classes': ('collapse',),
-            'fields': ('slug','widget_template',)
+            'fields': ('slug', 'widget_template',)
         }),
     )
+    
+    if settings.USE_TAGGING:
+        fieldsets[4][1]['fields'] += ('categories',)
+    
     add_fieldsets = (
         (None, {'fields': ('title',)}),
         (_("Content"),{'fields':('external_url','file', 'caption')}),
@@ -205,13 +209,16 @@ class VideoAdmin(MediaAdmin):
         (_("Content"),{'fields':(('file','external_url'),'thumbnail')}),
         (_("Credit"),{'fields':('author','one_off_author','reproduction_allowed')}),
         (_("Metadata"),{'fields':('metadata','mime_type')}),
-        (_("Connections"),{'fields':('public','categories','site')}),
+        (_("Connections"),{'fields':('public','site')}),
         (_("Widget"),{'fields':('width','height')}),
         (_("Advanced options"), {
             'classes': ('collapse',),
             'fields': ('slug','widget_template',)
         }),
     )
+    
+    if settings.USE_TAGGING:
+        fieldsets[4][1]['fields'] += ('categories',)
     
     raw_id_fields = ('thumbnail',)
     add_fieldsets = (
@@ -238,19 +245,23 @@ class CollectionInline(GenericCollectionTabularInline):
     model = CollectionRelation
 
 class CollectionAdmin(admin.ModelAdmin):
-    fields = ('title','slug','caption','zip_file','public','categories','site')
+    fields = ('title', 'slug', 'caption', 'zip_file', 'public', 'site')
     list_display = ('title','caption', 'public', 'creation_date')
     list_filter = ('site', 'creation_date','public')
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'creation_date'
     search_fields = ('caption',)
     inlines = (CollectionInline,)
+    
+    if settings.USE_TAGGING:
+        fields += ('categories',)
+    
     class Media:
         js = (
             'http://code.jquery.com/jquery-1.4.2.min.js',
             'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js',
             'js/genericcollections.js',
-            )
+        )
 
 admin.site.register(Collection , CollectionAdmin)
 admin.site.register(Image, ImageAdmin)
@@ -258,7 +269,6 @@ admin.site.register(Video, VideoAdmin)
 admin.site.register(Audio, AudioAdmin)
 admin.site.register(Flash, FlashAdmin)
 admin.site.register(Document, DocumentAdmin)
-admin.site.register(GrabVideo, GrabVideoAdmin)
 admin.site.register(Embed)
 
 if not settings.FS_TEMPLATES:
