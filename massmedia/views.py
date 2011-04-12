@@ -63,30 +63,6 @@ def mediatype_detail(request, queryset, object_id=None, slug=None,
     response = HttpResponse(t.render(c), mimetype=mimetype)
     populate_xheaders(request, response, model, getattr(obj, obj._meta.pk.name))
     return response
-    
-def grab_categorized(request):
-    videos = models.GrabVideo.objects.filter(public=True)
-    if request.GET.get('author',None):
-        videos = videos.filter(one_off_author__iexact=request.GET['author'])
-    if request.GET.get('category',None):
-        videos = videos.filter(categories__icontains=str(request.GET['category']).lower())
-    if request.GET.get('keyword',None):
-        videos = videos.filter(keywords__icontains=request.GET['keyword'])
-    videos = videos[int(request.GET.get('off',0)):int(request.GET.get('lim',7))]
-    if 'layout' in request.GET:
-        [setattr(v, 'layout_id', request.GET['layout']) for v in videos]
-    if 'width' in request.GET:
-        [setattr(v, 'width', request.GET['width']) for v in videos]
-    if 'height' in request.GET:
-        [setattr(v, 'height', request.GET['height']) for v in videos]
-    if 'ajax' in request.GET:
-        return render_to_response('massmedia/grab_list.ajax',{
-                'videos': videos,
-            }, context_instance=RequestContext(request))
-    return render_to_response('massmedia/grab_list.html',{
-        'videos': videos,
-    }, context_instance=RequestContext(request))
-
 
 def snipshot_callback(request, pk):
     from django.core.files.base import ContentFile

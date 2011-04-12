@@ -10,11 +10,11 @@ from django.utils.html import escape
 
 import os
 
-from models import Image,Video,Audio,Flash,Collection,\
-    CollectionRelation,MediaTemplate,GrabVideo,Document,Embed
+from models import (Image, Video, Audio, Flash, Collection, Embed, Document,
+    CollectionRelation, MediaTemplate)
 import settings
-from forms import ImageCreationForm, VideoCreationForm, AudioCreationForm, \
-    FlashCreationForm, DocumentCreationForm
+from forms import (ImageCreationForm, VideoCreationForm, AudioCreationForm, 
+    FlashCreationForm, DocumentCreationForm)
 
 from templatetags.media_widgets import snipshot_url
 
@@ -225,17 +225,6 @@ class VideoAdmin(MediaAdmin):
     )
     add_form = VideoCreationForm
 
-
-class GrabVideoAdmin(VideoAdmin):
-    search_fields = ('title','caption','keywords')
-    list_filter = VideoAdmin.list_filter + ('one_off_author',)
-    list_display = ('asset_id','layout_id','title','thumb','one_off_author','public','creation_date','categories')
-    fieldsets = ( (_("Grab"),{'fields':('asset_id','layout_id','keywords')}), )
-    for fieldset in VideoAdmin.fieldsets:
-        if fieldset[0] == 'Content':
-            continue
-        fieldsets += (fieldset,)
-    
 class AudioAdmin(MediaAdmin,admin.ModelAdmin):
     add_form = AudioCreationForm
 
