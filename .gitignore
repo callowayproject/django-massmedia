@@ -11,3 +11,6 @@ media/css/*.r*.css
 *.egg-info
 build/
 dist/
+example/media/js/tiny_mce
+example/media/misc
+example/store_here
