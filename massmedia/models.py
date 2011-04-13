@@ -289,24 +289,47 @@ class Collection(models.Model):
     class Meta:
         ordering = ['-creation_date']
         get_latest_by = 'creation_date'
-
+    
     def __unicode__(self):
         return self.title
-
+    
     @models.permalink
     def get_absolute_url(self):
         return ('massmedia_detail', (), {
             'mediatype': self.__class__.__name__.lower(), 
             'slug': self.slug
         })
-
+    
     def save(self, *args, **kwargs):
         if self.site_id is None:
             self.site = Site.objects.get_current()
+        if self.external_url:
+            self.process_external_url()
         super(Collection, self).save(*args, **kwargs)
         self.process_zipfile()
         super(Collection, self).save(*(), **{})
-        
+    
+    def process_external_url(self):
+        """
+        Handle an external reference
+        """
+        # Get host for proper handling
+        # Route to proper handler
+        from urlparse import urlparse
+        from youtube import YouTubeFeed
+        url_struct = urlparse(self.external_url)
+        if 'youtube' not in url_struct.hostname:
+            return
+        feed = YouTubeFeed(self.external_url)
+        if feed:
+            self.external_url = feed.url
+            if not self.title:
+                self.title = feed.metadata['title']
+            self.slug = slugify(self.title)
+            if not self.caption:
+                self.caption = feed.metadata['subtitle']
+            #self.metadata = feed.metadata
+    
     def process_zipfile(self):
         """
         Loop through a passed Zip file, saving the images and adding them to
