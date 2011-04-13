@@ -45,6 +45,20 @@ UPLOAD_TO = {
 
 UPLOAD_TO.update(getattr(settings, 'MASSMEDIA_UPLOAD_TO', {}))
 
+SERVICES = {
+    'YOUTUBE': {
+        'EMAIL': '',
+        'USERNAME': '',
+        'PASSWORD': '',},
+}
+
+user_services = getattr(settings, 'MASSMEDIA_SERVICES', {})
+for key, val in user_services.items():
+    if key in SERVICES:
+        SERVICES[key].update(val)
+    else:
+        SERVICES[key] = val
+
 if hasattr(settings, "MMEDIA_IMAGE_EXTS"):
     DEFAULT_SETTINGS["IMAGE_EXTS"] = getattr(settings, 'MMEDIA_IMAGE_EXTS')
     warnings.warn(

@@ -92,6 +92,14 @@ INSTALLED_APPS = (
 
 MMEDIA_IMAGE_STORAGE = 'media_storage.MediaStorage'
 
+MASSMEDIA_SERVICES = {
+    'YOUTUBE': {
+        'EMAIL': 'twtweb@gmail.com',
+        'USERNAME': 'washingtontimes',
+        'PASSWORD': 'timesweb10',
+    },
+}
+
 TINYMCE_DEFAULT_CONFIG = {
     'mode': "textareas",
     'theme': "advanced",

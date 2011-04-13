@@ -94,25 +94,32 @@ class CollectionTestCase(unittest.TestCase):
             os.path.join(settings.MEDIA_ROOT,'MWG_Test_Files.zip'),
             os.path.join(settings.MEDIA_ROOT,'Archive.zip')
         )
-        site = Site.objects.create(domain='example.com',name='Example')
-        self.collection = Collection.objects.create(title='test',slug='test',zip_file='Archive.zip')
-        self.collection.sites.add(site)
-
-    def testCollection(self):
-        relations = CollectionRelation.objects.filter(collection=self.collection)
-        self.assertEqual(len(relations), 8 ,\
-            'Wrong number of files collected: %s != 8'%len(relations))
     
-        self.assertEqual(expected_metadata,
-            [dict(x.content_object.metadata) for x in relations],
-            'Wrong metadata info')
-        return
-        testplate =  Template("""
-            {% load media_widgets %}
-            {% spaceless %}
-            {% for related in relations %}
-                <a href="{{ related.content_object.get_absolute_url }}">{{ related.content_object }}</a>
-                {% show_media related.content_object %}
-            {% endfor %}
-            {% endspaceless %}""")
-        self.assertEqual(expected_widgets, testplate.render(Context({'relations':relations})).strip())
+    def testCollection(self):
+        site, didcreate = Site.objects.get_or_create(domain='example.com',name='Example')
+        self.collection = Collection.objects.create(title='test', slug='test',zip_file='Archive.zip')
+        self.collection.site = site
+
+        relations = CollectionRelation.objects.filter(collection=self.collection)
+        self.assertEqual(len(relations), 85,
+            'Wrong number of files collected: %s != 85' % len(relations))
+        
+        # self.assertEqual(expected_metadata,
+        #     [dict(x.content_object.metadata) for x in relations],
+        #     'Wrong metadata info')
+        # return
+        # testplate =  Template("""
+        #     {% load media_widgets %}
+        #     {% spaceless %}
+        #     {% for related in relations %}
+        #         <a href="{{ related.content_object.get_absolute_url }}">{{ related.content_object }}</a>
+        #         {% show_media related.content_object %}
+        #     {% endfor %}
+        #     {% endspaceless %}""")
+        # self.assertEqual(expected_widgets, testplate.render(Context({'relations':relations})).strip())
+    
+    def testYouTube(self):
+        c = Collection.objects.create(external_url="http://www.youtube.com/view_play_list?p=3C046B163FA3957C")
+        testplate = Template("{% load mm_youtube %}{% get_youtube_feed c as t %}{{ t.metadata.title }}")
+        t = testplate.render(Context({'c': c}))
+        self.assertEqual(t, "TWT Home")
