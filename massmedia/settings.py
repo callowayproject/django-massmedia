@@ -172,35 +172,35 @@ if hasattr(settings, 'MMEDIA_DOC_STORAGE'):
     )
 
 if hasattr(settings, 'IMAGE_UPLOAD_TO'):
-    STORAGE["IMAGE"] = getattr(settings, 'MMEDIA_IMAGE_UPLOAD_TO')
+    UPLOAD_TO["IMAGE"] = getattr(settings, 'MMEDIA_IMAGE_UPLOAD_TO')
     warnings.warn(
         "settings.MMEDIA_IMAGE_UPLOAD_TO is deprecated; use settings.MASSMEDIA_UPLOAD_TO instead.",
         PendingDeprecationWarning
     )
 
 if hasattr(settings, 'MMEDIA_VIDEO_UPLOAD_TO'):
-    STORAGE["VIDEO"] = getattr(settings, 'MMEDIA_VIDEO_UPLOAD_TO')
+    UPLOAD_TO["VIDEO"] = getattr(settings, 'MMEDIA_VIDEO_UPLOAD_TO')
     warnings.warn(
         "settings.MMEDIA_VIDEO_UPLOAD_TO is deprecated; use settings.MASSMEDIA_UPLOAD_TO instead.",
         PendingDeprecationWarning
     )
 
 if hasattr(settings, 'MMEDIA_AUDIO_UPLOAD_TO'):
-    STORAGE["AUDIO"] = getattr(settings, 'MMEDIA_AUDIO_UPLOAD_TO')
+    UPLOAD_TO["AUDIO"] = getattr(settings, 'MMEDIA_AUDIO_UPLOAD_TO')
     warnings.warn(
         "settings.MMEDIA_AUDIO_UPLOAD_TO is deprecated; use settings.MASSMEDIA_UPLOAD_TO instead.",
         PendingDeprecationWarning
     )
 
 if hasattr(settings, 'MMEDIA_FLASH_UPLOAD_TO'):
-    STORAGE["FLASH"] = getattr(settings, 'MMEDIA_FLASH_UPLOAD_TO')
+    UPLOAD_TO["FLASH"] = getattr(settings, 'MMEDIA_FLASH_UPLOAD_TO')
     warnings.warn(
         "settings.MMEDIA_FLASH_UPLOAD_TO is deprecated; use settings.MASSMEDIA_UPLOAD_TO instead.",
         PendingDeprecationWarning
     )
 
 if hasattr(settings, 'MMEDIA_DOC_UPLOAD_TO'):
-    STORAGE["DOC"] = getattr(settings, 'MMEDIA_DOC_UPLOAD_TO')
+    UPLOAD_TO["DOC"] = getattr(settings, 'MMEDIA_DOC_UPLOAD_TO')
     warnings.warn(
         "settings.MMEDIA_DOC_UPLOAD_TO is deprecated; use settings.MASSMEDIA_UPLOAD_TO instead.",
         PendingDeprecationWarning
