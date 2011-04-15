@@ -1,0 +1,556 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>YouTube Collections and Templates &mdash; MassMedia v0.8beta2 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.8beta2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MassMedia v0.8beta2 documentation" href="index.html" />
+    <link rel="next" title="Rendering media in templates" href="media_and_templates.html" />
+    <link rel="prev" title="You Tube Collections" href="youtube_collections.html" /> 
+  </head>
+  <body>
+<div id="docstitle">
+	<p>MassMedia v0.8beta2 documentation</p>
+</div>
+<div id="header">
+	<div id="title"><h1>YouTube Collections and Templates</h1></div>
+	<ul id="headerButtons">
+		<li id="toc_button"><div class="headerButton"><a href="#">Table of Contents</a></div></li>
+		<li id="page_buttons">
+			<div class="headerButton"><a href="genindex.html" title="General Index" accesskey="I">index</a></div>
+			<div class="headerButton"><a href="py-modindex.html" title="Python Module Index" >modules</a></div>
+			<div class="headerButton"><a href="media_and_templates.html" title="Rendering media in templates" accesskey="N">next</a></div>
+			<div class="headerButton"><a href="youtube_collections.html" title="You Tube Collections" accesskey="P">previous</a></div>
+		</li>
+	</ul>
+</div>
+
+<div id="sphinxsidebar">
+  <div class="sphinxsidebarwrapper">
+	<ul><li class="toctree-l1"><a href="index.html">Main Page</a></li></ul>
+	<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Configuration Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Mass Media Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tinymce_and_filebrowsing.html">TinyMCE and Filebrowsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube_collections.html">You Tube Collections</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">YouTube Collections and Templates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mm-youtube-template-tag-library">mm_youtube template tag library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="media_and_templates.html">Rendering media in templates</a></li>
+</ul>
+
+    <div id="searchbox" style="display: none">
+      
+        <form class="search" action="search.html" method="get">
+			<div class="search-wrapper">
+			<span class="search-left"></span>
+			<input class="prettysearch" type="text" name="q" size="18" />
+			<span class="search-right">&nbsp;</span>
+			</div>
+          <input type="submit" value="Search" class="searchbutton" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        <p class="searchtip" style="font-size: 90%">
+        Enter search terms or a module, class or function name.
+        </p>
+    </div>
+    <script type="text/javascript">$('#searchbox').show(0);</script>
+  </div>
+</div>
+
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="youtube-collections-and-templates">
+<span id="id1"></span><h1>YouTube Collections and Templates<a class="headerlink" href="#youtube-collections-and-templates" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mm-youtube-template-tag-library">
+<h2>mm_youtube template tag library<a class="headerlink" href="#mm-youtube-template-tag-library" title="Permalink to this headline">¶</a></h2>
+<p>The <em class="xref std std-ref">mm_youtube</em> template tag library handles all the communication with YouTube, plus there are some extra helper tags and filters.</p>
+<ul class="simple">
+<li><a class="reference internal" href="#get-youtube-feed"><em>{% get_youtube_feed %}</em></a></li>
+<li><a class="reference internal" href="#split"><em>{% split %}</em></a></li>
+<li><a class="reference internal" href="#format-seconds"><em>format_seconds filter</em></a></li>
+</ul>
+<div class="section" id="get-youtube-feed">
+<span id="id2"></span><h3>{% get_youtube_feed %}<a class="headerlink" href="#get-youtube-feed" title="Permalink to this headline">¶</a></h3>
+<p><strong>Usage:</strong> <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_youtube_feed</span> <span class="pre">&lt;object&gt;</span> <span class="pre">as</span> <span class="pre">&lt;result&gt;</span> <span class="pre">%}</span></tt></p>
+<p>This tag onverts the <tt class="xref py py-class docutils literal"><span class="pre">Collection</span></tt> <tt class="docutils literal"><span class="pre">&lt;object&gt;</span></tt> into an object with the information about the YouTube playlist. The information is stored in the variable specified as <tt class="docutils literal"><span class="pre">&lt;result&gt;</span></tt>. The <tt class="docutils literal"><span class="pre">&lt;result&gt;</span></tt> object has two attributes: metadata and entries. The metadata contains information about the playlist, and entries is a list of the videos in the playlist.</p>
+<div class="section" id="result-metadata">
+<h4>result.metadata<a class="headerlink" href="#result-metadata" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt><strong>author</strong></dt>
+<dd><p class="first"><em>Type:</em> A list of dictionaries containing <tt class="docutils literal"><span class="pre">name</span></tt> and <tt class="docutils literal"><span class="pre">uri</span></tt> fields.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.metadata.author.0.name</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">result.metadata.author.0.url</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>washingtontimes
+http://gdata.youtube.com/feeds/api/users/washingtontimes</pre>
+</div>
+</dd>
+<dt><strong>category</strong></dt>
+<dd><p class="first"><em>Type:</em> A list of strings.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">cat</span> <span class="k">in</span> <span class="nv">result.metadata.category</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{{</span> <span class="nv">cat</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>http://gdata.youtube.com/schemas/2007#playlist
+washington
+news
+politics</pre>
+</div>
+</dd>
+<dt><strong>items_per_page</strong></dt>
+<dd><p class="first"><em>Type:</em> A string representation of a number for the default number of items retrieved per page.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.metadata.items_per_page</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="mi">25</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>link</strong></dt>
+<dd><p class="first"><em>Type:</em> A list of dictionaries containing <tt class="docutils literal"><span class="pre">href</span></tt>, <tt class="docutils literal"><span class="pre">rel</span></tt>, and <tt class="docutils literal"><span class="pre">type</span></tt> fields.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.metadata.link.0.href</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">result.metadata.link.0.rel</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">result.metadata.link.0.type</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="highlight-python"><pre>http://www.youtube.com/view_play_list?p=3C046B163FA3957C
+alternate
+text/html</pre>
+</div>
+<p><em>Comment:</em> Typically there are four links with <tt class="docutils literal"><span class="pre">rel</span></tt> attributes of:</p>
+<ul class="last simple">
+<li><tt class="docutils literal"><span class="pre">alternate</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">http://schemas.google.com/g/2005#feed</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">http://schemas.google.com/g/2005#batch</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">self</span></tt></li>
+</ul>
+</dd>
+<dt><strong>logo</strong></dt>
+<dd><p class="first"><em>Type:</em> A string of the URL to the logo set for this playlist.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.metadata.logo</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>http://www.youtube.com/img/pic_youtubelogo_123x63.gif</pre>
+</div>
+</dd>
+<dt><strong>playlistId</strong></dt>
+<dd><p class="first"><em>Type:</em> A string representing the ID of the playlist.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.metadata.playlistId</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>3C046B163FA3957C</pre>
+</div>
+</dd>
+<dt><strong>start_index</strong></dt>
+<dd><p class="first"><em>Type:</em> A string representation of a item number of a paginated result list.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.metadata.start_index</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="mi">1</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>subtitle</strong></dt>
+<dd><p class="first"><em>Type:</em> A string of the subtitle of the playlist</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.metadata.subtitle</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>The best of The Washington Times YouTube Channel</pre>
+</div>
+</dd>
+<dt><strong>title</strong></dt>
+<dd><p class="first"><em>Type:</em> A string of the title of the playlist</p>
+<p><em>Example:</em></p>
+<div class="highlight-python"><pre>{{ result.metadata.title }}</pre>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>TWT Home</pre>
+</div>
+</dd>
+<dt><strong>total_results</strong></dt>
+<dd><p class="first"><em>Type:</em> A string representation of the number of items returned.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.metadata.total_results</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="mi">15</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>updated</strong></dt>
+<dd><p class="first"><em>Type:</em> A string representation of the date this playlist was last modified.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.metadata.updated</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>2011-04-13T16:37:29.000Z</pre>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="result-entries">
+<h4>result.entries<a class="headerlink" href="#result-entries" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt><strong>author</strong></dt>
+<dd><p class="first"><em>Type:</em> A list of dictionaries containing <tt class="docutils literal"><span class="pre">name</span></tt> and <tt class="docutils literal"><span class="pre">uri</span></tt> fields.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.author.0.name</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">result.entries.0.author.0.url</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>washingtontimes
+http://gdata.youtube.com/feeds/api/users/washingtontimes</pre>
+</div>
+</dd>
+<dt><strong>category</strong></dt>
+<dd><p class="first"><em>Type:</em> A list of strings.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">cat</span> <span class="k">in</span> <span class="nv">result.entries.0.category</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{{</span> <span class="nv">cat</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>http://gdata.youtube.com/schemas/2007#playlist
+{'label': 'Entertainment', 'term': 'Entertainment'}
+evan rachel wood
+the conspirator
+robert redford
+mildred pierce
+liz glover
+dawne langford
+gucci
+jill stuart
+washington
+d.c.
+ford's theater</pre>
+</div>
+</dd>
+<dt><strong>comments</strong></dt>
+<dd><p class="first"><em>Type:</em> A list of dictionaries containing <tt class="docutils literal"><span class="pre">count_hint</span></tt> and <tt class="docutils literal"><span class="pre">href</span></tt> fields.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">item</span> <span class="k">in</span> <span class="nv">result.entries.0.comments</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{{</span> <span class="nv">item.count_hint</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{{</span> <span class="nv">item.href</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>0
+http://gdata.youtube.com/feeds/api/videos/DLyt64ZtZcw/comments</pre>
+</div>
+</dd>
+<dt><strong>content</strong></dt>
+<dd><p class="first"><em>Type:</em> A string</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.content</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>Liz Glover chats with Evan Rachel Wood at the D.C. Premiere of "The Conspirator."</pre>
+</div>
+</dd>
+<dt><strong>description</strong></dt>
+<dd><p class="first"><em>Type:</em> A string</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.description</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>Liz Glover chats with Evan Rachel Wood at the D.C. Premiere of "The Conspirator."</pre>
+</div>
+</dd>
+<dt><strong>link</strong></dt>
+<dd><p class="first"><em>Type:</em> A list of dictionaries containing <tt class="docutils literal"><span class="pre">href</span></tt>, <tt class="docutils literal"><span class="pre">rel</span></tt>, and <tt class="docutils literal"><span class="pre">type</span></tt> fields.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.link.0.href</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">result.entries.0.link.0.rel</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">result.entries.0.link.0.type</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="highlight-python"><pre>http://www.youtube.com/watch?v=DLyt64ZtZcw&amp;feature=youtube_gdata
+alternate
+text/html</pre>
+</div>
+<p><em>Comment:</em> Typically there are six links with <tt class="docutils literal"><span class="pre">rel</span></tt> attributes of:</p>
+<ul class="last simple">
+<li><tt class="docutils literal"><span class="pre">alternate</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">http://gdata.youtube.com/schemas/2007#video.responses</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">http://gdata.youtube.com/schemas/2007#video.related</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">http://gdata.youtube.com/schemas/2007#mobile</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">related</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">self</span></tt></li>
+</ul>
+</dd>
+<dt><strong>media</strong></dt>
+<dd><p class="first"><em>Type:</em> A dictionary.</p>
+<p class="last"><em>Comment:</em> Because the <tt class="docutils literal"><span class="pre">media</span></tt> field is complex, each field is discussed separately.</p>
+</dd>
+<dt><strong>media.category</strong></dt>
+<dd><p class="first"><em>Type:</em> A list of dictionaries with <tt class="docutils literal"><span class="pre">label</span></tt>, and <tt class="docutils literal"><span class="pre">text</span></tt> fields.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">cat</span> <span class="k">in</span> <span class="nv">result.entries.0.media.category</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{{</span> <span class="nv">cat.label</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{{</span> <span class="nv">cat.text</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">Entertainment</span>
+<span class="n">Entertainment</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>media.content</strong></dt>
+<dd><p class="first"><em>Type:</em> A list of dictionaries with fields: <tt class="docutils literal"><span class="pre">duration</span></tt>, <tt class="docutils literal"><span class="pre">expression</span></tt>, <tt class="docutils literal"><span class="pre">isDefault</span></tt>, <tt class="docutils literal"><span class="pre">medium</span></tt>, <tt class="docutils literal"><span class="pre">type</span></tt>, <tt class="docutils literal"><span class="pre">url</span></tt>, and <tt class="docutils literal"><span class="pre">{http://gdata.youtube.com/schemas/2007}format</span></tt>.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><pre>{% for item in result.entries.0.media.content %}
+    {{ item.duration|format_seconds:"i:s" }}
+    {{ item.expression }}
+    {{ item.isDefault }}
+    {{ item.medium }}
+    {{ item.type }}
+    {{ item.url }}
+    {{ item.{http://gdata.youtube.com/schemas/2007}format }}
+    ---------------------------------
+{% endfor %}</pre>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>01:05
+full
+true
+video
+application/x-shockwave-flash
+http://www.youtube.com/v/DLyt64ZtZcw?f=playlists&amp;app=youtube_gdata
+5
+---------------------------------
+01:05
+full
+
+video
+video/3gpp
+rtsp://v4.cache4.c.youtube.com/CiULENy73wIaHAnMZW2G6628DBMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp
+1
+---------------------------------
+01:05
+full
+
+video
+video/3gpp
+rtsp://v4.cache5.c.youtube.com/CiULENy73wIaHAnMZW2G6628DBMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp
+6
+---------------------------------</pre>
+</div>
+</dd>
+<dt><strong>media.description</strong></dt>
+<dd><p class="first"><em>Type:</em> A string</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.media.description</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>Liz Glover chats with Evan Rachel Wood at the D.C. Premiere of "The Conspirator."</pre>
+</div>
+</dd>
+<dt><strong>media.description</strong></dt>
+<dd><p class="first"><em>Type:</em> A string representing the number of seconds of the movie&#8217;s duration.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.media.duration</span><span class="o">|</span><span class="nf">format_seconds</span><span class="s2">:&quot;i:s&quot;</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>01:05</pre>
+</div>
+</dd>
+<dt><strong>media.keywords</strong></dt>
+<dd><p class="first"><em>Type:</em> string of comma-delimited keywords</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">split</span> <span class="nv">result.entries.0.media.keywords</span> <span class="s2">&quot;, &quot;</span> <span class="k">as</span> <span class="nv">keywords</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">i</span> <span class="k">in</span> <span class="nv">keywords</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{{</span> <span class="nv">i</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>evan rachel wood
+the conspirator
+robert redford
+mildred pierce
+liz glover
+dawne langford
+gucci
+jill stuart
+washington
+d.c.
+ford's theater</pre>
+</div>
+</dd>
+<dt><strong>media.player</strong></dt>
+<dd><p class="first"><em>Type:</em> A URL string</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.media.player</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>http://www.youtube.com/watch?v=DLyt64ZtZcw&amp;feature=youtube_gdata_player</pre>
+</div>
+</dd>
+<dt><strong>media.thumbnail</strong></dt>
+<dd><p class="first"><em>Type:</em> A list of dictionaries with <tt class="docutils literal"><span class="pre">height</span></tt>, <tt class="docutils literal"><span class="pre">time</span></tt>, <tt class="docutils literal"><span class="pre">url</span></tt>, and <tt class="docutils literal"><span class="pre">width</span></tt>.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">i</span> <span class="k">in</span> <span class="nv">result.entries.0.media.thumbnail</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    &lt;img height=&quot;</span><span class="cp">{{</span><span class="nv">i.height</span><span class="cp">}}</span><span class="x">&quot; width=&quot;</span><span class="cp">{{</span><span class="nv">i.width</span><span class="cp">}}</span><span class="x">&quot; src=&quot;</span><span class="cp">{{</span><span class="nv">i.url</span><span class="cp">}}</span><span class="x">&quot; alt=&quot;</span><span class="cp">{{</span><span class="nv">time</span><span class="cp">}}</span><span class="x">&quot;&gt;</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>&lt;img height="240" width="320" src="http://i.ytimg.com/vi/DLyt64ZtZcw/0.jpg" alt="00:00:32.500"&gt;
+&lt;img height="90" width="120" src="http://i.ytimg.com/vi/DLyt64ZtZcw/1.jpg" alt="00:00:16.250"&gt;
+&lt;img height="90" width="120" src="http://i.ytimg.com/vi/DLyt64ZtZcw/2.jpg" alt="00:00:32.500"&gt;
+&lt;img height="90" width="120" src="http://i.ytimg.com/vi/DLyt64ZtZcw/3.jpg" alt="00:00:48.750"&gt;</pre>
+</div>
+</dd>
+<dt><strong>media.title</strong></dt>
+<dd><p class="first"><em>Type:</em> A string</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.media.title</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>Evan Rachel Wood at the D.C. Premiere of "The Conspirator"</pre>
+</div>
+</dd>
+<dt><strong>position</strong></dt>
+<dd><p class="first"><em>Type:</em> A string representing the position of the item in the results.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.position</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="mi">1</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>statistics</strong></dt>
+<dd><p class="first"><em>Type:</em> A dictionary with fields <tt class="docutils literal"><span class="pre">favorite_count</span></tt> and <tt class="docutils literal"><span class="pre">view_count</span></tt>.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.statistics.favorite_count</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">result.entries.0.statistics.view_count</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="mi">0</span>
+<span class="mi">151</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>title</strong></dt>
+<dd><p class="first"><em>Type:</em> A string</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.entries.0.title</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>Evan Rachel Wood at the D.C. Premiere of "The Conspirator"</pre>
+</div>
+</dd>
+<dt><strong>updated</strong></dt>
+<dd><p class="first"><em>Type:</em> A string representation of the date this playlist was last modified.</p>
+<p><em>Example:</em></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">result.metadata.updated</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>could result in:</p>
+<div class="last highlight-python"><pre>2011-04-13T16:37:29.000Z</pre>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="split">
+<span id="id3"></span><h3>{% split %}<a class="headerlink" href="#split" title="Permalink to this headline">¶</a></h3>
+<p><strong>Usage:</strong> <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">split</span> <span class="pre">&lt;string</span> <span class="pre">or</span> <span class="pre">variable&gt;</span> <span class="pre">[&lt;split_str&gt;]</span> <span class="pre">as</span> <span class="pre">&lt;result&gt;</span> <span class="pre">%}</span></tt></p>
+<p>This tag is useful for converting a string to a list of strings. Without the <tt class="docutils literal"><span class="pre">split_str</span></tt> parameter, it will split by space.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">split</span> <span class="s2">&quot;1 2 3 4&quot;</span> <span class="k">as</span> <span class="nv">result</span> <span class="cp">%}</span><span class="x"> </span><span class="c">{# result == [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;] #}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">split</span> <span class="s2">&quot;1, 2, 3, 4&quot;</span> <span class="s2">&quot;, &quot;</span> <span class="k">as</span> <span class="nv">result</span> <span class="cp">%}</span><span class="x"> </span><span class="c">{# result == [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;] #}</span><span class="x"></span>
+
+<span class="c">{# assuming commalist == &quot;1,2,3,4&quot; #}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">split</span> <span class="nv">commalist</span> <span class="s2">&quot;,&quot;</span> <span class="k">as</span> <span class="nv">result</span> <span class="cp">%}</span><span class="x"> </span><span class="c">{# result == [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;] #}</span><span class="x"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="format-seconds-filter">
+<span id="format-seconds"></span><h3>format_seconds filter<a class="headerlink" href="#format-seconds-filter" title="Permalink to this headline">¶</a></h3>
+<p><strong>Usage:</strong> <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">secondsvar|format_seconds:&quot;i:s&quot;}}</span></tt></p>
+<p>This filter formats a number of seconds using the format provided. It is the same formatting options for Django&#8217;s date filter.</p>
+</div>
+</div>
+</div>
+
+
+          </div> 
+        </div>
+      </div>
+    <div class="footer">
+    <p>
+      &copy; Copyright 2009-2010, The Washington Times.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+	</p>
+    </div>
+      <div class="clearer"></div>
+    </div>
+	<div id="breadcrumbs">
+		YouTube Collections and Templates
+		</ul>
+	</div>
+	<script type="text/javascript" charset="utf-8" src="_static/toc.js"></script>
+  </body>
+</html>

@@ -7,9 +7,11 @@ New in 0.8
 	All settings are contained within ``MASSMEDIA_SETTINGS``\ , ``MASSMEDIA_STORAGE``\ , and ``MASSMEDIA_UPLOAD_TO``\ . Old settings will work, but will raise a deprecation warning.
 
 * New settings
-	``MASSMEDIA_SETTINGS["USE_TAGGING"]``
+	``MASSMEDIA_SETTINGS["USE_TAGGING"]`` and ``MASSMEDIA_SERVICES["YOUTUBE"]``
 
-Requires:
+* Support for YouTube feeds as collections
+
+Optional Requirements:
 	django-tagging
 
 Optional, but used for extracting Metadata:

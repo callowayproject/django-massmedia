@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>&lt;no title&gt; &mdash; MassMedia v0.8beta2 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.8beta2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MassMedia v0.8beta2 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div id="docstitle">
+	<p>MassMedia v0.8beta2 documentation</p>
+</div>
+<div id="header">
+	<div id="title"><h1><no title></h1></div>
+	<ul id="headerButtons">
+		<li id="toc_button"><div class="headerButton"><a href="#">Table of Contents</a></div></li>
+		<li id="page_buttons">
+			<div class="headerButton"><a href="genindex.html" title="General Index" accesskey="I">index</a></div>
+			<div class="headerButton"><a href="py-modindex.html" title="Python Module Index" >modules</a></div>
+		</li>
+	</ul>
+</div>
+
+<div id="sphinxsidebar">
+  <div class="sphinxsidebarwrapper">
+	<ul><li class="toctree-l1"><a href="index.html">Main Page</a></li></ul>
+	<ul>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Configuration Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Mass Media Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tinymce_and_filebrowsing.html">TinyMCE and Filebrowsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube_collections.html">You Tube Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media_and_templates.html">Rendering media in templates</a></li>
+</ul>
+
+    <div id="searchbox" style="display: none">
+      
+        <form class="search" action="search.html" method="get">
+			<div class="search-wrapper">
+			<span class="search-left"></span>
+			<input class="prettysearch" type="text" name="q" size="18" />
+			<span class="search-right">&nbsp;</span>
+			</div>
+          <input type="submit" value="Search" class="searchbutton" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        <p class="searchtip" style="font-size: 90%">
+        Enter search terms or a module, class or function name.
+        </p>
+    </div>
+    <script type="text/javascript">$('#searchbox').show(0);</script>
+  </div>
+</div>
+
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <dl class="docutils">
+<dt>{&#8216;author&#8217;: [{&#8216;name&#8217;: &#8216;washingtontimes&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;uri&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/users/washingtontimes">http://gdata.youtube.com/feeds/api/users/washingtontimes</a>&#8216;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;category&#8217;: [&#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#playlist">http://gdata.youtube.com/schemas/2007#playlist</a>&#8216;,</dt>
+<dd>&#8216;washington&#8217;,
+&#8216;news&#8217;,
+&#8216;politics&#8217;],</dd>
+</dl>
+<p>&#8216;group&#8217;: None,
+&#8216;items_per_page&#8217;: &#8216;25&#8217;,
+&#8216;link&#8217;: [{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/view_play_list?p=3C046B163FA3957C">http://www.youtube.com/view_play_list?p=3C046B163FA3957C</a>&#8216;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;rel&#8217;: &#8216;alternate&#8217;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://schemas.google.com/g/2005#feed">http://schemas.google.com/g/2005#feed</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/batch">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/batch</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://schemas.google.com/g/2005#batch">http://schemas.google.com/g/2005#batch</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C?start-index=1&amp;max-results=25">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C?start-index=1&amp;max-results=25</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;self&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p>&#8216;logo&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/img/pic_youtubelogo_123x63.gif">http://www.youtube.com/img/pic_youtubelogo_123x63.gif</a>&#8216;,
+&#8216;playlistId&#8217;: &#8216;3C046B163FA3957C&#8217;,
+&#8216;start_index&#8217;: &#8216;1&#8217;,
+&#8216;subtitle&#8217;: &#8216;The best of The Washington Times YouTube Channel&#8217;,
+&#8216;title&#8217;: &#8216;TWT Home&#8217;,
+&#8216;total_results&#8217;: &#8216;15&#8217;,
+&#8216;updated&#8217;: &#8216;2011-04-13T16:37:29.000Z&#8217;}</p>
+<blockquote>
+<div><blockquote>
+<div><dl class="docutils">
+<dt>[{&#8216;author&#8217;: [{&#8216;name&#8217;: &#8216;washingtontimes&#8217;,</dt>
+<dd>&#8216;uri&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/users/washingtontimes">http://gdata.youtube.com/feeds/api/users/washingtontimes</a>&#8216;}],</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;category&#8217;: [&#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#playlist">http://gdata.youtube.com/schemas/2007#playlist</a>&#8216;,</dt>
+<dd>{&#8216;label&#8217;: &#8216;Entertainment&#8217;, &#8216;term&#8217;: &#8216;Entertainment&#8217;},
+&#8216;evan rachel wood&#8217;,
+&#8216;the conspirator&#8217;,
+&#8216;robert redford&#8217;,
+&#8216;mildred pierce&#8217;,
+&#8216;liz glover&#8217;,
+&#8216;dawne langford&#8217;,
+&#8216;gucci&#8217;,
+&#8216;jill stuart&#8217;,
+&#8216;washington&#8217;,
+&#8216;d.c.&#8217;,
+&#8220;ford&#8217;s theater&#8221;],</dd>
+<dt>&#8216;comments&#8217;: [{&#8216;count_hint&#8217;: &#8216;0&#8217;,</dt>
+<dd>&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/DLyt64ZtZcw/comments">http://gdata.youtube.com/feeds/api/videos/DLyt64ZtZcw/comments</a>&#8216;}],</dd>
+</dl>
+<p>&#8216;content&#8217;: &#8216;Liz Glover chats with Evan Rachel Wood at the D.C. Premiere of &#8220;The Conspirator.&#8221;&#8217;,
+&#8216;description&#8217;: &#8216;Liz Glover chats with Evan Rachel Wood at the D.C. Premiere of &#8220;The Conspirator.&#8221;&#8217;,
+&#8216;link&#8217;: [{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=DLyt64ZtZcw&amp;feature=youtube_gdata">http://www.youtube.com/watch?v=DLyt64ZtZcw&amp;feature=youtube_gdata</a>&#8216;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;rel&#8217;: &#8216;alternate&#8217;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/DLyt64ZtZcw/responses">http://gdata.youtube.com/feeds/api/videos/DLyt64ZtZcw/responses</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.responses">http://gdata.youtube.com/schemas/2007#video.responses</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/DLyt64ZtZcw/related">http://gdata.youtube.com/feeds/api/videos/DLyt64ZtZcw/related</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.related">http://gdata.youtube.com/schemas/2007#video.related</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://m.youtube.com/details?v=DLyt64ZtZcw">http://m.youtube.com/details?v=DLyt64ZtZcw</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#mobile">http://gdata.youtube.com/schemas/2007#mobile</a>&#8216;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/DLyt64ZtZcw">http://gdata.youtube.com/feeds/api/videos/DLyt64ZtZcw</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;related&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/DD2E2C946BA4FCC6">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/DD2E2C946BA4FCC6</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;self&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;media&#8217;: {&#8216;category&#8217;: [{&#8216;label&#8217;: &#8216;Entertainment&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;text&#8217;: &#8216;Entertainment&#8217;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;content&#8217;: [{&#8216;duration&#8217;: &#8216;65&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;isDefault&#8217;: &#8216;true&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;application/x-shockwave-flash&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/v/DLyt64ZtZcw?f=playlists&amp;app=youtube_gdata">http://www.youtube.com/v/DLyt64ZtZcw?f=playlists&amp;app=youtube_gdata</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;5&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;duration&#8217;: &#8216;65&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v4.cache4.c.youtube.com/CiULENy73wIaHAnMZW2G6628DBMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v4.cache4.c.youtube.com/CiULENy73wIaHAnMZW2G6628DBMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;duration&#8217;: &#8216;65&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v4.cache5.c.youtube.com/CiULENy73wIaHAnMZW2G6628DBMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v4.cache5.c.youtube.com/CiULENy73wIaHAnMZW2G6628DBMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;6&#8217;}],</dd>
+</dl>
+</dd>
+</dl>
+<p>&#8216;description&#8217;: &#8216;Liz Glover chats with Evan Rachel Wood at the D.C. Premiere of &#8220;The Conspirator.&#8221;&#8217;,
+&#8216;duration&#8217;: &#8216;65&#8217;,
+&#8216;keywords&#8217;: &#8220;evan rachel wood, the conspirator, robert redford, mildred pierce, liz glover, dawne langford, gucci, jill stuart, washington, d.c., ford&#8217;s theater&#8221;,
+&#8216;player&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=DLyt64ZtZcw&amp;feature=youtube_gdata_player">http://www.youtube.com/watch?v=DLyt64ZtZcw&amp;feature=youtube_gdata_player</a>&#8216;,
+&#8216;thumbnail&#8217;: [{&#8216;height&#8217;: &#8216;240&#8217;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;time&#8217;: &#8216;00:00:32.500&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/DLyt64ZtZcw/0.jpg">http://i.ytimg.com/vi/DLyt64ZtZcw/0.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;320&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:16.250&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/DLyt64ZtZcw/1.jpg">http://i.ytimg.com/vi/DLyt64ZtZcw/1.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:32.500&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/DLyt64ZtZcw/2.jpg">http://i.ytimg.com/vi/DLyt64ZtZcw/2.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:48.750&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/DLyt64ZtZcw/3.jpg">http://i.ytimg.com/vi/DLyt64ZtZcw/3.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p class="last">&#8216;title&#8217;: &#8216;Evan Rachel Wood at the D.C. Premiere of &#8220;The Conspirator&#8221;&#8217;},</p>
+</dd>
+</dl>
+<p>&#8216;position&#8217;: &#8216;1&#8217;,
+&#8216;statistics&#8217;: {&#8216;favorite_count&#8217;: &#8216;0&#8217;, &#8216;view_count&#8217;: &#8216;151&#8217;},
+&#8216;title&#8217;: &#8216;Evan Rachel Wood at the D.C. Premiere of &#8220;The Conspirator&#8221;&#8217;,
+&#8216;updated&#8217;: &#8216;2011-04-14T15:27:50.536Z&#8217;},</p>
+</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;author&#8217;: [{&#8216;name&#8217;: &#8216;washingtontimes&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;uri&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/users/washingtontimes">http://gdata.youtube.com/feeds/api/users/washingtontimes</a>&#8216;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;category&#8217;: [&#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#playlist">http://gdata.youtube.com/schemas/2007#playlist</a>&#8216;,</dt>
+<dd>{&#8216;label&#8217;: &#8216;Entertainment&#8217;, &#8216;term&#8217;: &#8216;Entertainment&#8217;},
+&#8216;Tom Wilkinson&#8217;,
+&#8216;prince william&#8217;,
+&#8216;kate middleton&#8217;,
+&#8216;michael clayton&#8217;,
+&#8216;the conspirator&#8217;,
+&#8216;robert redford&#8217;,
+&#8216;liz glover&#8217;,
+&#8216;dawne langford&#8217;],</dd>
+<dt>&#8216;comments&#8217;: [{&#8216;count_hint&#8217;: &#8216;0&#8217;,</dt>
+<dd>&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/q9moctwtSH8/comments">http://gdata.youtube.com/feeds/api/videos/q9moctwtSH8/comments</a>&#8216;}],</dd>
+</dl>
+<p>&#8216;content&#8217;: &#8216;Liz Glover speaks with Tom Wilkinson about &#8220;Michael Clayton,&#8221; working with Robert Redford, and not getting invited to Prince William&#8217;s wedding later this month.&#8217;,
+&#8216;description&#8217;: &#8216;Liz Glover speaks with Tom Wilkinson about &#8220;Michael Clayton,&#8221; working with Robert Redford, and not getting invited to Prince William&#8217;s wedding later this month.&#8217;,
+&#8216;link&#8217;: [{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=q9moctwtSH8&amp;feature=youtube_gdata">http://www.youtube.com/watch?v=q9moctwtSH8&amp;feature=youtube_gdata</a>&#8216;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;rel&#8217;: &#8216;alternate&#8217;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/q9moctwtSH8/responses">http://gdata.youtube.com/feeds/api/videos/q9moctwtSH8/responses</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.responses">http://gdata.youtube.com/schemas/2007#video.responses</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/q9moctwtSH8/related">http://gdata.youtube.com/feeds/api/videos/q9moctwtSH8/related</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.related">http://gdata.youtube.com/schemas/2007#video.related</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://m.youtube.com/details?v=q9moctwtSH8">http://m.youtube.com/details?v=q9moctwtSH8</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#mobile">http://gdata.youtube.com/schemas/2007#mobile</a>&#8216;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/q9moctwtSH8">http://gdata.youtube.com/feeds/api/videos/q9moctwtSH8</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;related&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/D0D044049CF320CF">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/D0D044049CF320CF</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;self&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;media&#8217;: {&#8216;category&#8217;: [{&#8216;label&#8217;: &#8216;Entertainment&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;text&#8217;: &#8216;Entertainment&#8217;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;content&#8217;: [{&#8216;duration&#8217;: &#8216;108&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;isDefault&#8217;: &#8216;true&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;application/x-shockwave-flash&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/v/q9moctwtSH8?f=playlists&amp;app=youtube_gdata">http://www.youtube.com/v/q9moctwtSH8?f=playlists&amp;app=youtube_gdata</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;5&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;duration&#8217;: &#8216;108&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v3.cache1.c.youtube.com/CiULENy73wIaHAl_SC3ccqjZqxMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v3.cache1.c.youtube.com/CiULENy73wIaHAl_SC3ccqjZqxMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;duration&#8217;: &#8216;108&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v2.cache1.c.youtube.com/CiULENy73wIaHAl_SC3ccqjZqxMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v2.cache1.c.youtube.com/CiULENy73wIaHAl_SC3ccqjZqxMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;6&#8217;}],</dd>
+</dl>
+</dd>
+</dl>
+<p>&#8216;description&#8217;: &#8216;Liz Glover speaks with Tom Wilkinson about &#8220;Michael Clayton,&#8221; working with Robert Redford, and not getting invited to Prince William&#8217;s wedding later this month.&#8217;,
+&#8216;duration&#8217;: &#8216;108&#8217;,
+&#8216;keywords&#8217;: &#8216;Tom Wilkinson, prince william, kate middleton, michael clayton, the conspirator, robert redford, liz glover, dawne langford&#8217;,
+&#8216;player&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=q9moctwtSH8&amp;feature=youtube_gdata_player">http://www.youtube.com/watch?v=q9moctwtSH8&amp;feature=youtube_gdata_player</a>&#8216;,
+&#8216;thumbnail&#8217;: [{&#8216;height&#8217;: &#8216;240&#8217;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;time&#8217;: &#8216;00:00:54&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/q9moctwtSH8/0.jpg">http://i.ytimg.com/vi/q9moctwtSH8/0.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;320&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:27&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/q9moctwtSH8/1.jpg">http://i.ytimg.com/vi/q9moctwtSH8/1.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:54&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/q9moctwtSH8/2.jpg">http://i.ytimg.com/vi/q9moctwtSH8/2.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:01:21&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/q9moctwtSH8/3.jpg">http://i.ytimg.com/vi/q9moctwtSH8/3.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p class="last">&#8216;title&#8217;: &#8216;Tom Wilkinson at the D.C. Premiere of &#8220;The Conspirator&#8221;&#8217;},</p>
+</dd>
+</dl>
+<p class="last">&#8216;position&#8217;: &#8216;2&#8217;,
+&#8216;statistics&#8217;: {&#8216;favorite_count&#8217;: &#8216;0&#8217;, &#8216;view_count&#8217;: &#8216;93&#8217;},
+&#8216;title&#8217;: &#8216;Tom Wilkinson at the D.C. Premiere of &#8220;The Conspirator&#8221;&#8217;,
+&#8216;updated&#8217;: &#8216;2011-04-14T15:27:50.536Z&#8217;},</p>
+</dd>
+<dt>{&#8216;author&#8217;: [{&#8216;name&#8217;: &#8216;washingtontimes&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;uri&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/users/washingtontimes">http://gdata.youtube.com/feeds/api/users/washingtontimes</a>&#8216;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;category&#8217;: [&#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#playlist">http://gdata.youtube.com/schemas/2007#playlist</a>&#8216;,</dt>
+<dd>{&#8216;label&#8217;: &#8216;Entertainment&#8217;, &#8216;term&#8217;: &#8216;Entertainment&#8217;},
+&#8216;James McAvoy&#8217;,
+&#8216;the conspirator&#8217;,
+&#8216;washington&#8217;,
+&#8216;d.c.&#8217;,
+&#8216;robert redford&#8217;,
+&#8216;the last king of scotland&#8217;,
+&#8216;dawne langford&#8217;,
+&#8216;liz glover&#8217;,
+&#8216;riley waggaman&#8217;,
+&#8220;ford&#8217;s theater&#8221;],</dd>
+<dt>&#8216;comments&#8217;: [{&#8216;count_hint&#8217;: &#8216;0&#8217;,</dt>
+<dd>&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/KiUsQCPRw_Y/comments">http://gdata.youtube.com/feeds/api/videos/KiUsQCPRw_Y/comments</a>&#8216;}],</dd>
+</dl>
+<p>&#8216;content&#8217;: &#8216;Liz Glover chats with James McAvoy at the premiere of &#8220;The Conspirator.&#8221;  The premiere was hosted by Ford&#8217;s Theater in Washington, D.C.   Glover asks McAvoy if his character in &#8220;The Last King of Scotland&#8221; would&#8217;ve worked for Gaddafi.&#8217;,
+&#8216;description&#8217;: &#8216;Liz Glover chats with James McAvoy at the premiere of &#8220;The Conspirator.&#8221;  The premiere was hosted by Ford&#8217;s Theater in Washington, D.C.   Glover asks McAvoy if his character in &#8220;The Last King of Scotland&#8221; would&#8217;ve worked for Gaddafi.&#8217;,
+&#8216;link&#8217;: [{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=KiUsQCPRw_Y&amp;feature=youtube_gdata">http://www.youtube.com/watch?v=KiUsQCPRw_Y&amp;feature=youtube_gdata</a>&#8216;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;rel&#8217;: &#8216;alternate&#8217;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/KiUsQCPRw_Y/responses">http://gdata.youtube.com/feeds/api/videos/KiUsQCPRw_Y/responses</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.responses">http://gdata.youtube.com/schemas/2007#video.responses</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/KiUsQCPRw_Y/related">http://gdata.youtube.com/feeds/api/videos/KiUsQCPRw_Y/related</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.related">http://gdata.youtube.com/schemas/2007#video.related</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://m.youtube.com/details?v=KiUsQCPRw_Y">http://m.youtube.com/details?v=KiUsQCPRw_Y</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#mobile">http://gdata.youtube.com/schemas/2007#mobile</a>&#8216;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/KiUsQCPRw_Y">http://gdata.youtube.com/feeds/api/videos/KiUsQCPRw_Y</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;related&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/7799310FD8FFE663">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/7799310FD8FFE663</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;self&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;media&#8217;: {&#8216;category&#8217;: [{&#8216;label&#8217;: &#8216;Entertainment&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;text&#8217;: &#8216;Entertainment&#8217;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;content&#8217;: [{&#8216;duration&#8217;: &#8216;91&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;isDefault&#8217;: &#8216;true&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;application/x-shockwave-flash&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/v/KiUsQCPRw_Y?f=playlists&amp;app=youtube_gdata">http://www.youtube.com/v/KiUsQCPRw_Y?f=playlists&amp;app=youtube_gdata</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;5&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;duration&#8217;: &#8216;91&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v8.cache5.c.youtube.com/CiULENy73wIaHAn2w9EjQCwlKhMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v8.cache5.c.youtube.com/CiULENy73wIaHAn2w9EjQCwlKhMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;duration&#8217;: &#8216;91&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v6.cache2.c.youtube.com/CiULENy73wIaHAn2w9EjQCwlKhMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v6.cache2.c.youtube.com/CiULENy73wIaHAn2w9EjQCwlKhMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;6&#8217;}],</dd>
+</dl>
+</dd>
+</dl>
+<p>&#8216;description&#8217;: &#8216;Liz Glover chats with James McAvoy at the premiere of &#8220;The Conspirator.&#8221;  The premiere was hosted by Ford&#8217;s Theater in Washington, D.C.   Glover asks McAvoy if his character in &#8220;The Last King of Scotland&#8221; would&#8217;ve worked for Gaddafi.&#8217;,
+&#8216;duration&#8217;: &#8216;91&#8217;,
+&#8216;keywords&#8217;: &#8220;James McAvoy, the conspirator, washington, d.c., robert redford, the last king of scotland, dawne langford, liz glover, riley waggaman, ford&#8217;s theater&#8221;,
+&#8216;player&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=KiUsQCPRw_Y&amp;feature=youtube_gdata_player">http://www.youtube.com/watch?v=KiUsQCPRw_Y&amp;feature=youtube_gdata_player</a>&#8216;,
+&#8216;thumbnail&#8217;: [{&#8216;height&#8217;: &#8216;240&#8217;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;time&#8217;: &#8216;00:00:45.500&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/KiUsQCPRw_Y/0.jpg">http://i.ytimg.com/vi/KiUsQCPRw_Y/0.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;320&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:22.750&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/KiUsQCPRw_Y/1.jpg">http://i.ytimg.com/vi/KiUsQCPRw_Y/1.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:45.500&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/KiUsQCPRw_Y/2.jpg">http://i.ytimg.com/vi/KiUsQCPRw_Y/2.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:01:08.250&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/KiUsQCPRw_Y/3.jpg">http://i.ytimg.com/vi/KiUsQCPRw_Y/3.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p class="last">&#8216;title&#8217;: &#8216;James McAvoy at the D.C. Premiere of &#8220;The Conspirator&#8221;&#8217;},</p>
+</dd>
+</dl>
+<p>&#8216;position&#8217;: &#8216;3&#8217;,
+&#8216;rating&#8217;: {&#8216;average&#8217;: &#8216;5.0&#8217;,</p>
+<blockquote>
+<div>&#8216;max&#8217;: &#8216;5&#8217;,
+&#8216;min&#8217;: &#8216;1&#8217;,
+&#8216;num_raters&#8217;: &#8216;3&#8217;,
+&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://schemas.google.com/g/2005#overall">http://schemas.google.com/g/2005#overall</a>&#8216;},</div></blockquote>
+<p class="last">&#8216;statistics&#8217;: {&#8216;favorite_count&#8217;: &#8216;0&#8217;, &#8216;view_count&#8217;: &#8216;241&#8217;},
+&#8216;title&#8217;: &#8216;James McAvoy at the D.C. Premiere of &#8220;The Conspirator&#8221;&#8217;,
+&#8216;updated&#8217;: &#8216;2011-04-14T15:27:50.536Z&#8217;},</p>
+</dd>
+<dt>{&#8216;author&#8217;: [{&#8216;name&#8217;: &#8216;AssociatedPress&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;uri&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/users/associatedpress">http://gdata.youtube.com/feeds/api/users/associatedpress</a>&#8216;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;category&#8217;: [&#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#playlist">http://gdata.youtube.com/schemas/2007#playlist</a>&#8216;,</dt>
+<dd>{&#8216;label&#8217;: &#8216;News &amp; Politics&#8217;, &#8216;term&#8217;: &#8216;News&#8217;},
+&#8216;DC&#8217;,
+&#8216;Mayor&#8217;,
+&#8216;Arrest&#8217;],</dd>
+<dt>&#8216;comments&#8217;: [{&#8216;count_hint&#8217;: &#8216;52&#8217;,</dt>
+<dd>&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/Krx9-XoEEZc/comments">http://gdata.youtube.com/feeds/api/videos/Krx9-XoEEZc/comments</a>&#8216;}],</dd>
+</dl>
+<p>&#8216;content&#8217;: &#8220;District leaders including the mayor took to the streets to protest congressional control of the nation&#8217;s capital, blocking traffic and getting arrested over a federal budget deal expected to impose renewed restrictions on the city. (April 12)&#8221;,
+&#8216;description&#8217;: &#8220;District leaders including the mayor took to the streets to protest congressional control of the nation&#8217;s capital, blocking traffic and getting arrested over a federal budget deal expected to impose renewed restrictions on the city. (April 12)&#8221;,
+&#8216;link&#8217;: [{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=Krx9-XoEEZc&amp;feature=youtube_gdata">http://www.youtube.com/watch?v=Krx9-XoEEZc&amp;feature=youtube_gdata</a>&#8216;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;rel&#8217;: &#8216;alternate&#8217;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/Krx9-XoEEZc/responses">http://gdata.youtube.com/feeds/api/videos/Krx9-XoEEZc/responses</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.responses">http://gdata.youtube.com/schemas/2007#video.responses</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/Krx9-XoEEZc/related">http://gdata.youtube.com/feeds/api/videos/Krx9-XoEEZc/related</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.related">http://gdata.youtube.com/schemas/2007#video.related</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://m.youtube.com/details?v=Krx9-XoEEZc">http://m.youtube.com/details?v=Krx9-XoEEZc</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#mobile">http://gdata.youtube.com/schemas/2007#mobile</a>&#8216;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/Krx9-XoEEZc">http://gdata.youtube.com/feeds/api/videos/Krx9-XoEEZc</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;related&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/B5E1EE5B81E9CB05">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/B5E1EE5B81E9CB05</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;self&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p>&#8216;location&#8217;: &#8216;New York, NY&#8217;,
+&#8216;media&#8217;: {&#8216;category&#8217;: [{&#8216;label&#8217;: &#8216;News &amp; Politics&#8217;, &#8216;text&#8217;: &#8216;News&#8217;}],</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8216;content&#8217;: [{&#8216;duration&#8217;: &#8216;95&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;isDefault&#8217;: &#8216;true&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;application/x-shockwave-flash&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/v/Krx9-XoEEZc?f=playlists&amp;app=youtube_gdata">http://www.youtube.com/v/Krx9-XoEEZc?f=playlists&amp;app=youtube_gdata</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;5&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;duration&#8217;: &#8216;95&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v7.cache5.c.youtube.com/CiULENy73wIaHAmXEQR6-X28KhMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v7.cache5.c.youtube.com/CiULENy73wIaHAmXEQR6-X28KhMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;duration&#8217;: &#8216;95&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v7.cache1.c.youtube.com/CiULENy73wIaHAmXEQR6-X28KhMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v7.cache1.c.youtube.com/CiULENy73wIaHAmXEQR6-X28KhMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;6&#8217;}],</dd>
+</dl>
+</dd>
+</dl>
+<p>&#8216;description&#8217;: &#8220;District leaders including the mayor took to the streets to protest congressional control of the nation&#8217;s capital, blocking traffic and getting arrested over a federal budget deal expected to impose renewed restrictions on the city. (April 12)&#8221;,
+&#8216;duration&#8217;: &#8216;95&#8217;,
+&#8216;keywords&#8217;: &#8216;DC, Mayor, Arrest&#8217;,
+&#8216;player&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=Krx9-XoEEZc&amp;feature=youtube_gdata_player">http://www.youtube.com/watch?v=Krx9-XoEEZc&amp;feature=youtube_gdata_player</a>&#8216;,
+&#8216;thumbnail&#8217;: [{&#8216;height&#8217;: &#8216;240&#8217;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;time&#8217;: &#8216;00:00:47.500&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/Krx9-XoEEZc/0.jpg">http://i.ytimg.com/vi/Krx9-XoEEZc/0.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;320&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:23.750&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/Krx9-XoEEZc/1.jpg">http://i.ytimg.com/vi/Krx9-XoEEZc/1.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:47.500&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/Krx9-XoEEZc/2.jpg">http://i.ytimg.com/vi/Krx9-XoEEZc/2.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:01:11.250&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/Krx9-XoEEZc/3.jpg">http://i.ytimg.com/vi/Krx9-XoEEZc/3.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p>&#8216;title&#8217;: &#8216;DC Mayor Arrested in Budget Protest&#8217;},</p>
+</div></blockquote>
+<p>&#8216;position&#8217;: &#8216;4&#8217;,
+&#8216;rating&#8217;: {&#8216;average&#8217;: &#8216;4.8297873&#8217;,</p>
+<blockquote>
+<div>&#8216;max&#8217;: &#8216;5&#8217;,
+&#8216;min&#8217;: &#8216;1&#8217;,
+&#8216;num_raters&#8217;: &#8216;47&#8217;,
+&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://schemas.google.com/g/2005#overall">http://schemas.google.com/g/2005#overall</a>&#8216;},</div></blockquote>
+<p class="last">&#8216;recorded&#8217;: &#8216;2011-04-12&#8217;,
+&#8216;statistics&#8217;: {&#8216;favorite_count&#8217;: &#8216;16&#8217;, &#8216;view_count&#8217;: &#8216;1422&#8217;},
+&#8216;title&#8217;: &#8216;DC Mayor Arrested in Budget Protest&#8217;,
+&#8216;updated&#8217;: &#8216;2011-04-14T15:27:50.536Z&#8217;},</p>
+</dd>
+<dt>{&#8216;author&#8217;: [{&#8216;name&#8217;: &#8216;washingtontimes&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;uri&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/users/washingtontimes">http://gdata.youtube.com/feeds/api/users/washingtontimes</a>&#8216;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;category&#8217;: [&#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#playlist">http://gdata.youtube.com/schemas/2007#playlist</a>&#8216;,</dt>
+<dd>{&#8216;label&#8217;: &#8216;Entertainment&#8217;, &#8216;term&#8217;: &#8216;Entertainment&#8217;},
+&#8216;Robert Redford&#8217;,
+&#8216;The Conspirator&#8217;,
+&#8216;Mary Surratt&#8217;,
+&#8216;Lincoln&#8217;,
+&#8216;Khalid Sheikh Mohammed&#8217;,
+&#8216;Guantanamo Bay&#8217;,
+&#8216;GITMO&#8217;,
+&#8216;Liz Glover&#8217;,
+&#8216;hollywood actor&#8217;,
+&#8216;hollywood&#8217;,
+&#8216;showbiz&#8217;,
+&#8216;entertainment&#8217;,
+&#8216;director&#8217;,
+&#8216;interviews&#8217;,
+&#8216;talking&#8217;,
+&#8216;commentary&#8217;,
+&#8216;politics&#8217;,
+&#8216;famous&#8217;,
+&#8216;talk&#8217;,
+&#8216;news&#8217;,
+&#8216;discussion&#8217;],</dd>
+<dt>&#8216;comments&#8217;: [{&#8216;count_hint&#8217;: &#8216;0&#8217;,</dt>
+<dd>&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/LUBvJZuC4Xk/comments">http://gdata.youtube.com/feeds/api/videos/LUBvJZuC4Xk/comments</a>&#8216;}],</dd>
+</dl>
+<p>&#8216;content&#8217;: &#8216;Liz Glover chats with film star Robert Redford at the premiere of &#8220;The Conspirator,&#8221; a movie he directed.   She asks what drew him to the story about Mary Surratt who aided the Booth brothers in assassinating Lincoln.   She was tried via military tribunal much like Khalid Sheikh Mohammed who will be tried at GITMO.  The premiere took place at Ford&#8217;s Theater in Washington, D.C.&#8217;,
+&#8216;description&#8217;: &#8216;Liz Glover chats with film star Robert Redford at the premiere of &#8220;The Conspirator,&#8221; a movie he directed.   She asks what drew him to the story about Mary Surratt who aided the Booth brothers in assassinating Lincoln.   She was tried via military tribunal much like Khalid Sheikh Mohammed who will be tried at GITMO.  The premiere took place at Ford&#8217;s Theater in Washington, D.C.&#8217;,
+&#8216;link&#8217;: [{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=LUBvJZuC4Xk&amp;feature=youtube_gdata">http://www.youtube.com/watch?v=LUBvJZuC4Xk&amp;feature=youtube_gdata</a>&#8216;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;rel&#8217;: &#8216;alternate&#8217;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/LUBvJZuC4Xk/responses">http://gdata.youtube.com/feeds/api/videos/LUBvJZuC4Xk/responses</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.responses">http://gdata.youtube.com/schemas/2007#video.responses</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/LUBvJZuC4Xk/related">http://gdata.youtube.com/feeds/api/videos/LUBvJZuC4Xk/related</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.related">http://gdata.youtube.com/schemas/2007#video.related</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://m.youtube.com/details?v=LUBvJZuC4Xk">http://m.youtube.com/details?v=LUBvJZuC4Xk</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#mobile">http://gdata.youtube.com/schemas/2007#mobile</a>&#8216;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/LUBvJZuC4Xk">http://gdata.youtube.com/feeds/api/videos/LUBvJZuC4Xk</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;related&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/CF327BF0D9F8E236">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/CF327BF0D9F8E236</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;self&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;media&#8217;: {&#8216;category&#8217;: [{&#8216;label&#8217;: &#8216;Entertainment&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;text&#8217;: &#8216;Entertainment&#8217;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;content&#8217;: [{&#8216;duration&#8217;: &#8216;82&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;isDefault&#8217;: &#8216;true&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;application/x-shockwave-flash&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/v/LUBvJZuC4Xk?f=playlists&amp;app=youtube_gdata">http://www.youtube.com/v/LUBvJZuC4Xk?f=playlists&amp;app=youtube_gdata</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;5&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;duration&#8217;: &#8216;82&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v6.cache1.c.youtube.com/CiULENy73wIaHAl54YKbJW9ALRMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v6.cache1.c.youtube.com/CiULENy73wIaHAl54YKbJW9ALRMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;duration&#8217;: &#8216;82&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v8.cache4.c.youtube.com/CiULENy73wIaHAl54YKbJW9ALRMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v8.cache4.c.youtube.com/CiULENy73wIaHAl54YKbJW9ALRMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;6&#8217;}],</dd>
+</dl>
+</dd>
+</dl>
+<p>&#8216;description&#8217;: &#8216;Liz Glover chats with film star Robert Redford at the premiere of &#8220;The Conspirator,&#8221; a movie he directed.   She asks what drew him to the story about Mary Surratt who aided the Booth brothers in assassinating Lincoln.   She was tried via military tribunal much like Khalid Sheikh Mohammed who will be tried at GITMO.  The premiere took place at Ford&#8217;s Theater in Washington, D.C.&#8217;,
+&#8216;duration&#8217;: &#8216;82&#8217;,
+&#8216;keywords&#8217;: &#8216;Robert Redford, The Conspirator, Mary Surratt, Lincoln, Khalid Sheikh Mohammed, Guantanamo Bay, GITMO, Liz Glover, hollywood actor, hollywood, showbiz, entertainment, director, interviews, talking, commentary, politics, famous, talk, news, discussion&#8217;,
+&#8216;player&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=LUBvJZuC4Xk&amp;feature=youtube_gdata_player">http://www.youtube.com/watch?v=LUBvJZuC4Xk&amp;feature=youtube_gdata_player</a>&#8216;,
+&#8216;thumbnail&#8217;: [{&#8216;height&#8217;: &#8216;240&#8217;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;time&#8217;: &#8216;00:00:41&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/LUBvJZuC4Xk/0.jpg">http://i.ytimg.com/vi/LUBvJZuC4Xk/0.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;320&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:20.500&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/LUBvJZuC4Xk/1.jpg">http://i.ytimg.com/vi/LUBvJZuC4Xk/1.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:41&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/LUBvJZuC4Xk/2.jpg">http://i.ytimg.com/vi/LUBvJZuC4Xk/2.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:01:01.500&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/LUBvJZuC4Xk/3.jpg">http://i.ytimg.com/vi/LUBvJZuC4Xk/3.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p class="last">&#8216;title&#8217;: &#8216;Robert Redford at the Premiere of &#8220;The Conspirator&#8221;&#8217;},</p>
+</dd>
+</dl>
+<p>&#8216;position&#8217;: &#8216;5&#8217;,
+&#8216;rating&#8217;: {&#8216;average&#8217;: &#8216;3.6666667&#8217;,</p>
+<blockquote>
+<div>&#8216;max&#8217;: &#8216;5&#8217;,
+&#8216;min&#8217;: &#8216;1&#8217;,
+&#8216;num_raters&#8217;: &#8216;3&#8217;,
+&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://schemas.google.com/g/2005#overall">http://schemas.google.com/g/2005#overall</a>&#8216;},</div></blockquote>
+<p class="last">&#8216;statistics&#8217;: {&#8216;favorite_count&#8217;: &#8216;0&#8217;, &#8216;view_count&#8217;: &#8216;434&#8217;},
+&#8216;title&#8217;: &#8216;Robert Redford at the Premiere of &#8220;The Conspirator&#8221;&#8217;,
+&#8216;updated&#8217;: &#8216;2011-04-14T15:27:50.536Z&#8217;},</p>
+</dd>
+<dt>{&#8216;author&#8217;: [{&#8216;name&#8217;: &#8216;washingtontimes&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;uri&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/users/washingtontimes">http://gdata.youtube.com/feeds/api/users/washingtontimes</a>&#8216;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;category&#8217;: [&#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#playlist">http://gdata.youtube.com/schemas/2007#playlist</a>&#8216;,</dt>
+<dd>{&#8216;label&#8217;: &#8216;Entertainment&#8217;, &#8216;term&#8217;: &#8216;Entertainment&#8217;},
+&#8216;kevin kline&#8217;,
+&#8216;the conspirator&#8217;,
+&#8216;liz glover&#8217;,
+&#8216;washington times&#8217;,
+&#8216;dawne langford&#8217;,
+&#8216;robert redford&#8217;,
+&#8216;collective bargaining&#8217;,
+&#8216;Khalid Sheikh Mohammed&#8217;],</dd>
+<dt>&#8216;comments&#8217;: [{&#8216;count_hint&#8217;: &#8216;0&#8217;,</dt>
+<dd>&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/W2_IhFlPYCU/comments">http://gdata.youtube.com/feeds/api/videos/W2_IhFlPYCU/comments</a>&#8216;}],</dd>
+</dl>
+<p>&#8216;content&#8217;: &#8216;Liz Glover chats with actor Kevin Kline at the premiere of &#8220;The Conspirator,&#8221; directed by Robert Redford.   She asks him about what his presidential character in the movie, &#8220;Dave,&#8221; would have thought of trying Khalid Sheikh Mohammed at GITMO, and of the collective bargaining debate in Wisconsin.&#8217;,
+&#8216;description&#8217;: &#8216;Liz Glover chats with actor Kevin Kline at the premiere of &#8220;The Conspirator,&#8221; directed by Robert Redford.   She asks him about what his presidential character in the movie, &#8220;Dave,&#8221; would have thought of trying Khalid Sheikh Mohammed at GITMO, and of the collective bargaining debate in Wisconsin.&#8217;,
+&#8216;link&#8217;: [{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=W2_IhFlPYCU&amp;feature=youtube_gdata">http://www.youtube.com/watch?v=W2_IhFlPYCU&amp;feature=youtube_gdata</a>&#8216;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;rel&#8217;: &#8216;alternate&#8217;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/W2_IhFlPYCU/responses">http://gdata.youtube.com/feeds/api/videos/W2_IhFlPYCU/responses</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.responses">http://gdata.youtube.com/schemas/2007#video.responses</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/W2_IhFlPYCU/related">http://gdata.youtube.com/feeds/api/videos/W2_IhFlPYCU/related</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.related">http://gdata.youtube.com/schemas/2007#video.related</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://m.youtube.com/details?v=W2_IhFlPYCU">http://m.youtube.com/details?v=W2_IhFlPYCU</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#mobile">http://gdata.youtube.com/schemas/2007#mobile</a>&#8216;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/W2_IhFlPYCU">http://gdata.youtube.com/feeds/api/videos/W2_IhFlPYCU</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;related&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/96C0CC1CCD3201B3">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/96C0CC1CCD3201B3</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;self&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;media&#8217;: {&#8216;category&#8217;: [{&#8216;label&#8217;: &#8216;Entertainment&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;text&#8217;: &#8216;Entertainment&#8217;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;content&#8217;: [{&#8216;duration&#8217;: &#8216;148&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;isDefault&#8217;: &#8216;true&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;application/x-shockwave-flash&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/v/W2_IhFlPYCU?f=playlists&amp;app=youtube_gdata">http://www.youtube.com/v/W2_IhFlPYCU?f=playlists&amp;app=youtube_gdata</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;5&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;duration&#8217;: &#8216;148&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v1.cache4.c.youtube.com/CiULENy73wIaHAklYE9ZhMhvWxMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v1.cache4.c.youtube.com/CiULENy73wIaHAklYE9ZhMhvWxMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;duration&#8217;: &#8216;148&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v7.cache1.c.youtube.com/CiULENy73wIaHAklYE9ZhMhvWxMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v7.cache1.c.youtube.com/CiULENy73wIaHAklYE9ZhMhvWxMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;6&#8217;}],</dd>
+</dl>
+</dd>
+</dl>
+<p>&#8216;description&#8217;: &#8216;Liz Glover chats with actor Kevin Kline at the premiere of &#8220;The Conspirator,&#8221; directed by Robert Redford.   She asks him about what his presidential character in the movie, &#8220;Dave,&#8221; would have thought of trying Khalid Sheikh Mohammed at GITMO, and of the collective bargaining debate in Wisconsin.&#8217;,
+&#8216;duration&#8217;: &#8216;148&#8217;,
+&#8216;keywords&#8217;: &#8216;kevin kline, the conspirator, liz glover, washington times, dawne langford, robert redford, collective bargaining, Khalid Sheikh Mohammed&#8217;,
+&#8216;player&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=W2_IhFlPYCU&amp;feature=youtube_gdata_player">http://www.youtube.com/watch?v=W2_IhFlPYCU&amp;feature=youtube_gdata_player</a>&#8216;,
+&#8216;thumbnail&#8217;: [{&#8216;height&#8217;: &#8216;240&#8217;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;time&#8217;: &#8216;00:01:14&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/W2_IhFlPYCU/0.jpg">http://i.ytimg.com/vi/W2_IhFlPYCU/0.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;320&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:37&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/W2_IhFlPYCU/1.jpg">http://i.ytimg.com/vi/W2_IhFlPYCU/1.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:01:14&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/W2_IhFlPYCU/2.jpg">http://i.ytimg.com/vi/W2_IhFlPYCU/2.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:01:51&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/W2_IhFlPYCU/3.jpg">http://i.ytimg.com/vi/W2_IhFlPYCU/3.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p class="last">&#8216;title&#8217;: &#8216;Kevin Kline at the Premiere of &#8220;The Conspirator&#8221; in Washington, D.C.&#8217;},</p>
+</dd>
+</dl>
+<p>&#8216;position&#8217;: &#8216;6&#8217;,
+&#8216;rating&#8217;: {&#8216;average&#8217;: &#8216;5.0&#8217;,</p>
+<blockquote>
+<div>&#8216;max&#8217;: &#8216;5&#8217;,
+&#8216;min&#8217;: &#8216;1&#8217;,
+&#8216;num_raters&#8217;: &#8216;2&#8217;,
+&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://schemas.google.com/g/2005#overall">http://schemas.google.com/g/2005#overall</a>&#8216;},</div></blockquote>
+<p class="last">&#8216;statistics&#8217;: {&#8216;favorite_count&#8217;: &#8216;2&#8217;, &#8216;view_count&#8217;: &#8216;319&#8217;},
+&#8216;title&#8217;: &#8216;Kevin Kline at the Premiere of &#8220;The Conspirator&#8221; in Washington, D.C.&#8217;,
+&#8216;updated&#8217;: &#8216;2011-04-14T15:27:50.536Z&#8217;},</p>
+</dd>
+<dt>{&#8216;author&#8217;: [{&#8216;name&#8217;: &#8216;AssociatedPress&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;uri&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/users/associatedpress">http://gdata.youtube.com/feeds/api/users/associatedpress</a>&#8216;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;category&#8217;: [&#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#playlist">http://gdata.youtube.com/schemas/2007#playlist</a>&#8216;,</dt>
+<dd>{&#8216;label&#8217;: &#8216;News &amp; Politics&#8217;, &#8216;term&#8217;: &#8216;News&#8217;},
+&#8216;ivory_coast&#8217;],</dd>
+<dt>&#8216;comments&#8217;: [{&#8216;count_hint&#8217;: &#8216;5&#8217;,</dt>
+<dd>&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/iePua9qTWIs/comments">http://gdata.youtube.com/feeds/api/videos/iePua9qTWIs/comments</a>&#8216;}],</dd>
+</dl>
+<p>&#8216;content&#8217;: &#8220;Sporadic gunfire rang out Tuesday after Ivory Coast President Alassane Ouattara called on all fighters to put down their arms now that the country&#8217;s longtime strongman has been captured following a months-long deadly power struggle. (April 12)&#8221;,
+&#8216;description&#8217;: &#8220;Sporadic gunfire rang out Tuesday after Ivory Coast President Alassane Ouattara called on all fighters to put down their arms now that the country&#8217;s longtime strongman has been captured following a months-long deadly power struggle. (April 12)&#8221;,
+&#8216;link&#8217;: [{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=iePua9qTWIs&amp;feature=youtube_gdata">http://www.youtube.com/watch?v=iePua9qTWIs&amp;feature=youtube_gdata</a>&#8216;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;rel&#8217;: &#8216;alternate&#8217;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/iePua9qTWIs/responses">http://gdata.youtube.com/feeds/api/videos/iePua9qTWIs/responses</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.responses">http://gdata.youtube.com/schemas/2007#video.responses</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/iePua9qTWIs/related">http://gdata.youtube.com/feeds/api/videos/iePua9qTWIs/related</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.related">http://gdata.youtube.com/schemas/2007#video.related</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://m.youtube.com/details?v=iePua9qTWIs">http://m.youtube.com/details?v=iePua9qTWIs</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#mobile">http://gdata.youtube.com/schemas/2007#mobile</a>&#8216;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/iePua9qTWIs">http://gdata.youtube.com/feeds/api/videos/iePua9qTWIs</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;related&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/313C80A39ACDA8F8">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/313C80A39ACDA8F8</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;self&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p>&#8216;location&#8217;: &#8216;New York, NY&#8217;,
+&#8216;media&#8217;: {&#8216;category&#8217;: [{&#8216;label&#8217;: &#8216;News &amp; Politics&#8217;, &#8216;text&#8217;: &#8216;News&#8217;}],</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8216;content&#8217;: [{&#8216;duration&#8217;: &#8216;80&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;isDefault&#8217;: &#8216;true&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;application/x-shockwave-flash&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/v/iePua9qTWIs?f=playlists&amp;app=youtube_gdata">http://www.youtube.com/v/iePua9qTWIs?f=playlists&amp;app=youtube_gdata</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;5&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;duration&#8217;: &#8216;80&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v6.cache3.c.youtube.com/CiULENy73wIaHAmLWJPaa-7jiRMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v6.cache3.c.youtube.com/CiULENy73wIaHAmLWJPaa-7jiRMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;duration&#8217;: &#8216;80&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v7.cache5.c.youtube.com/CiULENy73wIaHAmLWJPaa-7jiRMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v7.cache5.c.youtube.com/CiULENy73wIaHAmLWJPaa-7jiRMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;6&#8217;}],</dd>
+</dl>
+</dd>
+</dl>
+<p>&#8216;description&#8217;: &#8220;Sporadic gunfire rang out Tuesday after Ivory Coast President Alassane Ouattara called on all fighters to put down their arms now that the country&#8217;s longtime strongman has been captured following a months-long deadly power struggle. (April 12)&#8221;,
+&#8216;duration&#8217;: &#8216;80&#8217;,
+&#8216;keywords&#8217;: &#8216;ivory_coast&#8217;,
+&#8216;player&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=iePua9qTWIs&amp;feature=youtube_gdata_player">http://www.youtube.com/watch?v=iePua9qTWIs&amp;feature=youtube_gdata_player</a>&#8216;,
+&#8216;thumbnail&#8217;: [{&#8216;height&#8217;: &#8216;240&#8217;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;time&#8217;: &#8216;00:00:40&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/iePua9qTWIs/0.jpg">http://i.ytimg.com/vi/iePua9qTWIs/0.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;320&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:20&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/iePua9qTWIs/1.jpg">http://i.ytimg.com/vi/iePua9qTWIs/1.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:40&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/iePua9qTWIs/2.jpg">http://i.ytimg.com/vi/iePua9qTWIs/2.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:01:00&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/iePua9qTWIs/3.jpg">http://i.ytimg.com/vi/iePua9qTWIs/3.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p>&#8216;title&#8217;: &#8216;Ivory Coast Leader: All Fighters Must Disarm&#8217;},</p>
+</div></blockquote>
+<p>&#8216;position&#8217;: &#8216;7&#8217;,
+&#8216;rating&#8217;: {&#8216;average&#8217;: &#8216;4.3333335&#8217;,</p>
+<blockquote>
+<div>&#8216;max&#8217;: &#8216;5&#8217;,
+&#8216;min&#8217;: &#8216;1&#8217;,
+&#8216;num_raters&#8217;: &#8216;6&#8217;,
+&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://schemas.google.com/g/2005#overall">http://schemas.google.com/g/2005#overall</a>&#8216;},</div></blockquote>
+<p class="last">&#8216;recorded&#8217;: &#8216;2011-04-12&#8217;,
+&#8216;statistics&#8217;: {&#8216;favorite_count&#8217;: &#8216;2&#8217;, &#8216;view_count&#8217;: &#8216;504&#8217;},
+&#8216;title&#8217;: &#8216;Ivory Coast Leader: All Fighters Must Disarm&#8217;,
+&#8216;updated&#8217;: &#8216;2011-04-14T15:27:50.536Z&#8217;},</p>
+</dd>
+<dt>{&#8216;author&#8217;: [{&#8216;name&#8217;: &#8216;AssociatedPress&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;uri&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/users/associatedpress">http://gdata.youtube.com/feeds/api/users/associatedpress</a>&#8216;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;category&#8217;: [&#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#playlist">http://gdata.youtube.com/schemas/2007#playlist</a>&#8216;,</dt>
+<dd>{&#8216;label&#8217;: &#8216;News &amp; Politics&#8217;, &#8216;term&#8217;: &#8216;News&#8217;},
+&#8216;belarus_explosion&#8217;],</dd>
+<dt>&#8216;comments&#8217;: [{&#8216;count_hint&#8217;: &#8216;20&#8217;,</dt>
+<dd>&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/IafwZ4ofCIo/comments">http://gdata.youtube.com/feeds/api/videos/IafwZ4ofCIo/comments</a>&#8216;}],</dd>
+</dl>
+<p>&#8216;content&#8217;: &#8216;The toll in the Belarus subway bombing rose to 12 dead and more than 200 wounded Tuesday and authorities said several people have been detained in what they are calling a terrorist attack. (April 12)&#8217;,
+&#8216;description&#8217;: &#8216;The toll in the Belarus subway bombing rose to 12 dead and more than 200 wounded Tuesday and authorities said several people have been detained in what they are calling a terrorist attack. (April 12)&#8217;,
+&#8216;link&#8217;: [{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=IafwZ4ofCIo&amp;feature=youtube_gdata">http://www.youtube.com/watch?v=IafwZ4ofCIo&amp;feature=youtube_gdata</a>&#8216;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;rel&#8217;: &#8216;alternate&#8217;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/IafwZ4ofCIo/responses">http://gdata.youtube.com/feeds/api/videos/IafwZ4ofCIo/responses</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.responses">http://gdata.youtube.com/schemas/2007#video.responses</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/IafwZ4ofCIo/related">http://gdata.youtube.com/feeds/api/videos/IafwZ4ofCIo/related</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.related">http://gdata.youtube.com/schemas/2007#video.related</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://m.youtube.com/details?v=IafwZ4ofCIo">http://m.youtube.com/details?v=IafwZ4ofCIo</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#mobile">http://gdata.youtube.com/schemas/2007#mobile</a>&#8216;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/IafwZ4ofCIo">http://gdata.youtube.com/feeds/api/videos/IafwZ4ofCIo</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;related&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/76A975CF8ECBE24B">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/76A975CF8ECBE24B</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;self&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p>&#8216;location&#8217;: &#8216;New York, NY&#8217;,
+&#8216;media&#8217;: {&#8216;category&#8217;: [{&#8216;label&#8217;: &#8216;News &amp; Politics&#8217;, &#8216;text&#8217;: &#8216;News&#8217;}],</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8216;content&#8217;: [{&#8216;duration&#8217;: &#8216;60&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;isDefault&#8217;: &#8216;true&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;application/x-shockwave-flash&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/v/IafwZ4ofCIo?f=playlists&amp;app=youtube_gdata">http://www.youtube.com/v/IafwZ4ofCIo?f=playlists&amp;app=youtube_gdata</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;5&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;duration&#8217;: &#8216;60&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v6.cache5.c.youtube.com/CiULENy73wIaHAmKCB-KZ_CnIRMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v6.cache5.c.youtube.com/CiULENy73wIaHAmKCB-KZ_CnIRMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;duration&#8217;: &#8216;60&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v3.cache6.c.youtube.com/CiULENy73wIaHAmKCB-KZ_CnIRMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v3.cache6.c.youtube.com/CiULENy73wIaHAmKCB-KZ_CnIRMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;6&#8217;}],</dd>
+</dl>
+</dd>
+</dl>
+<p>&#8216;description&#8217;: &#8216;The toll in the Belarus subway bombing rose to 12 dead and more than 200 wounded Tuesday and authorities said several people have been detained in what they are calling a terrorist attack. (April 12)&#8217;,
+&#8216;duration&#8217;: &#8216;60&#8217;,
+&#8216;keywords&#8217;: &#8216;belarus_explosion&#8217;,
+&#8216;player&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=IafwZ4ofCIo&amp;feature=youtube_gdata_player">http://www.youtube.com/watch?v=IafwZ4ofCIo&amp;feature=youtube_gdata_player</a>&#8216;,
+&#8216;thumbnail&#8217;: [{&#8216;height&#8217;: &#8216;240&#8217;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;time&#8217;: &#8216;00:00:30&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/IafwZ4ofCIo/0.jpg">http://i.ytimg.com/vi/IafwZ4ofCIo/0.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;320&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:15&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/IafwZ4ofCIo/1.jpg">http://i.ytimg.com/vi/IafwZ4ofCIo/1.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:30&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/IafwZ4ofCIo/2.jpg">http://i.ytimg.com/vi/IafwZ4ofCIo/2.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:45&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/IafwZ4ofCIo/3.jpg">http://i.ytimg.com/vi/IafwZ4ofCIo/3.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p>&#8216;title&#8217;: &#8216;Suspects Detained in Deadly Belarus Blast&#8217;},</p>
+</div></blockquote>
+<p>&#8216;position&#8217;: &#8216;8&#8217;,
+&#8216;rating&#8217;: {&#8216;average&#8217;: &#8216;4.6363635&#8217;,</p>
+<blockquote>
+<div>&#8216;max&#8217;: &#8216;5&#8217;,
+&#8216;min&#8217;: &#8216;1&#8217;,
+&#8216;num_raters&#8217;: &#8216;11&#8217;,
+&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://schemas.google.com/g/2005#overall">http://schemas.google.com/g/2005#overall</a>&#8216;},</div></blockquote>
+<p class="last">&#8216;recorded&#8217;: &#8216;2011-04-12&#8217;,
+&#8216;statistics&#8217;: {&#8216;favorite_count&#8217;: &#8216;0&#8217;, &#8216;view_count&#8217;: &#8216;411&#8217;},
+&#8216;title&#8217;: &#8216;Suspects Detained in Deadly Belarus Blast&#8217;,
+&#8216;updated&#8217;: &#8216;2011-04-14T15:27:50.536Z&#8217;},</p>
+</dd>
+<dt>{&#8216;author&#8217;: [{&#8216;name&#8217;: &#8216;washingtontimes&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;uri&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/users/washingtontimes">http://gdata.youtube.com/feeds/api/users/washingtontimes</a>&#8216;}],</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;category&#8217;: [&#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#playlist">http://gdata.youtube.com/schemas/2007#playlist</a>&#8216;,</dt>
+<dd>{&#8216;label&#8217;: &#8216;Travel &amp; Events&#8217;, &#8216;term&#8217;: &#8216;Travel&#8217;},
+&#8216;washingtontimes.com&#8217;,
+&#8216;tartan day&#8217;,
+&#8216;scottish&#8217;,
+&#8216;rain&#8217;,
+&#8216;alexandria va&#8217;,
+&#8216;washington DC&#8217;,
+&#8216;national tartan day&#8217;,
+&#8216;celebration&#8217;,
+&#8216;bag pipes&#8217;,
+&#8216;piper&#8217;,
+&#8216;drums&#8217;],</dd>
+<dt>&#8216;comments&#8217;: [{&#8216;count_hint&#8217;: &#8216;2&#8217;,</dt>
+<dd>&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/XuYUiRKXMA0/comments">http://gdata.youtube.com/feeds/api/videos/XuYUiRKXMA0/comments</a>&#8216;}],</dd>
+</dl>
+<p>&#8216;content&#8217;: &#8216;<a class="reference external" href="http://www.washingtontimes.comn(Best">http://www.washingtontimes.comn(Best</a> viewed in HD) nnTartan Day is a celebration of Scottish heritage on April 6, the date on which the Declaration of Arbroath was signed in 1320.nnProduced and shot by: Andrew S. Geraci&#8217;,
+&#8216;description&#8217;: &#8216;<a class="reference external" href="http://www.washingtontimes.comn(Best">http://www.washingtontimes.comn(Best</a> viewed in HD) nnTartan Day is a celebration of Scottish heritage on April 6, the date on which the Declaration of Arbroath was signed in 1320.nnProduced and shot by: Andrew S. Geraci&#8217;,
+&#8216;link&#8217;: [{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=XuYUiRKXMA0&amp;feature=youtube_gdata">http://www.youtube.com/watch?v=XuYUiRKXMA0&amp;feature=youtube_gdata</a>&#8216;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;rel&#8217;: &#8216;alternate&#8217;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/XuYUiRKXMA0/responses">http://gdata.youtube.com/feeds/api/videos/XuYUiRKXMA0/responses</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.responses">http://gdata.youtube.com/schemas/2007#video.responses</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/XuYUiRKXMA0/related">http://gdata.youtube.com/feeds/api/videos/XuYUiRKXMA0/related</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#video.related">http://gdata.youtube.com/schemas/2007#video.related</a>&#8216;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://m.youtube.com/details?v=XuYUiRKXMA0">http://m.youtube.com/details?v=XuYUiRKXMA0</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/schemas/2007#mobile">http://gdata.youtube.com/schemas/2007#mobile</a>&#8216;,
+&#8216;type&#8217;: &#8216;text/html&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/videos/XuYUiRKXMA0">http://gdata.youtube.com/feeds/api/videos/XuYUiRKXMA0</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;related&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;},</dd>
+<dt>{&#8216;href&#8217;: &#8216;<a class="reference external" href="http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/558BC40DF3B922CF">http://gdata.youtube.com/feeds/api/playlists/3C046B163FA3957C/558BC40DF3B922CF</a>&#8216;,</dt>
+<dd>&#8216;rel&#8217;: &#8216;self&#8217;,
+&#8216;type&#8217;: &#8216;application/atom+xml&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>&#8216;media&#8217;: {&#8216;category&#8217;: [{&#8216;label&#8217;: &#8216;Travel &amp; Events&#8217;, &#8216;text&#8217;: &#8216;Travel&#8217;}],</dt>
+<dd><dl class="first docutils">
+<dt>&#8216;content&#8217;: [{&#8216;duration&#8217;: &#8216;89&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;isDefault&#8217;: &#8216;true&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;application/x-shockwave-flash&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/v/XuYUiRKXMA0?f=playlists&amp;app=youtube_gdata">http://www.youtube.com/v/XuYUiRKXMA0?f=playlists&amp;app=youtube_gdata</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;5&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;duration&#8217;: &#8216;89&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v8.cache6.c.youtube.com/CiULENy73wIaHAkNMJcSiRTmXhMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v8.cache6.c.youtube.com/CiULENy73wIaHAkNMJcSiRTmXhMYDSANFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;duration&#8217;: &#8216;89&#8217;,</dt>
+<dd>&#8216;expression&#8217;: &#8216;full&#8217;,
+&#8216;medium&#8217;: &#8216;video&#8217;,
+&#8216;type&#8217;: &#8216;video/3gpp&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="rtsp://v1.cache8.c.youtube.com/CiULENy73wIaHAkNMJcSiRTmXhMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp">rtsp://v1.cache8.c.youtube.com/CiULENy73wIaHAkNMJcSiRTmXhMYESARFEgGUglwbGF5bGlzdHMM/0/0/0/video.3gp</a>&#8216;,
+&#8216;{<a class="reference external" href="http://gdata.youtube.com/schemas/2007">http://gdata.youtube.com/schemas/2007</a>}format&#8217;: &#8216;6&#8217;}],</dd>
+</dl>
+</dd>
+</dl>
+<p>&#8216;description&#8217;: &#8216;<a class="reference external" href="http://www.washingtontimes.comn(Best">http://www.washingtontimes.comn(Best</a> viewed in HD) nnTartan Day is a celebration of Scottish heritage on April 6, the date on which the Declaration of Arbroath was signed in 1320.nnProduced and shot by: Andrew S. Geraci&#8217;,
+&#8216;duration&#8217;: &#8216;89&#8217;,
+&#8216;keywords&#8217;: &#8216;washingtontimes.com, tartan day, scottish, rain, alexandria va, washington DC, national tartan day, celebration, bag pipes, piper, drums&#8217;,
+&#8216;player&#8217;: &#8216;<a class="reference external" href="http://www.youtube.com/watch?v=XuYUiRKXMA0&amp;feature=youtube_gdata_player">http://www.youtube.com/watch?v=XuYUiRKXMA0&amp;feature=youtube_gdata_player</a>&#8216;,
+&#8216;thumbnail&#8217;: [{&#8216;height&#8217;: &#8216;240&#8217;,</p>
+<blockquote>
+<div><blockquote>
+<div>&#8216;time&#8217;: &#8216;00:00:44.500&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/XuYUiRKXMA0/0.jpg">http://i.ytimg.com/vi/XuYUiRKXMA0/0.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;320&#8217;},</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:22.250&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/XuYUiRKXMA0/1.jpg">http://i.ytimg.com/vi/XuYUiRKXMA0/1.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:00:44.500&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/XuYUiRKXMA0/2.jpg">http://i.ytimg.com/vi/XuYUiRKXMA0/2.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;},</dd>
+<dt>{&#8216;height&#8217;: &#8216;90&#8217;,</dt>
+<dd>&#8216;time&#8217;: &#8216;00:01:06.750&#8217;,
+&#8216;url&#8217;: &#8216;<a class="reference external" href="http://i.ytimg.com/vi/XuYUiRKXMA0/3.jpg">http://i.ytimg.com/vi/XuYUiRKXMA0/3.jpg</a>&#8216;,
+&#8216;width&#8217;: &#8216;120&#8217;}],</dd>
+</dl>
+</div></blockquote>
+<p class="last">&#8216;title&#8217;: &#8216;Tartan Day&#8217;},</p>
+</dd>
+</dl>
+<p>&#8216;position&#8217;: &#8216;9&#8217;,
+&#8216;rating&#8217;: {&#8216;average&#8217;: &#8216;5.0&#8217;,</p>
+<blockquote>
+<div>&#8216;max&#8217;: &#8216;5&#8217;,
+&#8216;min&#8217;: &#8216;1&#8217;,
+&#8216;num_raters&#8217;: &#8216;4&#8217;,
+&#8216;rel&#8217;: &#8216;<a class="reference external" href="http://schemas.google.com/g/2005#overall">http://schemas.google.com/g/2005#overall</a>&#8216;},</div></blockquote>
+<p class="last">&#8216;statistics&#8217;: {&#8216;favorite_count&#8217;: &#8216;1&#8217;, &#8216;view_count&#8217;: &#8216;1032&#8217;},
+&#8216;title&#8217;: &#8216;Tartan Day&#8217;,
+&#8216;updated&#8217;: &#8216;2011-04-14T15:27</p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+          </div> 
+        </div>
+      </div>
+    <div class="footer">
+    <p>
+      &copy; Copyright 2009-2010, The Washington Times.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+	</p>
+    </div>
+      <div class="clearer"></div>
+    </div>
+	<div id="breadcrumbs">
+		&lt;no title&gt;
+		</ul>
+	</div>
+	<script type="text/javascript" charset="utf-8" src="_static/toc.js"></script>
+  </body>
+</html>

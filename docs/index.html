@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -5,26 +6,27 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>MassMedia v|release| &mdash; MassMedia v0.3beta1 documentation</title>
+    <title>MassMedia v|release| &mdash; MassMedia v0.8beta2 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '#',
-        VERSION:     '0.3beta1',
-        COLLAPSE_MODINDEX: false,
+        URL_ROOT:    '',
+        VERSION:     '0.8beta2',
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="MassMedia v0.3beta1 documentation" href="#" />
+    <link rel="top" title="MassMedia v0.8beta2 documentation" href="#" />
     <link rel="next" title="Configuration Settings" href="settings.html" /> 
   </head>
   <body>
 <div id="docstitle">
-	<p>MassMedia v0.3beta1 documentation</p>
+	<p>MassMedia v0.8beta2 documentation</p>
 </div>
 <div id="header">
 	<div id="title"><h1>MassMedia v|release|</h1></div>
@@ -32,7 +34,7 @@
 		<li id="toc_button"><div class="headerButton"><a href="#">Table of Contents</a></div></li>
 		<li id="page_buttons">
 			<div class="headerButton"><a href="genindex.html" title="General Index" accesskey="I">index</a></div>
-			<div class="headerButton"><a href="modindex.html" title="Global Module Index" accesskey="M">modules</a></div>
+			<div class="headerButton"><a href="py-modindex.html" title="Python Module Index" >modules</a></div>
 			<div class="headerButton"><a href="settings.html" title="Configuration Settings" accesskey="N">next</a></div>
 		</li>
 	</ul>
@@ -42,8 +44,12 @@
   <div class="sphinxsidebarwrapper">
 	<ul><li class="toctree-l1"><a href="#">Main Page</a></li></ul>
 	<ul>
-<li class="toctree-l1"><a class="reference external" href="settings.html">Configuration Settings</a></li>
-<li class="toctree-l1"><a class="reference external" href="reference/index.html">Mass Media Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Configuration Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Mass Media Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tinymce_and_filebrowsing.html">TinyMCE and Filebrowsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube_collections.html">You Tube Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube_collections_and_templates.html">YouTube Collections and Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media_and_templates.html">Rendering media in templates</a></li>
 </ul>
 
     <div id="searchbox" style="display: none">
@@ -76,34 +82,48 @@
   <div class="section" id="massmedia-v-release">
 <h1>MassMedia v|release|<a class="headerlink" href="#massmedia-v-release" title="Permalink to this headline">¶</a></h1>
 <p>Contents:</p>
+<div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference external" href="settings.html">Configuration Settings</a><ul>
-<li class="toctree-l2"><a class="reference external" href="settings.html#mmedia-image-exts">MMEDIA_IMAGE_EXTS</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#mmedia-video-exts">MMEDIA_VIDEO_EXTS</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#mmedia-audio-exts">MMEDIA_AUDIO_EXTS</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#mmedia-flash-exts">MMEDIA_FLASH_EXTS</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#mmedia-doc-exts">MMEDIA_DOC_EXTS</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#mmedia-info-quality">MMEDIA_INFO_QUALITY</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#mmedia-thumb-size">MMEDIA_THUMB_SIZE</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#mmedia-extra-mime-types">MMEDIA_EXTRA_MIME_TYPES</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#mmedia-fs-templates">MMEDIA_FS_TEMPLATES</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#mmedia-local-import-tmp-dir">MMEDIA_LOCAL_IMPORT_TMP_DIR</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#grab-api-key">GRAB_API_KEY</a></li>
-<li class="toctree-l2"><a class="reference external" href="settings.html#grab-api-url">GRAB_API_URL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Configuration Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#mmedia-image-exts">MMEDIA_IMAGE_EXTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#mmedia-video-exts">MMEDIA_VIDEO_EXTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#mmedia-audio-exts">MMEDIA_AUDIO_EXTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#mmedia-flash-exts">MMEDIA_FLASH_EXTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#mmedia-doc-exts">MMEDIA_DOC_EXTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#mmedia-info-quality">MMEDIA_INFO_QUALITY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#mmedia-thumb-size">MMEDIA_THUMB_SIZE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#mmedia-extra-mime-types">MMEDIA_EXTRA_MIME_TYPES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#mmedia-fs-templates">MMEDIA_FS_TEMPLATES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#mmedia-local-import-tmp-dir">MMEDIA_LOCAL_IMPORT_TMP_DIR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#grab-api-key">GRAB_API_KEY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#grab-api-url">GRAB_API_URL</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference external" href="reference/index.html">Mass Media Reference</a><ul>
-<li class="toctree-l2"><a class="reference external" href="reference/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Mass Media Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/models.html">Models</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tinymce_and_filebrowsing.html">TinyMCE and Filebrowsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube_collections.html">You Tube Collections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="youtube_collections.html#settings">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="youtube_collections.html#getting-the-playlist-url">Getting the playlist URL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="youtube_collections.html#creating-the-collection">Creating the Collection</a></li>
 </ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="youtube_collections_and_templates.html">YouTube Collections and Templates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="youtube_collections_and_templates.html#mm-youtube-template-tag-library">mm_youtube template tag library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="media_and_templates.html">Rendering media in templates</a></li>
+</ul>
+</div>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><a class="reference external" href="genindex.html"><em>Index</em></a></li>
-<li><a class="reference external" href="modindex.html"><em>Module Index</em></a></li>
-<li><a class="reference external" href="search.html"><em>Search Page</em></a></li>
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
 </div>
 
@@ -114,7 +134,7 @@
     <div class="footer">
     <p>
       &copy; Copyright 2009-2010, The Washington Times.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
 	</p>
     </div>
       <div class="clearer"></div>

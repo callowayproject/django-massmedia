@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -5,27 +6,29 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Models &mdash; MassMedia v0.3beta1 documentation</title>
+    <title>Models &mdash; MassMedia v0.8beta2 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.3beta1',
-        COLLAPSE_MODINDEX: false,
+        VERSION:     '0.8beta2',
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="MassMedia v0.3beta1 documentation" href="../index.html" />
+    <link rel="top" title="MassMedia v0.8beta2 documentation" href="../index.html" />
     <link rel="up" title="Mass Media Reference" href="index.html" />
+    <link rel="next" title="TinyMCE and Filebrowsing" href="../tinymce_and_filebrowsing.html" />
     <link rel="prev" title="Mass Media Reference" href="index.html" /> 
   </head>
   <body>
 <div id="docstitle">
-	<p>MassMedia v0.3beta1 documentation</p>
+	<p>MassMedia v0.8beta2 documentation</p>
 </div>
 <div id="header">
 	<div id="title"><h1>Models</h1></div>
@@ -33,7 +36,8 @@
 		<li id="toc_button"><div class="headerButton"><a href="#">Table of Contents</a></div></li>
 		<li id="page_buttons">
 			<div class="headerButton"><a href="../genindex.html" title="General Index" accesskey="I">index</a></div>
-			<div class="headerButton"><a href="../modindex.html" title="Global Module Index" accesskey="M">modules</a></div>
+			<div class="headerButton"><a href="../py-modindex.html" title="Python Module Index" >modules</a></div>
+			<div class="headerButton"><a href="../tinymce_and_filebrowsing.html" title="TinyMCE and Filebrowsing" accesskey="N">next</a></div>
 			<div class="headerButton"><a href="index.html" title="Mass Media Reference" accesskey="P">previous</a></div>
 		</li>
 	</ul>
@@ -43,11 +47,15 @@
   <div class="sphinxsidebarwrapper">
 	<ul><li class="toctree-l1"><a href="../index.html">Main Page</a></li></ul>
 	<ul class="current">
-<li class="toctree-l1"><a class="reference external" href="../settings.html">Configuration Settings</a></li>
-<li class="toctree-l1 current"><a class="reference external" href="index.html">Mass Media Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference external" href="">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../settings.html">Configuration Settings</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Mass Media Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Models</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../tinymce_and_filebrowsing.html">TinyMCE and Filebrowsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../youtube_collections.html">You Tube Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../youtube_collections_and_templates.html">YouTube Collections and Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../media_and_templates.html">Rendering media in templates</a></li>
 </ul>
 
     <div id="searchbox" style="display: none">
@@ -78,7 +86,7 @@
           <div class="body">
             
   <div class="section" id="module-massmedia.models">
-<h1>Models<a class="headerlink" href="#module-massmedia.models" title="Permalink to this headline">¶</a></h1>
+<span id="models"></span><h1>Models<a class="headerlink" href="#module-massmedia.models" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="massmedia.models.Media">
 <em class="property">class </em><tt class="descclassname">massmedia.models.</tt><tt class="descname">Media</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Media" title="Permalink to this definition">¶</a></dt>
@@ -87,13 +95,13 @@ attributes and functions.</p>
 <dl class="attribute">
 <dt id="massmedia.models.Media.title">
 <tt class="descname">title</tt><a class="headerlink" href="#massmedia.models.Media.title" title="Permalink to this definition">¶</a></dt>
-<dd>A headline or short descriptive sentence. Used in creating the slug field.
-<em>CharField</em>  * <tt class="docutils literal"><span class="pre">max_length</span></tt> - 255</dd></dl>
+<dd><p><tt class="docutils literal"><span class="pre">CharField(max_length</span> <span class="pre">255)</span></tt> A headline or short descriptive sentence. Used in creating the slug field.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="massmedia.models.Media.slug">
 <tt class="descname">slug</tt><a class="headerlink" href="#massmedia.models.Media.slug" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>SlugField</em> A variation of the title attribute that can be used in URLs. They must be unique.</p>
+<dd><p><tt class="docutils literal"><span class="pre">SlugField</span></tt> A variation of the title attribute that can be used in URLs. They must be unique.</p>
 <p><tt class="docutils literal"><span class="pre">unique=True</span></tt></p>
 </dd></dl>
 
@@ -170,8 +178,8 @@ attributes and functions.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="massmedia.models.Media.sites">
-<tt class="descclassname">Media.</tt><tt class="descname">sites</tt><a class="headerlink" href="#massmedia.models.Media.sites" title="Permalink to this definition">¶</a></dt>
+<dt id="massmedia.models.Media.site">
+<tt class="descclassname">Media.</tt><tt class="descname">site</tt><a class="headerlink" href="#massmedia.models.Media.site" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -194,7 +202,8 @@ attributes and functions.</p>
 <dl class="class">
 <dt id="massmedia.models.Image">
 <em class="property">class </em><tt class="descclassname">massmedia.models.</tt><tt class="descname">Image</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Image(id, title, slug, creation_date, author_id, one_off_author, caption, metadata, categories, reproduction_allowed, public, external_url, mime_type, width, height, widget_template, file, original_id)</p>
+<dd><p>We are using a File field instead of Image field because the Image field will 
+cause a problem if the file doesn&#8217;t exist and you merely access the record.</p>
 <dl class="exception">
 <dt id="massmedia.models.Image.DoesNotExist">
 <em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#massmedia.models.Image.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -214,11 +223,33 @@ attributes and functions.</p>
 <dd><dl class="attribute">
 <dt id="massmedia.models.Image.author.field.default">
 <tt class="descclassname">author.field.</tt><tt class="descname">default</tt><a class="headerlink" href="#massmedia.models.Image.author.field.default" title="Permalink to this definition">¶</a></dt>
-<dd>alias of <tt class="xref docutils literal"><span class="pre">NOT_PROVIDED</span></tt></dd></dl>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">NOT_PROVIDED</span></tt></p>
+</dd></dl>
 
 <dl class="staticmethod">
 <dt id="massmedia.models.Image.author.field.related_query_name">
 <em class="property">static </em><tt class="descclassname">author.field.</tt><tt class="descname">related_query_name</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Image.author.field.related_query_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="massmedia.models.Image.site">
+<tt class="descclassname">Image.</tt><tt class="descname">site</tt><a class="headerlink" href="#massmedia.models.Image.site" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="massmedia.models.Image.site.field">
+<tt class="descclassname">site.</tt><tt class="descname">field</tt><a class="headerlink" href="#massmedia.models.Image.site.field" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="massmedia.models.Image.site.field.default">
+<tt class="descclassname">site.field.</tt><tt class="descname">default</tt><a class="headerlink" href="#massmedia.models.Image.site.field.default" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">NOT_PROVIDED</span></tt></p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="massmedia.models.Image.site.field.related_query_name">
+<em class="property">static </em><tt class="descclassname">site.field.</tt><tt class="descname">related_query_name</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Image.site.field.related_query_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -234,7 +265,8 @@ attributes and functions.</p>
 <dd><dl class="attribute">
 <dt id="massmedia.models.Image.original.field.default">
 <tt class="descclassname">original.field.</tt><tt class="descname">default</tt><a class="headerlink" href="#massmedia.models.Image.original.field.default" title="Permalink to this definition">¶</a></dt>
-<dd>alias of <tt class="xref docutils literal"><span class="pre">NOT_PROVIDED</span></tt></dd></dl>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">NOT_PROVIDED</span></tt></p>
+</dd></dl>
 
 <dl class="staticmethod">
 <dt id="massmedia.models.Image.original.field.related_query_name">
@@ -280,10 +312,22 @@ attributes and functions.</p>
 <tt class="descclassname">Image.</tt><tt class="descname">parse_metadata</tt><big>(</big><big>)</big><a class="headerlink" href="#massmedia.models.Image.parse_metadata" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
-<dt id="massmedia.models.Image.sites">
-<tt class="descclassname">Image.</tt><tt class="descname">sites</tt><a class="headerlink" href="#massmedia.models.Image.sites" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="massmedia.models.Image.save">
+<tt class="descclassname">Image.</tt><tt class="descname">save</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Image.save" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descclassname">Image.</tt><tt class="descname">site</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="massmedia.models.Image.smart_fit">
+<tt class="descclassname">Image.</tt><tt class="descname">smart_fit</tt><big>(</big><em>width=20000</em>, <em>height=20000</em><big>)</big><a class="headerlink" href="#massmedia.models.Image.smart_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a width, height or both, it will return the width and height to 
+fit in the given area.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="massmedia.models.Image.variations">
@@ -300,7 +344,7 @@ attributes and functions.</p>
 <dl class="class">
 <dt id="massmedia.models.Video">
 <em class="property">class </em><tt class="descclassname">massmedia.models.</tt><tt class="descname">Video</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Video" title="Permalink to this definition">¶</a></dt>
-<dd><p>Video(id, title, slug, creation_date, author_id, one_off_author, caption, metadata, categories, reproduction_allowed, public, external_url, mime_type, width, height, widget_template, file, thumbnail_id)</p>
+<dd><p>A local or remote video file</p>
 <dl class="exception">
 <dt id="massmedia.models.Video.DoesNotExist">
 <em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#massmedia.models.Video.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -332,11 +376,6 @@ attributes and functions.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="massmedia.models.Video.grabvideo">
-<tt class="descclassname">Video.</tt><tt class="descname">grabvideo</tt><a class="headerlink" href="#massmedia.models.Video.grabvideo" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="massmedia.models.Video.media_url">
 <tt class="descclassname">Video.</tt><tt class="descname">media_url</tt><a class="headerlink" href="#massmedia.models.Video.media_url" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -347,8 +386,8 @@ attributes and functions.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="massmedia.models.Video.sites">
-<tt class="descclassname">Video.</tt><tt class="descname">sites</tt><a class="headerlink" href="#massmedia.models.Video.sites" title="Permalink to this definition">¶</a></dt>
+<dt id="massmedia.models.Video.site">
+<tt class="descclassname">Video.</tt><tt class="descname">site</tt><a class="headerlink" href="#massmedia.models.Video.site" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -364,40 +403,9 @@ attributes and functions.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="massmedia.models.GrabVideo">
-<em class="property">class </em><tt class="descclassname">massmedia.models.</tt><tt class="descname">GrabVideo</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.GrabVideo" title="Permalink to this definition">¶</a></dt>
-<dd><p>GrabVideo(id, title, slug, creation_date, author_id, one_off_author, caption, metadata, categories, reproduction_allowed, public, external_url, mime_type, width, height, widget_template, file, thumbnail_id, video_ptr_id, asset_id, layout_id, keywords)</p>
-<dl class="exception">
-<dt id="massmedia.models.GrabVideo.DoesNotExist">
-<em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#massmedia.models.GrabVideo.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="exception">
-<dt id="massmedia.models.GrabVideo.MultipleObjectsReturned">
-<em class="property">exception </em><tt class="descclassname">GrabVideo.</tt><tt class="descname">MultipleObjectsReturned</tt><a class="headerlink" href="#massmedia.models.GrabVideo.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="massmedia.models.GrabVideo.get_absolute_url">
-<tt class="descclassname">GrabVideo.</tt><tt class="descname">get_absolute_url</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.GrabVideo.get_absolute_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="massmedia.models.GrabVideo.save">
-<tt class="descclassname">GrabVideo.</tt><tt class="descname">save</tt><big>(</big><em>*a</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#massmedia.models.GrabVideo.save" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="massmedia.models.GrabVideo.video_ptr">
-<tt class="descclassname">GrabVideo.</tt><tt class="descname">video_ptr</tt><a class="headerlink" href="#massmedia.models.GrabVideo.video_ptr" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="massmedia.models.Audio">
 <em class="property">class </em><tt class="descclassname">massmedia.models.</tt><tt class="descname">Audio</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Audio" title="Permalink to this definition">¶</a></dt>
-<dd><p>Audio(id, title, slug, creation_date, author_id, one_off_author, caption, metadata, categories, reproduction_allowed, public, external_url, mime_type, width, height, widget_template, file)</p>
+<dd><p>An audio file</p>
 <dl class="exception">
 <dt id="massmedia.models.Audio.DoesNotExist">
 <em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#massmedia.models.Audio.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -434,8 +442,8 @@ attributes and functions.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="massmedia.models.Audio.sites">
-<tt class="descclassname">Audio.</tt><tt class="descname">sites</tt><a class="headerlink" href="#massmedia.models.Audio.sites" title="Permalink to this definition">¶</a></dt>
+<dt id="massmedia.models.Audio.site">
+<tt class="descclassname">Audio.</tt><tt class="descname">site</tt><a class="headerlink" href="#massmedia.models.Audio.site" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -443,7 +451,7 @@ attributes and functions.</p>
 <dl class="class">
 <dt id="massmedia.models.Flash">
 <em class="property">class </em><tt class="descclassname">massmedia.models.</tt><tt class="descname">Flash</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Flash" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flash(id, title, slug, creation_date, author_id, one_off_author, caption, metadata, categories, reproduction_allowed, public, external_url, mime_type, width, height, widget_template, file)</p>
+<dd><p>A flash SWF file to be played in a custom player</p>
 <dl class="exception">
 <dt id="massmedia.models.Flash.DoesNotExist">
 <em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#massmedia.models.Flash.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -480,8 +488,8 @@ attributes and functions.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="massmedia.models.Flash.sites">
-<tt class="descclassname">Flash.</tt><tt class="descname">sites</tt><a class="headerlink" href="#massmedia.models.Flash.sites" title="Permalink to this definition">¶</a></dt>
+<dt id="massmedia.models.Flash.site">
+<tt class="descclassname">Flash.</tt><tt class="descname">site</tt><a class="headerlink" href="#massmedia.models.Flash.site" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -489,7 +497,7 @@ attributes and functions.</p>
 <dl class="class">
 <dt id="massmedia.models.Document">
 <em class="property">class </em><tt class="descclassname">massmedia.models.</tt><tt class="descname">Document</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Document" title="Permalink to this definition">¶</a></dt>
-<dd><p>Document(id, title, slug, creation_date, author_id, one_off_author, caption, metadata, categories, reproduction_allowed, public, external_url, mime_type, width, height, widget_template, file)</p>
+<dd><p>A generic file</p>
 <dl class="exception">
 <dt id="massmedia.models.Document.DoesNotExist">
 <em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#massmedia.models.Document.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -526,8 +534,8 @@ attributes and functions.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="massmedia.models.Document.sites">
-<tt class="descclassname">Document.</tt><tt class="descname">sites</tt><a class="headerlink" href="#massmedia.models.Document.sites" title="Permalink to this definition">¶</a></dt>
+<dt id="massmedia.models.Document.site">
+<tt class="descclassname">Document.</tt><tt class="descname">site</tt><a class="headerlink" href="#massmedia.models.Document.site" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -535,7 +543,7 @@ attributes and functions.</p>
 <dl class="class">
 <dt id="massmedia.models.Collection">
 <em class="property">class </em><tt class="descclassname">massmedia.models.</tt><tt class="descname">Collection</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Collection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collection(id, creation_date, title, slug, caption, zip_file, public, categories)</p>
+<dd><p>An arbitrary collection of massmedia items</p>
 <dl class="exception">
 <dt id="massmedia.models.Collection.DoesNotExist">
 <em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#massmedia.models.Collection.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -552,6 +560,11 @@ attributes and functions.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="massmedia.models.Collection.get_absolute_url">
+<tt class="descclassname">Collection.</tt><tt class="descname">get_absolute_url</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Collection.get_absolute_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="massmedia.models.Collection.get_next_by_creation_date">
 <tt class="descclassname">Collection.</tt><tt class="descname">get_next_by_creation_date</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.Collection.get_next_by_creation_date" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -562,9 +575,17 @@ attributes and functions.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="massmedia.models.Collection.process_external_url">
+<tt class="descclassname">Collection.</tt><tt class="descname">process_external_url</tt><big>(</big><big>)</big><a class="headerlink" href="#massmedia.models.Collection.process_external_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle an external reference</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="massmedia.models.Collection.process_zipfile">
 <tt class="descclassname">Collection.</tt><tt class="descname">process_zipfile</tt><big>(</big><big>)</big><a class="headerlink" href="#massmedia.models.Collection.process_zipfile" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Loop through a passed Zip file, saving the images and adding them to
+the Collection.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="massmedia.models.Collection.save">
@@ -572,8 +593,8 @@ attributes and functions.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="massmedia.models.Collection.sites">
-<tt class="descclassname">Collection.</tt><tt class="descname">sites</tt><a class="headerlink" href="#massmedia.models.Collection.sites" title="Permalink to this definition">¶</a></dt>
+<dt id="massmedia.models.Collection.site">
+<tt class="descclassname">Collection.</tt><tt class="descname">site</tt><a class="headerlink" href="#massmedia.models.Collection.site" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -581,7 +602,7 @@ attributes and functions.</p>
 <dl class="class">
 <dt id="massmedia.models.CollectionRelation">
 <em class="property">class </em><tt class="descclassname">massmedia.models.</tt><tt class="descname">CollectionRelation</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.CollectionRelation" title="Permalink to this definition">¶</a></dt>
-<dd><p>CollectionRelation(id, collection_id, content_type_id, object_id)</p>
+<dd><p>Generic Many-to-Many Relationships between a Collection and any other obj</p>
 <dl class="exception">
 <dt id="massmedia.models.CollectionRelation.DoesNotExist">
 <em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#massmedia.models.CollectionRelation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -600,8 +621,9 @@ attributes and functions.</p>
 <dl class="attribute">
 <dt id="massmedia.models.CollectionRelation.content_object">
 <tt class="descclassname">CollectionRelation.</tt><tt class="descname">content_object</tt><a class="headerlink" href="#massmedia.models.CollectionRelation.content_object" title="Permalink to this definition">¶</a></dt>
-<dd>Provides a generic relation to any object through content-type/object-id
-fields.</dd></dl>
+<dd><p>Provides a generic relation to any object through content-type/object-id
+fields.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="massmedia.models.CollectionRelation.content_type">
@@ -613,7 +635,7 @@ fields.</dd></dl>
 <dl class="class">
 <dt id="massmedia.models.MediaTemplate">
 <em class="property">class </em><tt class="descclassname">massmedia.models.</tt><tt class="descname">MediaTemplate</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#massmedia.models.MediaTemplate" title="Permalink to this definition">¶</a></dt>
-<dd><p>MediaTemplate(id, name, mimetype, content)</p>
+<dd><p>Templates to display media, stored in the database</p>
 <dl class="exception">
 <dt id="massmedia.models.MediaTemplate.DoesNotExist">
 <em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#massmedia.models.MediaTemplate.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -632,7 +654,8 @@ fields.</dd></dl>
 <dl class="method">
 <dt id="massmedia.models.MediaTemplate.template">
 <tt class="descclassname">MediaTemplate.</tt><tt class="descname">template</tt><big>(</big><big>)</big><a class="headerlink" href="#massmedia.models.MediaTemplate.template" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return a Django Template object from the content of the record</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -645,7 +668,7 @@ fields.</dd></dl>
     <div class="footer">
     <p>
       &copy; Copyright 2009-2010, The Washington Times.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
 	</p>
     </div>
       <div class="clearer"></div>

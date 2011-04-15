@@ -1,0 +1,165 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>You Tube Collections &mdash; MassMedia v0.8beta2 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.8beta2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MassMedia v0.8beta2 documentation" href="index.html" />
+    <link rel="next" title="Rendering media in templates" href="media_and_templates.html" />
+    <link rel="prev" title="<no title>" href="tinymce_and_filebrowsing.html" /> 
+  </head>
+  <body>
+<div id="docstitle">
+	<p>MassMedia v0.8beta2 documentation</p>
+</div>
+<div id="header">
+	<div id="title"><h1>You Tube Collections</h1></div>
+	<ul id="headerButtons">
+		<li id="toc_button"><div class="headerButton"><a href="#">Table of Contents</a></div></li>
+		<li id="page_buttons">
+			<div class="headerButton"><a href="genindex.html" title="General Index" accesskey="I">index</a></div>
+			<div class="headerButton"><a href="py-modindex.html" title="Python Module Index" >modules</a></div>
+			<div class="headerButton"><a href="media_and_templates.html" title="Rendering media in templates" accesskey="N">next</a></div>
+			<div class="headerButton"><a href="tinymce_and_filebrowsing.html" title="<no title>" accesskey="P">previous</a></div>
+		</li>
+	</ul>
+</div>
+
+<div id="sphinxsidebar">
+  <div class="sphinxsidebarwrapper">
+	<ul><li class="toctree-l1"><a href="index.html">Main Page</a></li></ul>
+	<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Configuration Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Mass Media Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">You Tube Collections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#settings">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-the-playlist-url">Getting the playlist URL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-the-collection">Creating the Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="media_and_templates.html">Rendering media in templates</a></li>
+</ul>
+
+    <div id="searchbox" style="display: none">
+      
+        <form class="search" action="search.html" method="get">
+			<div class="search-wrapper">
+			<span class="search-left"></span>
+			<input class="prettysearch" type="text" name="q" size="18" />
+			<span class="search-right">&nbsp;</span>
+			</div>
+          <input type="submit" value="Search" class="searchbutton" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        <p class="searchtip" style="font-size: 90%">
+        Enter search terms or a module, class or function name.
+        </p>
+    </div>
+    <script type="text/javascript">$('#searchbox').show(0);</script>
+  </div>
+</div>
+
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="you-tube-collections">
+<h1>You Tube Collections<a class="headerlink" href="#you-tube-collections" title="Permalink to this headline">¶</a></h1>
+<p>In version 0.8 preliminary support for external services was added. The first service supported was creating a <tt class="xref py py-class docutils literal"><span class="pre">Collection</span></tt> of a youtube.com playlist.</p>
+<p>Creating a collection from a YouTube playlist <strong>will not import the videos</strong> on the playlist. Because you can change the playlist independently of the Django admin interface, it would be difficult to keep it in sync with YouTube. It is easy to use the Google YouTube API to get all the videos dynamically. See <a class="reference internal" href="youtube_collections_and_templates.html#youtube-collections-and-templates"><em>YouTube Collections and Templates</em></a>.</p>
+<div class="section" id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<p>The YouTube API requires 3 settings, <tt class="docutils literal"><span class="pre">EMAIL</span></tt>, <tt class="docutils literal"><span class="pre">USERNAME</span></tt>, <tt class="docutils literal"><span class="pre">PASSWORD</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MASSMEDIA_SERVICES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;YOUTUBE&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;EMAIL&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+        <span class="s">&#39;USERNAME&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+        <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-the-playlist-url">
+<h2>Getting the playlist URL<a class="headerlink" href="#getting-the-playlist-url" title="Permalink to this headline">¶</a></h2>
+<p>YouTube has several different URLs that reference the playlist, depending on how you get to the playlist page.</p>
+<div class="section" id="user-s-playlist-page">
+<h3>User&#8217;s playlist page<a class="headerlink" href="#user-s-playlist-page" title="Permalink to this headline">¶</a></h3>
+<p>If you go to any user&#8217;s page and click on the &#8220;Playlists&#8221; button</p>
+<img alt="_images/playlist_tab2.png" src="_images/playlist_tab2.png" />
+<p>you can select a playlist from the list on the right.</p>
+<img alt="_images/playlist_list2.png" src="_images/playlist_list2.png" />
+<p>The address bar address will change to look similar to:</p>
+<div class="highlight-python"><pre>http://www.youtube.com/washingtontimes#p/c/4A35EB2544D73557</pre>
+</div>
+</div>
+<div class="section" id="playlist-management-page">
+<h3>Playlist management page<a class="headerlink" href="#playlist-management-page" title="Permalink to this headline">¶</a></h3>
+<p>If you go to <strong>My Videos &amp; Playlists</strong></p>
+<img alt="_images/myplaylists1.png" src="_images/myplaylists1.png" />
+<p>and select <strong>Playlists</strong> from the list on the left.</p>
+<img alt="_images/playlists1.png" src="_images/playlists1.png" />
+<p>You can use the <strong>Link:</strong> field URL; which is formatted like:</p>
+<div class="highlight-python"><pre>http://www.youtube.com/view_play_list?p=4A35EB2544D73557</pre>
+</div>
+<p>If you look at the URL in the <strong>Embed:</strong> field, it contains a URL like:</p>
+<div class="highlight-python"><pre>http://www.youtube.com/p/4A35EB2544D73557?hl=en_US&amp;amp;fs=1</pre>
+</div>
+<p>This URL requires you to chop off the question mark and everything after it:</p>
+<div class="highlight-python"><pre>http://www.youtube.com/p/4A35EB2544D73557</pre>
+</div>
+</div>
+</div>
+<div class="section" id="creating-the-collection">
+<h2>Creating the Collection<a class="headerlink" href="#creating-the-collection" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Create a new <tt class="xref py py-class docutils literal"><span class="pre">Collection</span></tt> object in the admin.</li>
+<li>Give the new collection a name</li>
+<li>Enter the playlist URL retrieved earlier into the <strong>External URL</strong> field.</li>
+<li>Select the <strong>Site</strong>.</li>
+<li>Save.</li>
+</ol>
+<p>For information on displaying the collection, see <a class="reference internal" href="youtube_collections_and_templates.html#youtube-collections-and-templates"><em>YouTube Collections and Templates</em></a>.</p>
+</div>
+</div>
+
+
+          </div> 
+        </div>
+      </div>
+    <div class="footer">
+    <p>
+      &copy; Copyright 2009-2010, The Washington Times.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+	</p>
+    </div>
+      <div class="clearer"></div>
+    </div>
+	<div id="breadcrumbs">
+		You Tube Collections
+		</ul>
+	</div>
+	<script type="text/javascript" charset="utf-8" src="_static/toc.js"></script>
+  </body>
+</html>
