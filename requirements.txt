@@ -1,5 +1,7 @@
+gdata
+
 # Optional
-django-tagging
+# django-tagging
 
 # Optional for IPTC metadata extraction
 # As IPTCInfo isn't reachable through Pypi on 2011/02/28 install through pip
@@ -7,9 +9,9 @@ django-tagging
 # IPTCInfo
 
 # Optional for general metadata extraction
-hachoir-metadata
-hachoir-core
-hachoir-parser
+# hachoir-metadata
+# hachoir-core
+# hachoir-parser
 
 # Optional for south migration
-south
+# south
