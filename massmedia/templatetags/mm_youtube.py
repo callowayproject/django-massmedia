@@ -79,5 +79,71 @@ def get_youtube_feed(parser, token):
     if len(bits) != 4:
         raise template.TemplateSyntaxError("%s Tag is called: {%% %s <media object> as varname %%}" % (bits[0], bits[0]))
     return YouTubeFeedNode(bits[1], bits[3])
+
+class SplitNode(template.Node):
+    def __init__(self, varstring, varname, split_string=None):
+        self.varstring = template.Variable(varstring)
+        self.varname = varname
+        self.split_string = split_string
     
+    def render(self, context):
+        try:
+            varstring = self.varstring.resolve(context)
+        except template.VariableDoesNotExist:
+            varstring = self.varstring.var
+        
+        if self.split_string is None:
+            context[self.varname] = varstring.split()
+        else:
+            context[self.varname] = varstring.split(self.split_string)
+        return ''
+    
+    
+def split(parser, token):
+    """
+    Splits string into a list
+    
+    Usage:
+        {% split "1,2,3,4" as var %}
+        {% split "1, 2, 3, 4" ", " as var %}
+        {% split contextvar as var %}
+    """
+    bits = token.split_contents()
+    if len(bits) == 4 and bits[2] == 'as':
+        return SplitNode(bits[1], bits[3])
+    elif len(bits) == 5 and bits[3] == 'as':
+        return SplitNode(bits[1], bits[4], bits[2].strip('"').strip("'"))
+    else:
+        raise template.TemplateSyntaxError("%s Tag is called: {%% %s <string or variable> [<split string>] as varname %%}" % (bits[0], bits[0]))
+
+class Duration(object):
+    """A duration in seconds"""
+    def __init__(self, value):
+        super(Duration, self).__init__()
+        seconds = int(value)
+        hours, remainder = divmod(seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        self.hour = hours
+        self.minute = minutes
+        self.second = seconds
+
+@register.filter
+def format_seconds(value, arg=None):
+    """Formats a number of seconds according to the given format."""
+    from django.utils import dateformat
+    #from django.utils import formats
+    if value in (None, u''):
+        return u''
+    if arg is None:
+        arg = settings.TIME_FORMAT
+    data = Duration(value)
+    
+    try:
+        return dateformat.time_format(data, arg)
+    except AttributeError:
+        return ''
+time.is_safe = False
+
+
 register.tag(get_youtube_feed)
+register.tag(split)

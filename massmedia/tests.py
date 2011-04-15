@@ -118,6 +118,27 @@ class CollectionTestCase(unittest.TestCase):
         #     {% endspaceless %}""")
         # self.assertEqual(expected_widgets, testplate.render(Context({'relations':relations})).strip())
     
+    def testSplitTag(self):
+        tmpl1 = '{% load mm_youtube %}{% split x "," as xprime %}'
+        tmpl2 = "{% load mm_youtube %}{% split x ',' as xprime %}"
+        tmpl3 = "{% load mm_youtube %}{% split x as xprime %}"
+        loop = "{% for i in xprime %}{{i}}{% endfor %}"
+        expected = '1234'
+        from django import template
+        result1 = template.Template(tmpl1+loop).render(template.Context({'x':'1,2,3,4'}))
+        assert(result1 == expected)
+        result2 = template.Template(tmpl2+loop).render(template.Context({'x':'1,2,3,4'}))
+        assert(result2 == expected)
+        result3 = template.Template(tmpl3+loop).render(template.Context({'x':'1 2 3 4'}))
+        assert(result3 == expected)
+    
+    def testFormatSecondsFilter(self):
+        tmpl = '{% load mm_youtube %}{{ x|format_seconds:"i:s"}}'
+        expected = '01:05'
+        from django import template
+        result1 = template.Template(tmpl).render(template.Context({'x':'65'}))
+        assert(result1 == expected)
+    
     def testYouTube(self):
         c = Collection.objects.create(external_url="http://www.youtube.com/view_play_list?p=3C046B163FA3957C")
         testplate = Template("{% load mm_youtube %}{% get_youtube_feed c as t %}{{ t.metadata.title }}")
