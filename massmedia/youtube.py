@@ -133,7 +133,7 @@ class YouTubeFeed(YouTubeBase):
         """
         if 'gdata.youtube.com' not in self.url:
             import re
-            playlistid_re = re.compile("(?:user/|p=)([A-F0-9]{16})$")
+            playlistid_re = re.compile("(?:user/|p=|#p/c/)([A-F0-9]{16})$")
             search = playlistid_re.search(self.url)
             if search:
                 playlist_id = search.group(1)
