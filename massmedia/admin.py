@@ -245,7 +245,7 @@ class CollectionInline(GenericCollectionTabularInline):
     model = CollectionRelation
 
 class CollectionAdmin(admin.ModelAdmin):
-    fields = ('title', 'slug', 'caption', 'zip_file', 'public', 'site')
+    fields = ('title', 'slug', 'caption', 'zip_file', 'external_url', 'public', 'site')
     list_display = ('title','caption', 'public', 'creation_date')
     list_filter = ('site', 'creation_date','public')
     prepopulated_fields = {'slug': ('title',)}
