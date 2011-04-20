@@ -1,6 +1,6 @@
 from django import template
 from django.conf import settings
-from massmedia.models import GrabVideo,Image
+from massmedia.models import Image
 
 register = template.Library()
 
@@ -12,10 +12,7 @@ class MassMediaNode(template.Node):
     def render(self, context):
         self.args[0] = context.get(self.args[0],self.args[0])
         if isinstance(self.args[0], basestring):
-            try:
-                self.args[0] = GrabVideo.objects.get(slug=self.args[0])
-            except GrabVideo.DoesNotExist:
-                return ''
+            return ''
         try:
             self.args[0].layout_id = self.args[1]
         except IndexError:

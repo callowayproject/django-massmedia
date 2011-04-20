@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -5,27 +6,28 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Configuration Settings &mdash; MassMedia v0.3beta1 documentation</title>
+    <title>Configuration Settings &mdash; MassMedia v0.8beta2 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '#',
-        VERSION:     '0.3beta1',
-        COLLAPSE_MODINDEX: false,
+        URL_ROOT:    '',
+        VERSION:     '0.8beta2',
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="MassMedia v0.3beta1 documentation" href="index.html" />
+    <link rel="top" title="MassMedia v0.8beta2 documentation" href="index.html" />
     <link rel="next" title="Mass Media Reference" href="reference/index.html" />
     <link rel="prev" title="MassMedia v|release|" href="index.html" /> 
   </head>
   <body>
 <div id="docstitle">
-	<p>MassMedia v0.3beta1 documentation</p>
+	<p>MassMedia v0.8beta2 documentation</p>
 </div>
 <div id="header">
 	<div id="title"><h1>Configuration Settings</h1></div>
@@ -33,7 +35,7 @@
 		<li id="toc_button"><div class="headerButton"><a href="#">Table of Contents</a></div></li>
 		<li id="page_buttons">
 			<div class="headerButton"><a href="genindex.html" title="General Index" accesskey="I">index</a></div>
-			<div class="headerButton"><a href="modindex.html" title="Global Module Index" accesskey="M">modules</a></div>
+			<div class="headerButton"><a href="py-modindex.html" title="Python Module Index" >modules</a></div>
 			<div class="headerButton"><a href="reference/index.html" title="Mass Media Reference" accesskey="N">next</a></div>
 			<div class="headerButton"><a href="index.html" title="MassMedia v|release|" accesskey="P">previous</a></div>
 		</li>
@@ -44,22 +46,24 @@
   <div class="sphinxsidebarwrapper">
 	<ul><li class="toctree-l1"><a href="index.html">Main Page</a></li></ul>
 	<ul class="current">
-<li class="toctree-l1 current"><a class="current reference external" href="">Configuration Settings</a><ul>
-<li class="toctree-l2"><a class="reference external" href="#mmedia-image-exts">MMEDIA_IMAGE_EXTS</a></li>
-<li class="toctree-l2"><a class="reference external" href="#mmedia-video-exts">MMEDIA_VIDEO_EXTS</a></li>
-<li class="toctree-l2"><a class="reference external" href="#mmedia-audio-exts">MMEDIA_AUDIO_EXTS</a></li>
-<li class="toctree-l2"><a class="reference external" href="#mmedia-flash-exts">MMEDIA_FLASH_EXTS</a></li>
-<li class="toctree-l2"><a class="reference external" href="#mmedia-doc-exts">MMEDIA_DOC_EXTS</a></li>
-<li class="toctree-l2"><a class="reference external" href="#mmedia-info-quality">MMEDIA_INFO_QUALITY</a></li>
-<li class="toctree-l2"><a class="reference external" href="#mmedia-thumb-size">MMEDIA_THUMB_SIZE</a></li>
-<li class="toctree-l2"><a class="reference external" href="#mmedia-extra-mime-types">MMEDIA_EXTRA_MIME_TYPES</a></li>
-<li class="toctree-l2"><a class="reference external" href="#mmedia-fs-templates">MMEDIA_FS_TEMPLATES</a></li>
-<li class="toctree-l2"><a class="reference external" href="#mmedia-local-import-tmp-dir">MMEDIA_LOCAL_IMPORT_TMP_DIR</a></li>
-<li class="toctree-l2"><a class="reference external" href="#grab-api-key">GRAB_API_KEY</a></li>
-<li class="toctree-l2"><a class="reference external" href="#grab-api-url">GRAB_API_URL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Configuration Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mmedia-image-exts">MMEDIA_IMAGE_EXTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mmedia-video-exts">MMEDIA_VIDEO_EXTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mmedia-audio-exts">MMEDIA_AUDIO_EXTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mmedia-flash-exts">MMEDIA_FLASH_EXTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mmedia-doc-exts">MMEDIA_DOC_EXTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mmedia-info-quality">MMEDIA_INFO_QUALITY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mmedia-thumb-size">MMEDIA_THUMB_SIZE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mmedia-extra-mime-types">MMEDIA_EXTRA_MIME_TYPES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mmedia-fs-templates">MMEDIA_FS_TEMPLATES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mmedia-local-import-tmp-dir">MMEDIA_LOCAL_IMPORT_TMP_DIR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grab-api-key">GRAB_API_KEY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grab-api-url">GRAB_API_URL</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference external" href="reference/index.html">Mass Media Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Mass Media Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="youtube_collections.html">You Tube Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media_and_templates.html">Rendering media in templates</a></li>
 </ul>
 
     <div id="searchbox" style="display: none">
@@ -185,7 +189,7 @@
     <div class="footer">
     <p>
       &copy; Copyright 2009-2010, The Washington Times.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
 	</p>
     </div>
       <div class="clearer"></div>

@@ -21,8 +21,10 @@ class DjangoModelDocumenter(autodoc.ClassDocumenter):
         (members_check_module, members) = super(DjangoModelDocumenter, self).get_object_members(want_all)
         new_members = []
         for name, cls in members:
+            print "+++++++++++++++++++++", name
             if name == '_meta':
                 for field in cls.fields:
+                    print '-----------------------', field.name
                     new_members.append((field.name, field))
             elif cls is not None:
                 new_members.append((name, cls))

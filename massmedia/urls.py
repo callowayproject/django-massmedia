@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from django.views.generic.list_detail import object_list, object_detail
 from django.http import HttpResponseNotFound
-from models import GrabVideo, Collection, Image, Video, Audio, Flash, Document, Embed
+from models import Collection, Image, Video, Audio, Flash, Document, Embed
 from views import mediatype_detail
 
 
@@ -12,7 +12,6 @@ media_dict = {
     'video': {'queryset':Video.objects.public(),'meta':Video._meta},
     'flash': {'queryset':Flash.objects.public(),'meta':Flash._meta},
     'document': {'queryset':Document.objects.public(),'meta':Document._meta},
-    'grabvideo': {'queryset':GrabVideo.objects.public(),'meta':GrabVideo._meta},
     'embed': {'queryset':Embed.objects.public(),'meta':Embed._meta},
 }
 
@@ -47,10 +46,6 @@ urlpatterns = patterns('',
             'extra_context': {'media': media_dict}
         },
         name="massmedia_index"),
-    url(
-        r'^grabvideo/$',
-        'massmedia.views.grab_categorized',
-        name="massmedia_grab_categorized"),
     url(
         r'^(?P<enlarge>enlarge)/(?P<mediatype>\w+)/(?P<slug>[-\w]+)/$',
         generic_wrapper,

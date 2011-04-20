@@ -14,6 +14,10 @@ Contents:
    
    settings
    reference/index
+   tinymce_and_filebrowsing
+   youtube_collections
+   youtube_collections_and_templates
+   media_and_templates
 
 
 Indices and tables
