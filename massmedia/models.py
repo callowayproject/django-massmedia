@@ -136,7 +136,7 @@ class Image(Media):
         if isinstance(self.one_off_author, (tuple, list)):
             self.one_off_author = ", ".join(self.one_off_author)
         if not self.caption:
-            self.caption = self.metadata['120'] or ''
+            self.caption = self.metadata['120'] or self.metadata['Title'] or ''
         tags = []
         tags.extend(self.metadata["15"] or [])
         tags.extend(self.metadata["20"] or [])
