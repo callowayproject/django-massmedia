@@ -88,12 +88,10 @@ class YouTubeBase(object):
                     output.update(val)
                 elif key == 'extension_elements':
                     for item in val:
-                        if item.attributes:
-                            print item
-                            raise
-                        if item.children and item.text:
-                            print item
-                            raise
+                        # Do something with item.attributes?
+                        # if item.attributes:
+                        #     print item
+                        #     raise
                         if item.children:
                             output[item.tag] = YouTubeBase.convert_to_python(item.children)
                         else:
