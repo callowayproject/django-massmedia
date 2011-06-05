@@ -22,7 +22,7 @@ class SerializedObjectField(models.TextField):
             # If an error was raised, just return the plain value
             return value
     
-    def get_db_prep_save(self, value):
+    def get_db_prep_save(self, value, *args, **kwargs):
         if value is not None:# and not isinstance(value, SerializedObject):
             if self.encoder:
                 try:
@@ -36,7 +36,7 @@ class SerializedObjectField(models.TextField):
     def get_internal_type(self):
         return 'TextField'
     
-    def get_db_prep_lookup(self, lookup_type, value):
+    def get_db_prep_lookup(self, lookup_type, value, *args, **kwargs):
         if lookup_type == 'exact':
             value = self.get_db_prep_save(value)
             return super(SerializedObjectField, self).get_db_prep_lookup(lookup_type, value)
