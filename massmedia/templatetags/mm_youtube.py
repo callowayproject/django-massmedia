@@ -63,7 +63,13 @@ class YouTubeFeedNode(template.Node):
         if cache_results:
             context[self.varname] = cache_results
             return ''
-        feed = YouTubeFeed(media_object.external_url)
+        
+        try:
+            # In the event something unexpected happens with retrieving 
+            # the video feed, set the feed to None. 
+            feed = YouTubeFeed(media_object.external_url)
+        except:
+            feed = None
         cache_set(cache_key, feed)
         context[self.varname] = feed
         return ''
