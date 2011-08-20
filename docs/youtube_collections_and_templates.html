@@ -6,13 +6,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>YouTube Collections and Templates &mdash; MassMedia v0.8beta2 documentation</title>
+    <title>YouTube Collections and Templates &mdash; MassMedia v0.8.5 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.8beta2',
+        VERSION:     '0.8.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -21,13 +21,13 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="MassMedia v0.8beta2 documentation" href="index.html" />
+    <link rel="top" title="MassMedia v0.8.5 documentation" href="index.html" />
     <link rel="next" title="Rendering media in templates" href="media_and_templates.html" />
     <link rel="prev" title="You Tube Collections" href="youtube_collections.html" /> 
   </head>
   <body>
 <div id="docstitle">
-	<p>MassMedia v0.8beta2 documentation</p>
+	<p>MassMedia v0.8.5 documentation</p>
 </div>
 <div id="header">
 	<div id="title"><h1>YouTube Collections and Templates</h1></div>
@@ -88,7 +88,7 @@
 <span id="id1"></span><h1>YouTube Collections and Templates<a class="headerlink" href="#youtube-collections-and-templates" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mm-youtube-template-tag-library">
 <h2>mm_youtube template tag library<a class="headerlink" href="#mm-youtube-template-tag-library" title="Permalink to this headline">¶</a></h2>
-<p>The <em class="xref std std-ref">mm_youtube</em> template tag library handles all the communication with YouTube, plus there are some extra helper tags and filters.</p>
+<p>The <tt class="docutils literal"><span class="pre">mm_youtube</span></tt> template tag library handles all the communication with YouTube, plus there are some extra helper tags and filters.</p>
 <ul class="simple">
 <li><a class="reference internal" href="#get-youtube-feed"><em>{% get_youtube_feed %}</em></a></li>
 <li><a class="reference internal" href="#split"><em>{% split %}</em></a></li>
@@ -97,7 +97,7 @@
 <div class="section" id="get-youtube-feed">
 <span id="id2"></span><h3>{% get_youtube_feed %}<a class="headerlink" href="#get-youtube-feed" title="Permalink to this headline">¶</a></h3>
 <p><strong>Usage:</strong> <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_youtube_feed</span> <span class="pre">&lt;object&gt;</span> <span class="pre">as</span> <span class="pre">&lt;result&gt;</span> <span class="pre">%}</span></tt></p>
-<p>This tag onverts the <tt class="xref py py-class docutils literal"><span class="pre">Collection</span></tt> <tt class="docutils literal"><span class="pre">&lt;object&gt;</span></tt> into an object with the information about the YouTube playlist. The information is stored in the variable specified as <tt class="docutils literal"><span class="pre">&lt;result&gt;</span></tt>. The <tt class="docutils literal"><span class="pre">&lt;result&gt;</span></tt> object has two attributes: metadata and entries. The metadata contains information about the playlist, and entries is a list of the videos in the playlist.</p>
+<p>This tag onverts the <a class="reference internal" href="reference/models.html#massmedia.models.Collection" title="massmedia.models.Collection"><tt class="xref py py-class docutils literal"><span class="pre">massmedia.models.Collection</span></tt></a> <tt class="docutils literal"><span class="pre">&lt;object&gt;</span></tt> into an object with the information about the YouTube playlist. The information is stored in the variable specified as <tt class="docutils literal"><span class="pre">&lt;result&gt;</span></tt>. The <tt class="docutils literal"><span class="pre">&lt;result&gt;</span></tt> object has two attributes: metadata and entries. The metadata contains information about the playlist, and entries is a list of the videos in the playlist.</p>
 <div class="section" id="result-metadata">
 <h4>result.metadata<a class="headerlink" href="#result-metadata" title="Permalink to this headline">¶</a></h4>
 <dl class="docutils">

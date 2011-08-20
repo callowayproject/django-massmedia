@@ -6,13 +6,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>You Tube Collections &mdash; MassMedia v0.8beta2 documentation</title>
+    <title>You Tube Collections &mdash; MassMedia v0.8.5 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.8beta2',
+        VERSION:     '0.8.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -21,13 +21,13 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="MassMedia v0.8beta2 documentation" href="index.html" />
-    <link rel="next" title="Rendering media in templates" href="media_and_templates.html" />
-    <link rel="prev" title="<no title>" href="tinymce_and_filebrowsing.html" /> 
+    <link rel="top" title="MassMedia v0.8.5 documentation" href="index.html" />
+    <link rel="next" title="YouTube Collections and Templates" href="youtube_collections_and_templates.html" />
+    <link rel="prev" title="TinyMCE and Filebrowsing" href="tinymce_and_filebrowsing.html" /> 
   </head>
   <body>
 <div id="docstitle">
-	<p>MassMedia v0.8beta2 documentation</p>
+	<p>MassMedia v0.8.5 documentation</p>
 </div>
 <div id="header">
 	<div id="title"><h1>You Tube Collections</h1></div>
@@ -36,8 +36,8 @@
 		<li id="page_buttons">
 			<div class="headerButton"><a href="genindex.html" title="General Index" accesskey="I">index</a></div>
 			<div class="headerButton"><a href="py-modindex.html" title="Python Module Index" >modules</a></div>
-			<div class="headerButton"><a href="media_and_templates.html" title="Rendering media in templates" accesskey="N">next</a></div>
-			<div class="headerButton"><a href="tinymce_and_filebrowsing.html" title="<no title>" accesskey="P">previous</a></div>
+			<div class="headerButton"><a href="youtube_collections_and_templates.html" title="YouTube Collections and Templates" accesskey="N">next</a></div>
+			<div class="headerButton"><a href="tinymce_and_filebrowsing.html" title="TinyMCE and Filebrowsing" accesskey="P">previous</a></div>
 		</li>
 	</ul>
 </div>
@@ -48,12 +48,14 @@
 	<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="settings.html">Configuration Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Mass Media Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tinymce_and_filebrowsing.html">TinyMCE and Filebrowsing</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">You Tube Collections</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#settings">Settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-the-playlist-url">Getting the playlist URL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creating-the-collection">Creating the Collection</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="youtube_collections_and_templates.html">YouTube Collections and Templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="media_and_templates.html">Rendering media in templates</a></li>
 </ul>
 
@@ -107,9 +109,9 @@
 <div class="section" id="user-s-playlist-page">
 <h3>User&#8217;s playlist page<a class="headerlink" href="#user-s-playlist-page" title="Permalink to this headline">¶</a></h3>
 <p>If you go to any user&#8217;s page and click on the &#8220;Playlists&#8221; button</p>
-<img alt="_images/playlist_tab2.png" src="_images/playlist_tab2.png" />
+<img alt="_images/playlist_tab.png" src="_images/playlist_tab.png" />
 <p>you can select a playlist from the list on the right.</p>
-<img alt="_images/playlist_list2.png" src="_images/playlist_list2.png" />
+<img alt="_images/playlist_list.png" src="_images/playlist_list.png" />
 <p>The address bar address will change to look similar to:</p>
 <div class="highlight-python"><pre>http://www.youtube.com/washingtontimes#p/c/4A35EB2544D73557</pre>
 </div>
@@ -117,9 +119,9 @@
 <div class="section" id="playlist-management-page">
 <h3>Playlist management page<a class="headerlink" href="#playlist-management-page" title="Permalink to this headline">¶</a></h3>
 <p>If you go to <strong>My Videos &amp; Playlists</strong></p>
-<img alt="_images/myplaylists1.png" src="_images/myplaylists1.png" />
+<img alt="_images/myplaylists.png" src="_images/myplaylists.png" />
 <p>and select <strong>Playlists</strong> from the list on the left.</p>
-<img alt="_images/playlists1.png" src="_images/playlists1.png" />
+<img alt="_images/playlists.png" src="_images/playlists.png" />
 <p>You can use the <strong>Link:</strong> field URL; which is formatted like:</p>
 <div class="highlight-python"><pre>http://www.youtube.com/view_play_list?p=4A35EB2544D73557</pre>
 </div>

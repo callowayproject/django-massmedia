@@ -7,7 +7,7 @@ YouTube Collections and Templates
 mm_youtube template tag library
 ===============================
 
-The :ref:`mm_youtube` template tag library handles all the communication with YouTube, plus there are some extra helper tags and filters.
+The ``mm_youtube`` template tag library handles all the communication with YouTube, plus there are some extra helper tags and filters.
 
 * :ref:`get_youtube_feed`
 * :ref:`split`
@@ -20,7 +20,7 @@ The :ref:`mm_youtube` template tag library handles all the communication with Yo
 
 **Usage:** ``{% get_youtube_feed <object> as <result> %}``
 
-This tag onverts the :class:`Collection` ``<object>`` into an object with the information about the YouTube playlist. The information is stored in the variable specified as ``<result>``\ . The ``<result>`` object has two attributes: metadata and entries. The metadata contains information about the playlist, and entries is a list of the videos in the playlist.
+This tag onverts the :py:class:`massmedia.models.Collection` ``<object>`` into an object with the information about the YouTube playlist. The information is stored in the variable specified as ``<result>``\ . The ``<result>`` object has two attributes: metadata and entries. The metadata contains information about the playlist, and entries is a list of the videos in the playlist.
 
 
 result.metadata
