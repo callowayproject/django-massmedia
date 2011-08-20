@@ -30,15 +30,11 @@ Models
    :members:
    :undoc-members:
 
-.. autodjangomodel:: massmedia.models.Image
+.. autoclass:: massmedia.models.Image
    :members:
    :undoc-members:
 
 .. autoclass:: massmedia.models.Video
-   :members:
-   :undoc-members:
-
-.. autoclass:: massmedia.models.GrabVideo
    :members:
    :undoc-members:
 
