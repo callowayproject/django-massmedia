@@ -87,6 +87,7 @@ class Media(models.Model):
     external_url = models.URLField(
         _("External URL"),
         blank=True, null=True,
+        verify_exists=False,
         help_text=_("If this URL Field is set, the media will be pulled externally"))
     mime_type = models.CharField(
         _("MIME type"),

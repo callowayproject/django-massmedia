@@ -14,7 +14,7 @@ from models import (Image, Video, Audio, Flash, Collection, Embed, Document,
     CollectionRelation, MediaTemplate)
 import settings
 from forms import (ImageCreationForm, VideoCreationForm, AudioCreationForm, 
-    FlashCreationForm, DocumentCreationForm)
+    FlashCreationForm, DocumentCreationForm, EmbedCreationForm)
 
 from templatetags.media_widgets import snipshot_url
 
@@ -263,13 +263,48 @@ class CollectionAdmin(admin.ModelAdmin):
             'js/genericcollections.js',
         )
 
+class EmbedAdmin(MediaAdmin):
+    fieldsets = (
+        (None, {'fields':('title', 'caption')}),
+        (_("Content"), {'fields':(('external_url', 'code',),)}),
+        (_("Credit"), {'fields':('author', 'one_off_author', 'reproduction_allowed')}),
+        (_("Metadata"), {'fields':('metadata', 'mime_type')}),
+        (_("Connections"), {'fields':('public', 'site')}),
+        (_("Widget"), {'fields':('width', 'height')}),
+        (_("Advanced options"), {
+            'classes': ('collapse',),
+            'fields': ('slug', 'widget_template',)
+        }),
+    )
+    
+    add_fieldsets = (
+        (_("Content"),{'fields':('title', 'external_url', 'caption')}),
+        (_("Additional Info"), {
+            'classes': ('collapse',),
+            'fields': ('slug', 'creation_date', 'site')
+        })
+    )
+    
+    add_form = EmbedCreationForm
+    
+    if settings.USE_TAGGING:
+        fieldsets[4][1]['fields'] += ('categories',)
+    
+    list_display = ('title', 'mime_type', 'public', 'creation_date')
+    list_filter = ('site', 'creation_date', 'public')
+    list_editable = ('public',)
+    prepopulated_fields = {'slug': ('title',)}
+    date_hierarchy = 'creation_date'
+    search_fields = ('caption', )
+
+
 admin.site.register(Collection , CollectionAdmin)
 admin.site.register(Image, ImageAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Audio, AudioAdmin)
 admin.site.register(Flash, FlashAdmin)
 admin.site.register(Document, DocumentAdmin)
-admin.site.register(Embed)
+admin.site.register(Embed, EmbedAdmin)
 
 if not settings.FS_TEMPLATES:
     admin.site.register(MediaTemplate)
