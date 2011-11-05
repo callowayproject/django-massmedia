@@ -265,7 +265,7 @@ class CollectionAdmin(admin.ModelAdmin):
 class EmbedAdmin(MediaAdmin):
     fieldsets = (
         (None, {'fields':('title', 'caption')}),
-        (_("Content"), {'fields':(('external_url', 'code',),)}),
+        (_("Content"), {'fields':(('code',),)}),
         (_("Credit"), {'fields':('author', 'one_off_author', 'reproduction_allowed')}),
         (_("Metadata"), {'fields':('metadata', 'mime_type')}),
         (_("Connections"), {'fields':('public', 'site')}),
