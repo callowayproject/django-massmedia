@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.sites.models import Site
 import os, datetime
 
-from models import Image, Video, Audio, Flash, Document
+from models import Image, Video, Audio, Flash, Document, Embed
 
 
 class ContentCreationForm(forms.ModelForm):
@@ -109,3 +109,31 @@ class DocumentCreationForm(ContentCreationForm, forms.ModelForm):
         if (not self.cleaned_data.has_key('file') or not self.cleaned_data['file']) and not self.cleaned_data['external_url']:
             raise forms.ValidationError("You must include either a file or external url")
         return super(DocumentCreationForm, self).clean()
+
+
+class EmbedCreationForm(forms.ModelForm):
+    """
+    A form that creates a piece of content from a file and title.
+    """
+    title = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'size':85}))
+    external_url = forms.URLField(
+        required=False,
+        help_text="If this URLField is set, the media will be pulled externally")
+    code = forms.CharField(required=False, widget=forms.TextInput(attrs={'size':85}))
+    creation_date = forms.DateTimeField()
+    
+    class Meta:
+        model = Embed
+    
+    def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,
+                     initial=None, error_class=forms.util.ErrorList, label_suffix=':',
+                     empty_permitted=False, instance=None):
+        # set a default creation date and add the current site
+        if not instance and (initial is not None and not initial.has_key('creation_date')):
+            initial['creation_date'] = datetime.datetime.now()
+        if not instance and (initial is not None and not initial.has_key('site')):
+            initial['site'] = Site.objects.get_current().id
+        
+        super(EmbedCreationForm, self).__init__(data, files, auto_id, prefix, initial, 
+                                        error_class, label_suffix, 
+                                        empty_permitted, instance)
