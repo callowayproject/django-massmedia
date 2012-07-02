@@ -168,7 +168,7 @@ class Media(models.Model):
             return self.metadata['mime_type']
         return None
     
-    def get_template(self, template_type):
+    def get_template(self, template_type="detail"):
         mime_type = self.get_mime_type()
         if appsettings.FS_TEMPLATES:
             if self.widget_template:
