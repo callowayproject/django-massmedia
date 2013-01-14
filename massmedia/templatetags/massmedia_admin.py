@@ -7,7 +7,8 @@ from django.utils import dateformat
 from django.utils.html import escape, conditional_escape
 from django.utils.text import capfirst
 from django.utils.safestring import mark_safe
-from django.utils.translation import get_date_formats, get_partial_date_formats, ugettext as _
+from django.utils.translation import ugettext as _
+from django.utils.formats import get_format
 from django.utils.encoding import smart_unicode, smart_str, force_unicode
 from django.template import Library
 import datetime
@@ -72,13 +73,12 @@ def thumbnails_for_result(cl, result, form):
             # Dates and times are special: They're formatted in a certain way.
             elif isinstance(f, models.DateField) or isinstance(f, models.TimeField):
                 if field_val:
-                    (date_format, datetime_format, time_format) = get_date_formats()
                     if isinstance(f, models.DateTimeField):
-                        result_repr = capfirst(dateformat.format(field_val, datetime_format))
+                        result_repr = capfirst(dateformat.format(field_val, get_format('DATETIME_FORMAT')))
                     elif isinstance(f, models.TimeField):
-                        result_repr = capfirst(dateformat.time_format(field_val, time_format))
+                        result_repr = capfirst(dateformat.time_format(field_val, get_format('TIME_FORMAT')))
                     else:
-                        result_repr = capfirst(dateformat.format(field_val, date_format))
+                        result_repr = capfirst(dateformat.format(field_val, get_format('DATE_FORMAT')))
                 else:
                     result_repr = EMPTY_CHANGELIST_VALUE
                 row_class = ' class="nowrap"'

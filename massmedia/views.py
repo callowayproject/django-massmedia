@@ -89,10 +89,3 @@ def browse(request):
     request.GET = getcopy
     view_func, args, kwargs = urlresolvers.resolve(urlresolvers.reverse("admin:massmedia_%s_changelist" % get_type))
     return view_func(request)
-
-def tinymcepopup_url(request):
-    from django.conf import settings
-    import os
-    tinymce_root = os.path.join(getattr(settings, 'TINYMCE_JS_ROOT', os.path.join(settings.MEDIA_ROOT, 'js', 'tiny_mce')), 'tiny_mce_popup.js')
-    
-    return HttpResponse(open(tinymce_root, 'r').read(), mimetype="application/javascript")

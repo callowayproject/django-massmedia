@@ -144,7 +144,6 @@ class MediaAdmin(admin.ModelAdmin):
             'content_type_id': ContentType.objects.get_for_model(self.model).id,
             'save_as': self.save_as,
             'save_on_top': self.save_on_top,
-            'root_path': self.admin_site.root_path,
             'is_popup': is_popup,
         })
         context_instance = template.RequestContext(request, current_app=self.admin_site.name)
