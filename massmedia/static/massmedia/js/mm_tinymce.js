@@ -10,15 +10,12 @@ var FileBrowserDialogue = {
         
         // insert information now
         win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = URL;
+        win.document.getElementById("alt").value = caption;
         
         // change width/height & show preview
-        if (win.MMImageDialog){
-            if (win.MMImageDialog.getImageData)
-                win.MMImageDialog.getImageData();
-            if (win.MMImageDialog.setImageData)
-                win.MMImageDialog.setImageData(caption, linkURL);
-            if (win.MMImageDialog.showPreviewImage)
-                win.MMImageDialog.showPreviewImage(URL);
+        if (win.ImageDialog){
+            if (win.ImageDialog.showPreviewImage)
+                win.ImageDialog.showPreviewImage(URL);
         }
         
         // close popup window
