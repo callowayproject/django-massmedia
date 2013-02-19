@@ -25,9 +25,10 @@ class YouTubeBase(object):
         """
         if self._service is None:
             self._service = YouTubeService()
-            self._service.email = settings.SERVICES['YOUTUBE']['EMAIL']
-            self._service.password = settings.SERVICES['YOUTUBE']['PASSWORD']
-            self._service.ProgrammaticLogin()
+            if settings.SERVICES['YOUTUBE']['EMAIL'] != '' and settings.SERVICES['YOUTUBE']['PASSWORD'] != '':
+                self._service.email = settings.SERVICES['YOUTUBE']['EMAIL']
+                self._service.password = settings.SERVICES['YOUTUBE']['PASSWORD']
+                self._service.ProgrammaticLogin()
         return self._service
     
     @staticmethod
