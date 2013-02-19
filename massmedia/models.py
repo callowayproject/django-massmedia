@@ -335,13 +335,11 @@ class Collection(models.Model):
             return
         feed = YouTubeFeed(self.external_url)
         if feed:
-            self.external_url = feed.url
             if not self.title:
                 self.title = feed.metadata['title']
             self.slug = slugify(self.title)
             if not self.caption:
                 self.caption = feed.metadata['subtitle']
-            #self.metadata = feed.metadata
 
     def process_zipfile(self):
         """
