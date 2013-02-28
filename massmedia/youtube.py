@@ -1,5 +1,7 @@
 from gdata.youtube.service import YouTubeService, YOUTUBE_PLAYLIST_FEED_URI
 from massmedia import settings
+from django.http import QueryDict
+from urlparse import urlparse
 
 class YouTubeBase(object):
     """
@@ -25,9 +27,10 @@ class YouTubeBase(object):
         """
         if self._service is None:
             self._service = YouTubeService()
-            self._service.email = settings.SERVICES['YOUTUBE']['EMAIL']
-            self._service.password = settings.SERVICES['YOUTUBE']['PASSWORD']
-            self._service.ProgrammaticLogin()
+            if settings.SERVICES['YOUTUBE']['EMAIL'] != '' and settings.SERVICES['YOUTUBE']['PASSWORD'] != '':
+                self._service.email = settings.SERVICES['YOUTUBE']['EMAIL']
+                self._service.password = settings.SERVICES['YOUTUBE']['PASSWORD']
+                self._service.ProgrammaticLogin()
         return self._service
     
     @staticmethod
@@ -130,13 +133,7 @@ class YouTubeFeed(YouTubeBase):
         Process the feed url and set the metadata and entries
         """
         if 'gdata.youtube.com' not in self.url:
-            import re
-            playlistid_re = re.compile("(?:user/|p=|#p/c/)([A-F0-9]{16})$")
-            search = playlistid_re.search(self.url)
-            if search:
-                playlist_id = search.group(1)
-            else:
-                return
+            playlist_id = QueryDict(urlparse(self.url).query)['list']
             self.url = "%s/%s" % (YOUTUBE_PLAYLIST_FEED_URI, playlist_id)
         feed = self.get_service().GetYouTubeVideoFeed(uri=self.url)
         self.metadata = self.convert_to_python(feed.__dict__)
