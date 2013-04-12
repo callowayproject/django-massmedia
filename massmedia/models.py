@@ -1,4 +1,5 @@
-import os, zipfile
+import os
+import zipfile
 try:
     from cStringIO import StringIO
 except ImportError:
@@ -16,9 +17,14 @@ from django.template.loader import get_template
 from django.template import Template
 from django.utils.translation import ugettext as _
 
-from massmedia import settings as appsettings
+from .settings import (IMAGE_STORAGE, VIDEO_STORAGE, AUDIO_STORAGE,
+    FLASH_STORAGE, DOC_STORAGE, IMAGE_UPLOAD_TO, THUMB_UPLOAD_TO, THUMB_SIZE,
+    VIDEO_UPLOAD_TO, DOC_UPLOAD_TO, AUDIO_UPLOAD_TO, FLASH_UPLOAD_TO,
+    IMAGE_EXTS, VIDEO_EXTS, AUDIO_EXTS, FLASH_EXTS, DOC_EXTS)
+
+
 from base_models import Media, PublicMediaManager
-from massmedia.utils import custom_upload_to, super_force_ascii
+from massmedia.utils import custom_upload_to
 
 try:
     from iptcinfo import IPTCInfo
@@ -26,19 +32,16 @@ try:
 except ImportError:
     HAS_IPTC = False
 
-if appsettings.USE_TAGGING:
-    from tagging.fields import TagField
-
 try:
     import Image as PilImage
 except ImportError:
     from PIL import Image as PilImage
 
-IMAGE_STORAGE = get_storage_class(appsettings.IMAGE_STORAGE)
-VIDEO_STORAGE = get_storage_class(appsettings.VIDEO_STORAGE)
-AUDIO_STORAGE = get_storage_class(appsettings.AUDIO_STORAGE)
-FLASH_STORAGE = get_storage_class(appsettings.FLASH_STORAGE)
-DOC_STORAGE  = get_storage_class(appsettings.DOC_STORAGE)
+IMAGE_STORAGE = get_storage_class(IMAGE_STORAGE)
+VIDEO_STORAGE = get_storage_class(VIDEO_STORAGE)
+AUDIO_STORAGE = get_storage_class(AUDIO_STORAGE)
+FLASH_STORAGE = get_storage_class(FLASH_STORAGE)
+DOC_STORAGE = get_storage_class(DOC_STORAGE)
 
 
 class Image(Media):
@@ -47,18 +50,18 @@ class Image(Media):
     cause a problem if the file doesn't exist and you merely access the record.
     """
     file = models.FileField(
-        upload_to =  custom_upload_to(appsettings.IMAGE_UPLOAD_TO),
-        blank = True,
-        null = True,
+        upload_to=custom_upload_to(IMAGE_UPLOAD_TO),
+        blank=True,
+        null=True,
         storage=IMAGE_STORAGE())
     thumbnail = models.ImageField(
-        upload_to = custom_upload_to(appsettings.THUMB_UPLOAD_TO),
-        blank = True,
-        null = True,
-        width_field = 'thumb_width',
-        height_field = 'thumb_height',
+        upload_to=custom_upload_to(THUMB_UPLOAD_TO),
+        blank=True,
+        null=True,
+        width_field='thumb_width',
+        height_field='thumb_height',
         editable=False,
-        storage = IMAGE_STORAGE())
+        storage=IMAGE_STORAGE())
     thumb_width = models.IntegerField(blank=True, null=True, editable=False)
     thumb_height = models.IntegerField(blank=True, null=True, editable=False)
     original = models.ForeignKey(
@@ -90,7 +93,7 @@ class Image(Media):
             filename = os.path.basename(self.file.name)
         if image.mode not in ('L', 'RGB'):
             image = image.convert('RGB')
-        image.thumbnail(appsettings.THUMB_SIZE, PilImage.ANTIALIAS)
+        image.thumbnail(THUMB_SIZE, PilImage.ANTIALIAS)
 
         destination = StringIO()
         image.save(destination, format='JPEG')
@@ -114,10 +117,10 @@ class Image(Media):
             height = 20000
 
         if width < height:
-            scale = float(width)/float(im_width)
+            scale = float(width) / float(im_width)
             height = int(round(scale * im_height))
         else:
-            scale = float(height)/float(im_height)
+            scale = float(height) / float(im_height)
             width = int(round(scale * im_width))
 
         return width, height
@@ -149,8 +152,8 @@ class Image(Media):
         tags.extend(self.metadata["15"] or [])
         tags.extend(self.metadata["20"] or [])
         tags.extend(self.metadata["25"] or [])
-        categories = ", ".join([x[:50] for x in tags])
-        self.categories = super_force_ascii(categories)
+        # categories = ", ".join([x[:50] for x in tags])
+        # self.categories = super_force_ascii(categories)
 
 
 class Embed(Media):
@@ -172,9 +175,9 @@ class Video(Media):
     A local or remote video file
     """
     file = models.FileField(
-        upload_to = custom_upload_to(appsettings.VIDEO_UPLOAD_TO),
-        blank = True,
-        null = True,
+        upload_to=custom_upload_to(VIDEO_UPLOAD_TO),
+        blank=True,
+        null=True,
         storage=VIDEO_STORAGE())
     thumbnail = models.ForeignKey(
         Image,
@@ -203,7 +206,7 @@ class Audio(Media):
     An audio file
     """
     file = models.FileField(
-        upload_to=custom_upload_to(appsettings.AUDIO_UPLOAD_TO),
+        upload_to=custom_upload_to(AUDIO_UPLOAD_TO),
         blank=True, null=True,
         storage=AUDIO_STORAGE())
 
@@ -221,7 +224,7 @@ class Flash(Media):
     A flash SWF file to be played in a custom player
     """
     file = models.FileField(
-        upload_to=custom_upload_to(appsettings.FLASH_UPLOAD_TO),
+        upload_to=custom_upload_to(FLASH_UPLOAD_TO),
         blank=True, null=True,
         storage=FLASH_STORAGE())
 
@@ -239,9 +242,9 @@ class Document(Media):
     A generic file
     """
     file = models.FileField(
-        upload_to = custom_upload_to(appsettings.DOC_UPLOAD_TO),
-        blank = True,
-        null = True,
+        upload_to=custom_upload_to(DOC_UPLOAD_TO),
+        blank=True,
+        null=True,
         storage=DOC_STORAGE())
 
     class Meta:
@@ -254,19 +257,19 @@ class Document(Media):
 
 
 EXT_TO_MODEL_MAP = {}
-for ext in appsettings.IMAGE_EXTS:
+for ext in IMAGE_EXTS:
     EXT_TO_MODEL_MAP[ext] = Image
 
-for ext in appsettings.VIDEO_EXTS:
+for ext in VIDEO_EXTS:
     EXT_TO_MODEL_MAP[ext] = Video
 
-for ext in appsettings.AUDIO_EXTS:
+for ext in AUDIO_EXTS:
     EXT_TO_MODEL_MAP[ext] = Audio
 
-for ext in appsettings.FLASH_EXTS:
+for ext in FLASH_EXTS:
     EXT_TO_MODEL_MAP[ext] = Flash
 
-for ext in appsettings.DOC_EXTS:
+for ext in DOC_EXTS:
     EXT_TO_MODEL_MAP[ext] = Document
 
 
@@ -285,17 +288,11 @@ class Collection(models.Model):
         help_text=_("Select a .zip file of media to upload into a the Collection."))
     external_url = models.URLField(
         blank=True,
-        verify_exists=False,
         help_text=_("Pull content from an external source. Supported: YouTube"))
     public = models.BooleanField(
         help_text=_("this collection is publicly available"),
         default=True)
     site = models.ForeignKey(Site)
-
-    if appsettings.USE_TAGGING:
-        categories = TagField(
-            _("Categories"),
-            null=True, blank=True)
 
     objects = PublicMediaManager()
 
@@ -438,7 +435,7 @@ class MediaTemplate(models.Model):
     name = models.CharField(
         _("Name"),
         max_length=255,
-        choices=((_('detail'), _('detail')),(_('thumb'), _('thumb'))))
+        choices=((_('detail'), _('detail')), (_('thumb'), _('thumb'))))
     mimetype = models.CharField(
         _("MIME Type"),
         max_length=255,

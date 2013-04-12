@@ -6,6 +6,7 @@ import os
 from time import strftime
 from django.template.defaultfilters import slugify
 
+
 def value_or_list(val):
     """
     If this is a 1-item list, give us the value, otherwise, keep the list
@@ -15,9 +16,10 @@ def value_or_list(val):
     else:
         return val
 
+
 def super_force_ascii(bad_string):
     """
-    For unicode strings that are improperly encoded, 1. convert to latin-1 to 
+    For unicode strings that are improperly encoded, 1. convert to latin-1 to
     make it a regular string, convert it back to a unicode string, assuming that
     the string is encoded using default windows encoding. Then return an ascii
     string using xmlcharrefreplace for oddball characters
@@ -38,13 +40,14 @@ def super_force_ascii(bad_string):
             continue
     return output.encode('ascii', 'xmlcharrefreplace')
 
+
 def custom_upload_to(prefix_path):
     """
     return a function that will build a custom file name
     """
     def upload_callback(instance, filename):
         """
-        Clean the initial file name and build a destination path based on 
+        Clean the initial file name and build a destination path based on
         settings as prefix_path
         """
         # Split and clean the filename with slugify
@@ -54,7 +57,7 @@ def custom_upload_to(prefix_path):
         clean_filename = '%s.%s' % (slug, extension.lower())
         # Build a destination path with previous cleaned string.
         destination_path = os.path.join(strftime(prefix_path), clean_filename)
-        
+
         return destination_path
-    
+
     return upload_callback

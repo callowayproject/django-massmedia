@@ -3,24 +3,25 @@ from massmedia import settings
 from django.http import QueryDict
 from urlparse import urlparse
 
+
 class YouTubeBase(object):
     """
     A simple class to get the info for a youtube feed
     """
-    
+
     def __init__(self, url=None):
         self.url = url
         self._service = None
         self.metadata = {}
         self.entries = []
         self.process_url()
-    
+
     def process_url(self):
         """
         Overridden by subclasses
         """
         pass
-    
+
     def get_service(self):
         """
         Return the cached service object or get it and cache it.
@@ -32,7 +33,7 @@ class YouTubeBase(object):
                 self._service.password = settings.SERVICES['YOUTUBE']['PASSWORD']
                 self._service.ProgrammaticLogin()
         return self._service
-    
+
     @staticmethod
     def get_url_from_links(link_list, rel):
         """
@@ -41,7 +42,7 @@ class YouTubeBase(object):
         for item in link_list:
             if item.rel == rel:
                 return item.href
-    
+
     @staticmethod
     def get_default_content(content_list):
         """
@@ -50,7 +51,7 @@ class YouTubeBase(object):
         for fmt in content_list:
             if 'isDefault' in fmt.extension_attributes:
                 return fmt
-    
+
     @staticmethod
     def get_biggest_thumbnail(thumb_list):
         """
@@ -68,7 +69,7 @@ class YouTubeBase(object):
                     biggest = item
                     big_size = item_size
         return biggest
-    
+
     @staticmethod
     def convert_to_python(element):
         """
@@ -76,7 +77,7 @@ class YouTubeBase(object):
         """
         from atom.core import XmlElement
         from atom import AtomBase
-        
+
         ignorable_keys = ['scheme', 'namespace']
         if isinstance(element, (list, tuple)):
             output = []
@@ -139,5 +140,3 @@ class YouTubeFeed(YouTubeBase):
         self.metadata = self.convert_to_python(feed.__dict__)
         self.entries = self.metadata['entry'][:]
         del self.metadata['entry']
-
-
