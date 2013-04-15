@@ -83,6 +83,7 @@ class Image(Media):
             if 's3boto' in settings.DEFAULT_FILE_STORAGE:
                 self.external_url = self.image.file.url
         """
+        image = None
         if self.external_url:
             import urllib
             filepath, headers = urllib.urlretrieve(self.external_url)
@@ -91,6 +92,8 @@ class Image(Media):
         elif self.file:
             image = PilImage.open(self.file.path)
             filename = os.path.basename(self.file.name)
+        if image is None:
+            return
         if image.mode not in ('L', 'RGB'):
             image = image.convert('RGB')
         image.thumbnail(THUMB_SIZE, PilImage.ANTIALIAS)
