@@ -7,6 +7,16 @@ from time import strftime
 from django.template.defaultfilters import slugify
 
 
+def is_image(filepath):
+    """
+    Test the extension against valid image extensions
+    """
+    from .settings import IMAGE_EXTS
+    _, ext = os.path.splitext(filepath)
+    ext = ext.replace(".", "")
+    return ext in IMAGE_EXTS
+
+
 def value_or_list(val):
     """
     If this is a 1-item list, give us the value, otherwise, keep the list

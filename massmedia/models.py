@@ -70,7 +70,7 @@ class Image(Media):
         blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        generate_thumb = self.id is None
+        generate_thumb = (self.id is None or self.thumbnail is None)
         super(Image, self).save(*args, **kwargs)
         if generate_thumb:
             self._generate_thumbnail()

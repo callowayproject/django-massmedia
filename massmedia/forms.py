@@ -35,10 +35,29 @@ class ContentCreationForm(forms.ModelForm):
                                         error_class, label_suffix,
                                         empty_permitted, instance)
 
+    def set_title_and_slug(self):
+        """
+        If the title is empty, set it to the name of the uploaded or external file
+        """
+        from django.template.defaultfilters import slugify
+
+        if not self.cleaned_data['title']:
+            if 'file' in self.cleaned_data and hasattr(self.cleaned_data['file'], 'name'):
+                filename = self.cleaned_data['file'].name
+            else:
+                return
+            self.cleaned_data['title'] = filename
+
+        if not self.cleaned_data['slug']:
+            slug = slugify(self.cleaned_data['title'])
+        else:
+            slug = self.cleaned_data['slug']
+        self.cleaned_data['slug'] = slug
+
     def clean(self):
-        if (('file' not in self.cleaned_data or not self.cleaned_data['file'])
-            and not self.cleaned_data['external_url']):
-            raise forms.ValidationError("You must include either a file or external url")
+        if (('file' not in self.cleaned_data or not self.cleaned_data['file'])):
+            raise forms.ValidationError("You must include a file.")
+        self.set_title_and_slug()
         return super(ContentCreationForm, self).clean()
 
 
