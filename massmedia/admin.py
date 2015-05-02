@@ -231,7 +231,7 @@ class VideoAdmin(MediaAdmin):
     add_form = VideoCreationForm
 
 
-class AudioAdmin(MediaAdmin,admin.ModelAdmin):
+class AudioAdmin(MediaAdmin, admin.ModelAdmin):
     add_form = AudioCreationForm
 
 
@@ -251,15 +251,13 @@ class CollectionAdmin(admin.ModelAdmin):
     fields = ('title', 'slug', 'caption', 'zip_file', 'external_url', 'public', 'site')
     list_display = ('title', 'caption', 'public', 'creation_date')
     list_filter = ('site', 'creation_date', 'public')
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {'slug': ('title', )}
     date_hierarchy = 'creation_date'
-    search_fields = ('caption',)
-    inlines = (CollectionInline,)
+    search_fields = ('caption', )
+    inlines = (CollectionInline, )
 
     class Media:
         js = (
-            'http://code.jquery.com/jquery-1.4.2.min.js',
-            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js',
             'js/genericcollections.js',
         )
 

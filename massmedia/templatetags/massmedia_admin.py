@@ -22,7 +22,7 @@ def thumbnails_for_result(cl, result, form):
     Basically does the same thing as django's items_for_result, but makes all the
     items fit in one <td> element instead of separate elements for each field
     """
-    
+
     first = True
     pk = cl.lookup_opts.pk.attname
     for field_name in cl.list_display:
@@ -101,7 +101,7 @@ def thumbnails_for_result(cl, result, form):
             result_repr = mark_safe('&nbsp;')
         # If list_display_links not defined, add the link tag to the first field
         if (first and not cl.list_display_links) or field_name in cl.list_display_links:
-            table_tag = {True:'th', False:'td'}[first]
+            table_tag = {True: 'th', False: 'td'}[first]
             first = False
             url = cl.url_for_result(result)
             # Convert the pk to something that can be used in Javascript.
@@ -131,7 +131,7 @@ def thumbnails_for_result(cl, result, form):
             yield mark_safe(u'%s' % (result_repr))
     if form:
         yield mark_safe(force_unicode(form[cl.model._meta.pk.name]))
-    
+
 
 def results(cl):
     if cl.formset:
@@ -140,6 +140,7 @@ def results(cl):
     else:
         for res in cl.result_list:
             yield list(thumbnails_for_result(cl, res, None))
+
 
 def thumbnail_result_list(context, cl):
     if context.has_key('STATIC_URL'):

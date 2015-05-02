@@ -28,7 +28,7 @@ function myDismissAddAnotherPopup(win, newId, newRepr) {
 {% if has_add_permission %}
   <ul class="object-tools">
     <li>
-      <a href="{% url admin:massmedia_image_add %}{% if is_popup %}?_popup=1&amp;pop=2{% endif %}" class="addlink" target="_blank">
+      <a href="{% url "admin:massmedia_image_add" %}{% if is_popup %}?_popup=1&amp;pop=2{% endif %}" class="addlink" target="_blank">
         {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
       </a>
     </li>
