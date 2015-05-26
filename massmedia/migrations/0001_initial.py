@@ -1,438 +1,231 @@
-# encoding: utf-8
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-class Migration(SchemaMigration):
-
-    def forwards(self, orm):
-        
-        # Adding model 'Image'
-        db.create_table('massmedia_image', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50, db_index=True)),
-            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('one_off_author', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('caption', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('metadata', self.gf('massmedia.fields.SerializedObjectField')(blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(related_name='image_site', to=orm['sites.Site'])),
-            ('categories', self.gf('tagging.fields.TagField')(null=True)),
-            ('reproduction_allowed', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('public', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('external_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('mime_type', self.gf('django.db.models.fields.CharField')(max_length=150, null=True, blank=True)),
-            ('width', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('height', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('widget_template', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('file', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True)),
-            ('thumbnail', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
-            ('thumb_width', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('thumb_height', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('original', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='variations', null=True, to=orm['massmedia.Image'])),
-        ))
-        db.send_create_signal('massmedia', ['Image'])
-
-        # Adding model 'Embed'
-        db.create_table('massmedia_embed', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50, db_index=True)),
-            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('one_off_author', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('caption', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('metadata', self.gf('massmedia.fields.SerializedObjectField')(blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(related_name='embed_site', to=orm['sites.Site'])),
-            ('categories', self.gf('tagging.fields.TagField')(null=True)),
-            ('reproduction_allowed', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('public', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('external_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('mime_type', self.gf('django.db.models.fields.CharField')(max_length=150, null=True, blank=True)),
-            ('width', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('height', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('widget_template', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('code', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-        ))
-        db.send_create_signal('massmedia', ['Embed'])
-
-        # Adding model 'Video'
-        db.create_table('massmedia_video', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50, db_index=True)),
-            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('one_off_author', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('caption', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('metadata', self.gf('massmedia.fields.SerializedObjectField')(blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(related_name='video_site', to=orm['sites.Site'])),
-            ('categories', self.gf('tagging.fields.TagField')(null=True)),
-            ('reproduction_allowed', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('public', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('external_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('mime_type', self.gf('django.db.models.fields.CharField')(max_length=150, null=True, blank=True)),
-            ('width', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('height', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('widget_template', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('file', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True)),
-            ('thumbnail', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['massmedia.Image'], null=True, blank=True)),
-        ))
-        db.send_create_signal('massmedia', ['Video'])
-
-        # Adding model 'GrabVideo'
-        db.create_table('massmedia_grabvideo', (
-            ('video_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['massmedia.Video'], unique=True, primary_key=True)),
-            ('asset_id', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('layout_id', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('keywords', self.gf('tagging.fields.TagField')(null=True)),
-        ))
-        db.send_create_signal('massmedia', ['GrabVideo'])
-
-        # Adding model 'Audio'
-        db.create_table('massmedia_audio', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50, db_index=True)),
-            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('one_off_author', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('caption', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('metadata', self.gf('massmedia.fields.SerializedObjectField')(blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(related_name='audio_site', to=orm['sites.Site'])),
-            ('categories', self.gf('tagging.fields.TagField')(null=True)),
-            ('reproduction_allowed', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('public', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('external_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('mime_type', self.gf('django.db.models.fields.CharField')(max_length=150, null=True, blank=True)),
-            ('width', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('height', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('widget_template', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('file', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True)),
-        ))
-        db.send_create_signal('massmedia', ['Audio'])
-
-        # Adding model 'Flash'
-        db.create_table('massmedia_flash', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50, db_index=True)),
-            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('one_off_author', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('caption', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('metadata', self.gf('massmedia.fields.SerializedObjectField')(blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(related_name='flash_site', to=orm['sites.Site'])),
-            ('categories', self.gf('tagging.fields.TagField')(null=True)),
-            ('reproduction_allowed', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('public', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('external_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('mime_type', self.gf('django.db.models.fields.CharField')(max_length=150, null=True, blank=True)),
-            ('width', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('height', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('widget_template', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('file', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True)),
-        ))
-        db.send_create_signal('massmedia', ['Flash'])
-
-        # Adding model 'Document'
-        db.create_table('massmedia_document', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50, db_index=True)),
-            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('one_off_author', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('caption', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('metadata', self.gf('massmedia.fields.SerializedObjectField')(blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(related_name='document_site', to=orm['sites.Site'])),
-            ('categories', self.gf('tagging.fields.TagField')(null=True)),
-            ('reproduction_allowed', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('public', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('external_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('mime_type', self.gf('django.db.models.fields.CharField')(max_length=150, null=True, blank=True)),
-            ('width', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('height', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('widget_template', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('file', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True)),
-        ))
-        db.send_create_signal('massmedia', ['Document'])
-
-        # Adding model 'Collection'
-        db.create_table('massmedia_collection', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50, db_index=True)),
-            ('caption', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('zip_file', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True)),
-            ('public', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
-            ('categories', self.gf('tagging.fields.TagField')(null=True)),
-        ))
-        db.send_create_signal('massmedia', ['Collection'])
-
-        # Adding model 'CollectionRelation'
-        db.create_table('massmedia_collectionrelation', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('collection', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['massmedia.Collection'])),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-        ))
-        db.send_create_signal('massmedia', ['CollectionRelation'])
-
-        # Adding model 'MediaTemplate'
-        db.create_table('massmedia_mediatemplate', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('mimetype', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('content', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('massmedia', ['MediaTemplate'])
+from django.db import models, migrations
+import massmedia.fields
+from django.conf import settings
+import django.core.files.storage
 
 
-    def backwards(self, orm):
-        
-        # Deleting model 'Image'
-        db.delete_table('massmedia_image')
+class Migration(migrations.Migration):
 
-        # Deleting model 'Embed'
-        db.delete_table('massmedia_embed')
+    dependencies = [
+        ('sites', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('contenttypes', '0001_initial'),
+    ]
 
-        # Deleting model 'Video'
-        db.delete_table('massmedia_video')
-
-        # Deleting model 'GrabVideo'
-        db.delete_table('massmedia_grabvideo')
-
-        # Deleting model 'Audio'
-        db.delete_table('massmedia_audio')
-
-        # Deleting model 'Flash'
-        db.delete_table('massmedia_flash')
-
-        # Deleting model 'Document'
-        db.delete_table('massmedia_document')
-
-        # Deleting model 'Collection'
-        db.delete_table('massmedia_collection')
-
-        # Deleting model 'CollectionRelation'
-        db.delete_table('massmedia_collectionrelation')
-
-        # Deleting model 'MediaTemplate'
-        db.delete_table('massmedia_mediatemplate')
-
-
-    models = {
-        'auth.group': {
-            'Meta': {'object_name': 'Group'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
-        },
-        'auth.permission': {
-            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
-            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
-        },
-        'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        'massmedia.audio': {
-            'Meta': {'object_name': 'Audio'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'categories': ('tagging.fields.TagField', [], {'null': 'True'}),
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'external_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'metadata': ('massmedia.fields.SerializedObjectField', [], {'blank': 'True'}),
-            'mime_type': ('django.db.models.fields.CharField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
-            'one_off_author': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'reproduction_allowed': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'audio_site'", 'to': "orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'widget_template': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
-        },
-        'massmedia.collection': {
-            'Meta': {'ordering': "['-creation_date']", 'object_name': 'Collection'},
-            'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'categories': ('tagging.fields.TagField', [], {'null': 'True'}),
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'zip_file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
-        },
-        'massmedia.collectionrelation': {
-            'Meta': {'object_name': 'CollectionRelation'},
-            'collection': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['massmedia.Collection']"}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_id': ('django.db.models.fields.PositiveIntegerField', [], {})
-        },
-        'massmedia.document': {
-            'Meta': {'object_name': 'Document'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'categories': ('tagging.fields.TagField', [], {'null': 'True'}),
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'external_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'metadata': ('massmedia.fields.SerializedObjectField', [], {'blank': 'True'}),
-            'mime_type': ('django.db.models.fields.CharField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
-            'one_off_author': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'reproduction_allowed': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'document_site'", 'to': "orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'widget_template': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
-        },
-        'massmedia.embed': {
-            'Meta': {'ordering': "('-creation_date',)", 'object_name': 'Embed'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'categories': ('tagging.fields.TagField', [], {'null': 'True'}),
-            'code': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'external_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'metadata': ('massmedia.fields.SerializedObjectField', [], {'blank': 'True'}),
-            'mime_type': ('django.db.models.fields.CharField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
-            'one_off_author': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'reproduction_allowed': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'embed_site'", 'to': "orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'widget_template': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
-        },
-        'massmedia.flash': {
-            'Meta': {'object_name': 'Flash'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'categories': ('tagging.fields.TagField', [], {'null': 'True'}),
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'external_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'metadata': ('massmedia.fields.SerializedObjectField', [], {'blank': 'True'}),
-            'mime_type': ('django.db.models.fields.CharField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
-            'one_off_author': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'reproduction_allowed': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'flash_site'", 'to': "orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'widget_template': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
-        },
-        'massmedia.grabvideo': {
-            'Meta': {'ordering': "('-creation_date',)", 'object_name': 'GrabVideo', '_ormbases': ['massmedia.Video']},
-            'asset_id': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'keywords': ('tagging.fields.TagField', [], {'null': 'True'}),
-            'layout_id': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'video_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['massmedia.Video']", 'unique': 'True', 'primary_key': 'True'})
-        },
-        'massmedia.image': {
-            'Meta': {'ordering': "('-creation_date',)", 'object_name': 'Image'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'categories': ('tagging.fields.TagField', [], {'null': 'True'}),
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'external_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'metadata': ('massmedia.fields.SerializedObjectField', [], {'blank': 'True'}),
-            'mime_type': ('django.db.models.fields.CharField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
-            'one_off_author': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'original': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'variations'", 'null': 'True', 'to': "orm['massmedia.Image']"}),
-            'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'reproduction_allowed': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'image_site'", 'to': "orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'thumb_height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'thumb_width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'thumbnail': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'widget_template': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
-        },
-        'massmedia.mediatemplate': {
-            'Meta': {'object_name': 'MediaTemplate'},
-            'content': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'mimetype': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
-        },
-        'massmedia.video': {
-            'Meta': {'ordering': "('-creation_date',)", 'object_name': 'Video'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'categories': ('tagging.fields.TagField', [], {'null': 'True'}),
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'external_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'metadata': ('massmedia.fields.SerializedObjectField', [], {'blank': 'True'}),
-            'mime_type': ('django.db.models.fields.CharField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
-            'one_off_author': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'reproduction_allowed': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'video_site'", 'to': "orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
-            'thumbnail': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['massmedia.Image']", 'null': 'True', 'blank': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'widget_template': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
-        },
-        'sites.site': {
-            'Meta': {'ordering': "('domain',)", 'object_name': 'Site', 'db_table': "'django_site'"},
-            'domain': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        }
-    }
-
-    complete_apps = ['massmedia']
+    operations = [
+        migrations.CreateModel(
+            name='Audio',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=255, verbose_name='Title')),
+                ('slug', models.SlugField(unique=True, verbose_name='Slug')),
+                ('creation_date', models.DateTimeField(auto_now_add=True, verbose_name='Creation Date')),
+                ('one_off_author', models.CharField(max_length=100, verbose_name='One-off Author', blank=True)),
+                ('caption', models.TextField(verbose_name='Caption', blank=True)),
+                ('metadata', massmedia.fields.SerializedObjectField(verbose_name='Metadata', blank=True)),
+                ('reproduction_allowed', models.BooleanField(default=True, verbose_name='we have reproduction rights for this media')),
+                ('public', models.BooleanField(default=True, help_text='this media is publicly available', verbose_name='Public')),
+                ('external_url', models.URLField(help_text='If this URL Field is set, the media will be pulled externally', null=True, verbose_name='External URL', blank=True)),
+                ('mime_type', models.CharField(max_length=150, null=True, verbose_name='MIME type', blank=True)),
+                ('width', models.IntegerField(help_text='The width of the widget for the media', null=True, verbose_name='Width', blank=True)),
+                ('height', models.IntegerField(help_text='The height of the widget for the media', null=True, verbose_name='Height', blank=True)),
+                ('widget_template', models.CharField(help_text='The template name used to generate the widget (defaults to MIME type layout)', max_length=255, null=True, verbose_name='Widget Template', blank=True)),
+                ('file', models.FileField(storage=django.core.files.storage.FileSystemStorage(), null=True, upload_to=b'audio/%Y/%m/%d', blank=True)),
+                ('author', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('site', models.ForeignKey(related_name='audio_site', to='sites.Site')),
+            ],
+            options={
+                'verbose_name': 'audio clip',
+                'verbose_name_plural': 'audio clips',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Collection',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('creation_date', models.DateTimeField(auto_now_add=True)),
+                ('title', models.CharField(max_length=255)),
+                ('slug', models.SlugField(unique=True)),
+                ('caption', models.TextField(blank=True)),
+                ('zip_file', models.FileField(help_text='Select a .zip file of media to upload into a the Collection.', upload_to=b'tmp', null=True, verbose_name='Media files in a .zip', blank=True)),
+                ('external_url', models.URLField(help_text='Pull content from an external source. Supported: YouTube', blank=True)),
+                ('public', models.BooleanField(default=True, help_text='this collection is publicly available')),
+                ('site', models.ForeignKey(to='sites.Site')),
+            ],
+            options={
+                'ordering': ['-creation_date'],
+                'get_latest_by': 'creation_date',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CollectionRelation',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('object_id', models.PositiveIntegerField()),
+                ('position', models.PositiveSmallIntegerField(default=0, null=True, verbose_name='Position', blank=True)),
+                ('collection', models.ForeignKey(to='massmedia.Collection')),
+                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
+            ],
+            options={
+                'ordering': ['position', 'id'],
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Document',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=255, verbose_name='Title')),
+                ('slug', models.SlugField(unique=True, verbose_name='Slug')),
+                ('creation_date', models.DateTimeField(auto_now_add=True, verbose_name='Creation Date')),
+                ('one_off_author', models.CharField(max_length=100, verbose_name='One-off Author', blank=True)),
+                ('caption', models.TextField(verbose_name='Caption', blank=True)),
+                ('metadata', massmedia.fields.SerializedObjectField(verbose_name='Metadata', blank=True)),
+                ('reproduction_allowed', models.BooleanField(default=True, verbose_name='we have reproduction rights for this media')),
+                ('public', models.BooleanField(default=True, help_text='this media is publicly available', verbose_name='Public')),
+                ('external_url', models.URLField(help_text='If this URL Field is set, the media will be pulled externally', null=True, verbose_name='External URL', blank=True)),
+                ('mime_type', models.CharField(max_length=150, null=True, verbose_name='MIME type', blank=True)),
+                ('width', models.IntegerField(help_text='The width of the widget for the media', null=True, verbose_name='Width', blank=True)),
+                ('height', models.IntegerField(help_text='The height of the widget for the media', null=True, verbose_name='Height', blank=True)),
+                ('widget_template', models.CharField(help_text='The template name used to generate the widget (defaults to MIME type layout)', max_length=255, null=True, verbose_name='Widget Template', blank=True)),
+                ('file', models.FileField(storage=django.core.files.storage.FileSystemStorage(), null=True, upload_to=b'misc/%Y/%m/%d', blank=True)),
+                ('author', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('site', models.ForeignKey(related_name='document_site', to='sites.Site')),
+            ],
+            options={
+                'verbose_name': 'Document',
+                'verbose_name_plural': 'Documents',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Embed',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=255, verbose_name='Title')),
+                ('slug', models.SlugField(unique=True, verbose_name='Slug')),
+                ('creation_date', models.DateTimeField(auto_now_add=True, verbose_name='Creation Date')),
+                ('one_off_author', models.CharField(max_length=100, verbose_name='One-off Author', blank=True)),
+                ('caption', models.TextField(verbose_name='Caption', blank=True)),
+                ('metadata', massmedia.fields.SerializedObjectField(verbose_name='Metadata', blank=True)),
+                ('reproduction_allowed', models.BooleanField(default=True, verbose_name='we have reproduction rights for this media')),
+                ('public', models.BooleanField(default=True, help_text='this media is publicly available', verbose_name='Public')),
+                ('external_url', models.URLField(help_text='If this URL Field is set, the media will be pulled externally', null=True, verbose_name='External URL', blank=True)),
+                ('mime_type', models.CharField(max_length=150, null=True, verbose_name='MIME type', blank=True)),
+                ('width', models.IntegerField(help_text='The width of the widget for the media', null=True, verbose_name='Width', blank=True)),
+                ('height', models.IntegerField(help_text='The height of the widget for the media', null=True, verbose_name='Height', blank=True)),
+                ('widget_template', models.CharField(help_text='The template name used to generate the widget (defaults to MIME type layout)', max_length=255, null=True, verbose_name='Widget Template', blank=True)),
+                ('code', models.TextField(help_text='Embed HTML source code', null=True, verbose_name='Embed Code', blank=True)),
+                ('author', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('site', models.ForeignKey(related_name='embed_site', to='sites.Site')),
+            ],
+            options={
+                'ordering': ('-creation_date',),
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Flash',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=255, verbose_name='Title')),
+                ('slug', models.SlugField(unique=True, verbose_name='Slug')),
+                ('creation_date', models.DateTimeField(auto_now_add=True, verbose_name='Creation Date')),
+                ('one_off_author', models.CharField(max_length=100, verbose_name='One-off Author', blank=True)),
+                ('caption', models.TextField(verbose_name='Caption', blank=True)),
+                ('metadata', massmedia.fields.SerializedObjectField(verbose_name='Metadata', blank=True)),
+                ('reproduction_allowed', models.BooleanField(default=True, verbose_name='we have reproduction rights for this media')),
+                ('public', models.BooleanField(default=True, help_text='this media is publicly available', verbose_name='Public')),
+                ('external_url', models.URLField(help_text='If this URL Field is set, the media will be pulled externally', null=True, verbose_name='External URL', blank=True)),
+                ('mime_type', models.CharField(max_length=150, null=True, verbose_name='MIME type', blank=True)),
+                ('width', models.IntegerField(help_text='The width of the widget for the media', null=True, verbose_name='Width', blank=True)),
+                ('height', models.IntegerField(help_text='The height of the widget for the media', null=True, verbose_name='Height', blank=True)),
+                ('widget_template', models.CharField(help_text='The template name used to generate the widget (defaults to MIME type layout)', max_length=255, null=True, verbose_name='Widget Template', blank=True)),
+                ('file', models.FileField(storage=django.core.files.storage.FileSystemStorage(), null=True, upload_to=b'flash/%Y/%m/%d', blank=True)),
+                ('author', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('site', models.ForeignKey(related_name='flash_site', to='sites.Site')),
+            ],
+            options={
+                'verbose_name': 'SWF File',
+                'verbose_name_plural': 'SWF Files',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Image',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=255, verbose_name='Title')),
+                ('slug', models.SlugField(unique=True, verbose_name='Slug')),
+                ('creation_date', models.DateTimeField(auto_now_add=True, verbose_name='Creation Date')),
+                ('one_off_author', models.CharField(max_length=100, verbose_name='One-off Author', blank=True)),
+                ('caption', models.TextField(verbose_name='Caption', blank=True)),
+                ('metadata', massmedia.fields.SerializedObjectField(verbose_name='Metadata', blank=True)),
+                ('reproduction_allowed', models.BooleanField(default=True, verbose_name='we have reproduction rights for this media')),
+                ('public', models.BooleanField(default=True, help_text='this media is publicly available', verbose_name='Public')),
+                ('external_url', models.URLField(help_text='If this URL Field is set, the media will be pulled externally', null=True, verbose_name='External URL', blank=True)),
+                ('mime_type', models.CharField(max_length=150, null=True, verbose_name='MIME type', blank=True)),
+                ('width', models.IntegerField(help_text='The width of the widget for the media', null=True, verbose_name='Width', blank=True)),
+                ('height', models.IntegerField(help_text='The height of the widget for the media', null=True, verbose_name='Height', blank=True)),
+                ('widget_template', models.CharField(help_text='The template name used to generate the widget (defaults to MIME type layout)', max_length=255, null=True, verbose_name='Widget Template', blank=True)),
+                ('file', models.FileField(storage=django.core.files.storage.FileSystemStorage(), null=True, upload_to=b'image/%Y/%m/%d', blank=True)),
+                ('thumbnail', models.ImageField(upload_to=b'thumb/%Y/%m/%d', width_field=b'thumb_width', storage=django.core.files.storage.FileSystemStorage(), height_field=b'thumb_height', blank=True, editable=False, null=True)),
+                ('thumb_width', models.IntegerField(null=True, editable=False, blank=True)),
+                ('thumb_height', models.IntegerField(null=True, editable=False, blank=True)),
+                ('author', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('original', models.ForeignKey(related_name='variations', blank=True, to='massmedia.Image', null=True)),
+                ('site', models.ForeignKey(related_name='image_site', to='sites.Site')),
+            ],
+            options={
+                'ordering': ('-creation_date',),
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='MediaTemplate',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=255, verbose_name='Name', choices=[('detail', 'detail'), ('thumb', 'thumb')])),
+                ('mimetype', models.CharField(max_length=255, null=True, verbose_name='MIME Type', blank=True)),
+                ('content', models.TextField(verbose_name='Content')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Video',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=255, verbose_name='Title')),
+                ('slug', models.SlugField(unique=True, verbose_name='Slug')),
+                ('creation_date', models.DateTimeField(auto_now_add=True, verbose_name='Creation Date')),
+                ('one_off_author', models.CharField(max_length=100, verbose_name='One-off Author', blank=True)),
+                ('caption', models.TextField(verbose_name='Caption', blank=True)),
+                ('metadata', massmedia.fields.SerializedObjectField(verbose_name='Metadata', blank=True)),
+                ('reproduction_allowed', models.BooleanField(default=True, verbose_name='we have reproduction rights for this media')),
+                ('public', models.BooleanField(default=True, help_text='this media is publicly available', verbose_name='Public')),
+                ('external_url', models.URLField(help_text='If this URL Field is set, the media will be pulled externally', null=True, verbose_name='External URL', blank=True)),
+                ('mime_type', models.CharField(max_length=150, null=True, verbose_name='MIME type', blank=True)),
+                ('width', models.IntegerField(help_text='The width of the widget for the media', null=True, verbose_name='Width', blank=True)),
+                ('height', models.IntegerField(help_text='The height of the widget for the media', null=True, verbose_name='Height', blank=True)),
+                ('widget_template', models.CharField(help_text='The template name used to generate the widget (defaults to MIME type layout)', max_length=255, null=True, verbose_name='Widget Template', blank=True)),
+                ('file', models.FileField(storage=django.core.files.storage.FileSystemStorage(), null=True, upload_to=b'video/%Y/%m/%d', blank=True)),
+                ('author', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('site', models.ForeignKey(related_name='video_site', to='sites.Site')),
+                ('thumbnail', models.ForeignKey(blank=True, to='massmedia.Image', null=True)),
+            ],
+            options={
+                'ordering': ('-creation_date',),
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+    ]
