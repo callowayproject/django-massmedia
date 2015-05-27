@@ -1,0 +1,53 @@
+{% load i18n %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Confirm Delete</title>
+  <link href="{{ STATIC_URL }}massmedia/css/cropperwindow.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="ng-container eg-container" id="basic-example">
+  <div class="ng-grid ng-container-center eg-main">
+{% if perms_lacking or protected %}
+    {% if perms_lacking %}
+        <p>{% blocktrans with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktrans %}</p>
+        <ul>
+        {% for obj in perms_lacking %}
+            <li>{{ obj }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% if protected %}
+        <p>{% blocktrans with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would require deleting the following protected related objects:{% endblocktrans %}</p>
+        <ul>
+        {% for obj in protected %}
+            <li>{{ obj }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% else %}
+    <div class="ng-alert ng-alert-danger">
+        <p>{% blocktrans with escaped_object=object %}Are you sure you want to delete the {{ object_name }} "{{ escaped_object }}"?{% endblocktrans %}</p>
+        <form action="" method="post">{% csrf_token %}
+            <div>
+                <input type="hidden" name="post" value="yes" />
+                <input type="submit" class="ng-button ng-button-danger ng-float-right" value="{% trans "Yes, I'm sure" %}" />
+            </div>
+        </form>
+    </div>
+{% endif %}
+  </div>
+</div>
+<script src="{{ STATIC_URL }}js/ngkit.min.js"></script>
+</body>
+</html>
