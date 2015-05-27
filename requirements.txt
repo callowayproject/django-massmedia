@@ -1,4 +1,6 @@
 gdata
+simplejson
+django-mathfilters==0.3.0
 
 # For IPTC metadata extraction
 IPTCInfo
