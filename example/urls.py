@@ -20,9 +20,8 @@ urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': settings.MEDIA_ROOT}),
 
-    (r'^mymedia/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': os.path.join(settings.PROJ_ROOT, 'store_here')}),
+    (r'^uploads/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': os.path.join(settings.PROJ_ROOT, 'media/uploads')}),
 
-    (r'^tinymce/', include('tinymce.urls')),
     (r'', include('massmedia.urls'))
 )
