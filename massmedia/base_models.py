@@ -37,7 +37,7 @@ class PublicMediaManager(CurrentSiteManager):
         super(PublicMediaManager, self).__init__('site')
 
     def public(self):
-        return self.get_query_set().filter(public=True)
+        return self.get_queryset().filter(public=True)
 
 
 class Media(models.Model):

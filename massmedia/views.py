@@ -5,13 +5,14 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from django.views.generic import CreateView, DeleteView
-from django.utils import simplejson
+from django.views.generic import CreateView, DeleteView, UpdateView
+import simplejson
 from django.core.urlresolvers import reverse
 
 from django.conf import settings
 
 from .forms import ContentCreationForm
+
 
 def widget(request, id, type):
     try:
@@ -67,7 +68,6 @@ def mediatype_detail(request, queryset, object_id=None, slug=None,
         else:
             c[key] = value
     response = HttpResponse(t.render(c), mimetype=mimetype)
-    populate_xheaders(request, response, model, getattr(obj, obj._meta.pk.name))
     return response
 
 
@@ -114,7 +114,7 @@ class ContentCreateView(CreateView):
         return response
 
     def get_context_data(self, **kwargs):
-        context = super(ImageCreateView, self).get_context_data(**kwargs)
+        context = super(ContentCreateView, self).get_context_data(**kwargs)
         context['pictures'] = models.Image.objects.all()
         return context
 
@@ -142,3 +142,106 @@ class JSONResponse(HttpResponse):
     def __init__(self, obj='', json_opts={}, mimetype="application/json", *args, **kwargs):
         content = simplejson.dumps(obj, **json_opts)
         super(JSONResponse, self).__init__(content, mimetype, *args, **kwargs)
+
+
+class ImageCustomSizeCreate(CreateView):
+    template_name = 'admin/massmedia/imagecustomsize/change_form.html'
+
+    def get_form_kwargs(self):
+        """
+        Returns the keyword arguments for instantiating the form.
+        """
+        kwargs = super(ImageCustomSizeCreate, self).get_form_kwargs()
+        kwargs.update({'instance': self.get_object()})
+        return kwargs
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super(ImageCustomSizeCreate, self).get(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        image_id = self.kwargs.get('image_id')
+        if image_id is None and len(self.args):
+            image_id = int(self.args[0])
+        image = get_object_or_404(models.Image, ('id', image_id))
+        return models.ImageCustomSize(image=image)
+
+    def get_queryset(self):
+        image_id = self.kwargs.get('image_id')
+        image = get_object_or_404(models.Image, ('id', image_id))
+        return image.custom_sizes.all()
+
+    def get_success_url(self):
+        image_id = self.kwargs.get('image_id')
+        if image_id:
+            return reverse('admin:imagecustomsize_close')
+        else:
+            return reverse('admin:massmedia_image_changelist')
+
+
+class ImageCustomSizeUpdate(UpdateView):
+    template_name = 'admin/massmedia/imagecustomsize/change_form.html'
+
+    def get_form_kwargs(self):
+        """
+        Returns the keyword arguments for instantiating the form.
+        """
+        kwargs = super(models.ImageCustomSizeUpdate, self).get_form_kwargs()
+        kwargs.update({'instance': self.get_object()})
+        return kwargs
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super(models.ImageCustomSizeUpdate, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        if '_cancel' in self.request.POST:
+            return HttpResponseRedirect(self.get_success_url())
+        self.object = self.get_object()
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get_object(self, queryset=None):
+        object_id = self.kwargs.get('object_id')
+        return get_object_or_404(models.ImageCustomSize, ('id', object_id))
+
+    def get_queryset(self):
+        image_id = self.kwargs.get('image_id')
+        image = get_object_or_404(models.Image, ('id', image_id))
+        return image.custom_sizes.all()
+
+    def get_success_url(self):
+        image_id = self.kwargs.get('image_id')
+        if image_id:
+            return reverse('admin:imagecustomsize_close')
+        else:
+            return reverse('admin:massmedia_image_changelist')
+
+
+class ImageCustomSizeDelete(DeleteView):
+    template_name = 'admin/massmedia/imagecustomsize/confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        object_id = self.kwargs.get('object_id')
+        print object_id, models.ImageCustomSize.objects.values_list('id', flat=True)
+        return get_object_or_404(models.ImageCustomSize, ('id', object_id))
+
+    def get_queryset(self):
+        image_id = self.kwargs.get('image_id')
+        image = get_object_or_404(models.Image, ('id', image_id))
+        return image.custom_sizes.all()
+
+    def get_success_url(self):
+        image_id = self.kwargs.get('image_id')
+        if image_id:
+            return reverse('admin:imagecustomsize_close')
+        else:
+            return reverse('admin:massmedia_image_changelist')

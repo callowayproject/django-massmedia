@@ -1,5 +1,4 @@
 from django.conf import settings
-import warnings
 
 DEFAULT_SETTINGS = {
     "IMAGE_EXTS": ('bmp', 'gif', 'ico', 'cur', 'jpg', 'jpeg', 'pcx', 'png',
@@ -17,7 +16,14 @@ DEFAULT_SETTINGS = {
     "EXTRA_MIME_TYPES": {'.flv': 'video/x-flv', },  # Extra mime types to monkey patch to mimetypes.types_map
     "FS_TEMPLATES": True,  # Template mode, either off the fs (1) or through the admin (0)
     "IMPORT_LOCAL_TMP_DIR": '',
-    "MOGRIFY_KEY": settings.SECRET_KEY,
+    "MOGRIFY_KEY": 'asdv',  # settings.SECRET_KEY,
+    'CONTENT_TYPE_CHOICES': (
+        ('audio', 'Audio'),
+        ('document', 'Document'),
+        ('interactive', 'Interactive'),
+        ('presentation', 'Presentation'),
+        ('video', 'Video'),
+    )
 }
 
 DEFAULT_SETTINGS.update(getattr(settings, 'MASSMEDIA_SETTINGS', {}))

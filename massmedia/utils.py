@@ -51,23 +51,18 @@ def super_force_ascii(bad_string):
     return output.encode('ascii', 'xmlcharrefreplace')
 
 
-def custom_upload_to(prefix_path):
+def custom_upload_to(instance, filename):
     """
-    return a function that will build a custom file name
+    Clean the initial file name and build a destination path based on
+    settings as prefix_path
     """
-    def upload_callback(instance, filename):
-        """
-        Clean the initial file name and build a destination path based on
-        settings as prefix_path
-        """
-        # Split and clean the filename with slugify
-        filename = os.path.basename(filename)
-        name, dot, extension = filename.rpartition('.')
-        slug = slugify(name)
-        clean_filename = '%s.%s' % (slug, extension.lower())
-        # Build a destination path with previous cleaned string.
-        destination_path = os.path.join(strftime(prefix_path), clean_filename)
+    prefix_path = instance.prefix_path
+    # Split and clean the filename with slugify
+    filename = os.path.basename(filename)
+    name, dot, extension = filename.rpartition('.')
+    slug = slugify(name)
+    clean_filename = '%s.%s' % (slug, extension.lower())
+    # Build a destination path with previous cleaned string.
+    destination_path = os.path.join(strftime(prefix_path), clean_filename)
 
-        return destination_path
-
-    return upload_callback
+    return destination_path
