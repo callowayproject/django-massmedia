@@ -21,7 +21,8 @@ from django.utils.translation import ugettext as _
 from .settings import (IMAGE_STORAGE, VIDEO_STORAGE, AUDIO_STORAGE,
     FLASH_STORAGE, DOC_STORAGE, IMAGE_UPLOAD_TO, THUMB_UPLOAD_TO, THUMB_SIZE,
     VIDEO_UPLOAD_TO, DOC_UPLOAD_TO, AUDIO_UPLOAD_TO, FLASH_UPLOAD_TO,
-    IMAGE_EXTS, VIDEO_EXTS, AUDIO_EXTS, FLASH_EXTS, DOC_EXTS, CONTENT_TYPE_CHOICES)
+    IMAGE_EXTS, VIDEO_EXTS, AUDIO_EXTS, FLASH_EXTS, DOC_EXTS, CONTENT_TYPE_CHOICES,
+    TRANSMOGRIFY_KEY)
 
 
 from base_models import Media, PublicMediaManager
@@ -44,7 +45,7 @@ DOC_STORAGE = get_storage_class(DOC_STORAGE)
 
 def generate_url(url, action_string):
     from hashlib import sha1
-    security_hash = sha1(action_string + settings.SECRET_KEY).hexdigest()
+    security_hash = sha1(action_string + TRANSMOGRIFY_KEY).hexdigest()
     base_url, ext = os.path.splitext(url)
 
     return "%s%s%s?%s" % (base_url, action_string, ext, security_hash)
@@ -157,6 +158,8 @@ class Image(Media):
         Return the URL for the given size (dddxddd)
         """
         width, height = map(int, size.split('x'))
+        if self.width is None or self.height is None:
+            return ''
         crop_dims = self.smart_fill(width, height)
         if crop_dims == (0, 0, self.width, self.height) or crop_dims is None:
             processors = ["_r%dx%d" % (width, height), ]
@@ -186,7 +189,7 @@ class Image(Media):
     def get_purge_url(self):
         from hashlib import sha1
 
-        security_hash = sha1('PURGE' + settings.SECRET_KEY).hexdigest()
+        security_hash = sha1('PURGE' + TRANSMOGRIFY_KEY).hexdigest()
         return "%s?%s" % (self.image.url, security_hash)
 
     @property
@@ -247,7 +250,7 @@ class CustomSizeManager(models.Manager):
     """
     def get_for_dimensions(self, width, height, ratio_tolerance=300):
         ratio = int((width * 1.0 / height) * 1000)
-        qs = self.get_query_set().filter(width__gte=width)
+        qs = self.get_queryset().filter(width__gte=width)
         qs = qs.filter(height__gte=height)
         if ratio_tolerance:
             qs = qs.filter(ratio__lte=ratio + ratio_tolerance)

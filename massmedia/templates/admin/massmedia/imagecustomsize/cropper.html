@@ -1,4 +1,4 @@
-{% load mathfilters %}
+{% load massmedia_admin %}
 <div class="eg-container" id="basic-example">
   <div class="ng-grid ng-container-center eg-main">
     <div class="ng-width-4-6">
@@ -33,10 +33,10 @@
             <span class="ng-input-group-addon">px</span>
           </div>
         </div>
-        <div class="ng-form-row clearfix">
+        <div class="ng-form-row ng-margin-remove clearfix">
           <i id="lockIcon" class="sprite sprite-lock-open ng-float-right" style="height:18px"></i>
         </div>
-        <div class="ng-form-row">
+        <div class="ng-form-row ng-margin-remove">
           <div class="ng-input-group">
               {{ form.height.label_tag }}
               <input class="ng-form-width-mini{% if form.height.errors %} ng-form-danger{% endif %}" name="{{ form.height.name }}" id="{{ form.height.id_for_label }}" value="{% if form.height.value %}{{ form.height.value }}{% else %}{{ form.instance.image.height }}{% endif %}" type="text" placeholder="h">
@@ -65,7 +65,7 @@
             <option value="0.667">4x6 (2:3)</option>
           </select>
         </div>
-        <div class="ng-form-row">
+        <div class="ng-form-row" style="text-align: right">
           <a href="{% url "admin:imagecustomsize_close" %}" class="ng-button">Cancel</a> <input type="submit" class="ng-button ng-button-primary" value="Save" name="_save">
         </div>
       </div>{# eg-data #}

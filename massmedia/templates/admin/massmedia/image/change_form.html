@@ -64,14 +64,14 @@ a.buttonlink.add {
     }
 
     django.jQuery(document).ready(function(){
-        var iframe_markup = '<div class="jsm-iframe-scaler" style="%height%">'+
+        var iframe_markup = '<div class="jsm-iframe-scaler" style="height:%height%">'+
                                 '<iframe class="jsm-iframe" src="%src%" frameborder="0" allowfullscreen style="width:100%;height:100%"></iframe>'+
                             '</div>';
         django.jQuery('.thickbox').click(function(e) {
             var queryString = this.href.replace(/^[^\?]+\??/,''),
                 params = parseQuery( queryString ),
                 height = params.height;
-            if (height.indexOf('%') === -1) { height += 'px' };
+            if (height.indexOf('%') === -1) { height += 'px'; }
             e.preventDefault();
             Modal.open({
                 content: iframe_markup.replace('%src%', this.href).replace('%height%', height),

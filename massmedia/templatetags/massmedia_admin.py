@@ -1,5 +1,4 @@
-from django.contrib.admin.views.main import ALL_VAR, EMPTY_CHANGELIST_VALUE
-from django.contrib.admin.views.main import ORDER_VAR, ORDER_TYPE_VAR, PAGE_VAR, SEARCH_VAR
+from django.contrib.admin.views.main import EMPTY_CHANGELIST_VALUE
 from django.contrib.admin.templatetags.admin_list import _boolean_icon
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -7,15 +6,21 @@ from django.utils import dateformat
 from django.utils.html import escape, conditional_escape
 from django.utils.text import capfirst
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext as _
 from django.utils.formats import get_format
-from django.utils.encoding import smart_unicode, smart_str, force_unicode
+from django.utils.encoding import smart_unicode, force_unicode
 from django.template import Library
-import datetime
+
 
 register = Library()
 
 quo_esc = lambda x: x.replace("'", r"\'")
+
+from mathfilters.templatetags.mathfilters import div  # NOQA
+
+
+register.filter('div', div)
+div.is_safe = False
+
 
 def thumbnails_for_result(cl, result, form):
     """
@@ -115,7 +120,7 @@ def thumbnails_for_result(cl, result, form):
             if cl.is_popup and cl.params['pop'] == u'2':
                 yield mark_safe(u'<a href="%s"%s>%s</a>' % \
                 ('#', (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\', \'%s\', \'%s\'); return false;"' % (result.media_url or '', quo_esc(result.caption) or '', result.get_absolute_url())), conditional_escape(result_repr)))
-                #(url, (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\'); return false;"' % result.get_absolute_url() or ''), conditional_escape(result_repr)))
+                # (url, (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\'); return false;"' % result.get_absolute_url() or ''), conditional_escape(result_repr)))
             else:
                 yield mark_safe(u'<a href="%s"%s>%s</a>' % \
                 (url, (cl.is_popup and ' onclick="opener.dismissRelatedLookupPopup(window, %s); return false;"' % result_id or ''), conditional_escape(result_repr)))

@@ -16,7 +16,7 @@ DEFAULT_SETTINGS = {
     "EXTRA_MIME_TYPES": {'.flv': 'video/x-flv', },  # Extra mime types to monkey patch to mimetypes.types_map
     "FS_TEMPLATES": True,  # Template mode, either off the fs (1) or through the admin (0)
     "IMPORT_LOCAL_TMP_DIR": '',
-    "MOGRIFY_KEY": 'asdv',  # settings.SECRET_KEY,
+    "TRANSMOGRIFY_KEY": getattr(settings, 'TRANSMOGRIFY_SECRET_KEY', settings.SECRET_KEY),
     'CONTENT_TYPE_CHOICES': (
         ('audio', 'Audio'),
         ('document', 'Document'),
