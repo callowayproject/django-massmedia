@@ -31,7 +31,7 @@ def thumbnails_for_result(cl, result, form):
     first = True
     pk = cl.lookup_opts.pk.attname
     for field_name in cl.list_display:
-        row_class = ''
+        # row_class = ''
         try:
             f = cl.lookup_opts.get_field(field_name)
         except models.FieldDoesNotExist:
@@ -86,7 +86,7 @@ def thumbnails_for_result(cl, result, form):
                         result_repr = capfirst(dateformat.format(field_val, get_format('DATE_FORMAT')))
                 else:
                     result_repr = EMPTY_CHANGELIST_VALUE
-                row_class = ' class="nowrap"'
+                # row_class = ' class="nowrap"'
             # Booleans are special: We use images.
             elif isinstance(f, models.BooleanField) or isinstance(f, models.NullBooleanField):
                 result_repr = _boolean_icon(field_val)
@@ -106,7 +106,7 @@ def thumbnails_for_result(cl, result, form):
             result_repr = mark_safe('&nbsp;')
         # If list_display_links not defined, add the link tag to the first field
         if (first and not cl.list_display_links) or field_name in cl.list_display_links:
-            table_tag = {True: 'th', False: 'td'}[first]
+            # table_tag = {True: 'th', False: 'td'}[first]
             first = False
             url = cl.url_for_result(result)
             # Convert the pk to something that can be used in Javascript.
@@ -117,12 +117,12 @@ def thumbnails_for_result(cl, result, form):
                 attr = pk
             value = result.serializable_value(attr)
             result_id = repr(force_unicode(value))[1:]
-            if cl.is_popup and cl.params['pop'] == u'2':
-                yield mark_safe(u'<a href="%s"%s>%s</a>' % \
+            if cl.is_popup and cl.params.get('popup', 0) == u'2':
+                yield mark_safe(u'<a href="%s"%s>%s</a>' %
                 ('#', (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\', \'%s\', \'%s\'); return false;"' % (result.media_url or '', quo_esc(result.caption) or '', result.get_absolute_url())), conditional_escape(result_repr)))
                 # (url, (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\'); return false;"' % result.get_absolute_url() or ''), conditional_escape(result_repr)))
             else:
-                yield mark_safe(u'<a href="%s"%s>%s</a>' % \
+                yield mark_safe(u'<a href="%s"%s>%s</a>' %
                 (url, (cl.is_popup and ' onclick="opener.dismissRelatedLookupPopup(window, %s); return false;"' % result_id or ''), conditional_escape(result_repr)))
         else:
             # By default the fields come from ModelAdmin.list_editable, but if we pull
