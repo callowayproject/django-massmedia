@@ -229,8 +229,8 @@ class Media(models.Model):
                 return {}
             metadata = extractMetadata(parser, appsettings.INFO_QUALITY)
             if not metadata:
-                if settings.DEBUG:
-                    raise Exception("No metadata was extracted.")
+                # if settings.DEBUG:
+                #     raise Exception("No metadata was extracted.")
                 return {}
         except (InputStreamError, HachoirError):
             if settings.DEBUG:

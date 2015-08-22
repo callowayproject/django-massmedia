@@ -61,15 +61,13 @@ class ContentCreationForm(forms.Form):
         else:
             slug = self.cleaned_data['slug']
         try:
-            Image.objects.get(slug=slug)
+            self._meta.model.objects.get(slug=slug)
             slug = "%s_%d" % (slug, datetime.datetime.now().toordinal())
-        except Image.DoesNotExist:
+        except self._meta.model.DoesNotExist:
             pass
         self.cleaned_data['slug'] = slug
 
     def clean(self):
-        if (('file' not in self.cleaned_data or not self.cleaned_data['file'])):
-            raise forms.ValidationError("You must include a file.")
         self.set_title_and_slug()
         return super(ContentCreationForm, self).clean()
 

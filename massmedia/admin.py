@@ -75,7 +75,7 @@ class MediaAdmin(admin.ModelAdmin):
         (_("Credit"), {'fields': ('author', 'one_off_author', 'reproduction_allowed')}),
         (_("Metadata"), {'fields': ('metadata', 'mime_type')}),
         (_("Connections"), {'fields': ('public', 'site')}),
-        (_("Widget"), {'fields': ('width', 'height')}),
+        # (_("Widget"), {'fields': ('width', 'height')}),
         (_("Advanced options"), {
             'classes': ('collapse',),
             'fields': ('slug', 'widget_template',)
@@ -98,6 +98,7 @@ class MediaAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'creation_date'
     search_fields = ('caption', 'file')
+    raw_id_fields = ('author', )
     add_form_template = 'admin/massmedia/content_add_form.html'
 
     def get_fieldsets(self, request, obj=None):
