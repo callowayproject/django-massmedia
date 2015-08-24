@@ -1,5 +1,4 @@
-from django.contrib.admin.views.main import ALL_VAR, EMPTY_CHANGELIST_VALUE
-from django.contrib.admin.views.main import ORDER_VAR, ORDER_TYPE_VAR, PAGE_VAR, SEARCH_VAR
+from django.contrib.admin.views.main import EMPTY_CHANGELIST_VALUE
 from django.contrib.admin.templatetags.admin_list import _boolean_icon
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -7,15 +6,21 @@ from django.utils import dateformat
 from django.utils.html import escape, conditional_escape
 from django.utils.text import capfirst
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext as _
 from django.utils.formats import get_format
-from django.utils.encoding import smart_unicode, smart_str, force_unicode
+from django.utils.encoding import smart_unicode, force_unicode
 from django.template import Library
-import datetime
+
 
 register = Library()
 
 quo_esc = lambda x: x.replace("'", r"\'")
+
+from mathfilters.templatetags.mathfilters import div  # NOQA
+
+
+register.filter('div', div)
+div.is_safe = False
+
 
 def thumbnails_for_result(cl, result, form):
     """
@@ -26,7 +31,7 @@ def thumbnails_for_result(cl, result, form):
     first = True
     pk = cl.lookup_opts.pk.attname
     for field_name in cl.list_display:
-        row_class = ''
+        # row_class = ''
         try:
             f = cl.lookup_opts.get_field(field_name)
         except models.FieldDoesNotExist:
@@ -81,7 +86,7 @@ def thumbnails_for_result(cl, result, form):
                         result_repr = capfirst(dateformat.format(field_val, get_format('DATE_FORMAT')))
                 else:
                     result_repr = EMPTY_CHANGELIST_VALUE
-                row_class = ' class="nowrap"'
+                # row_class = ' class="nowrap"'
             # Booleans are special: We use images.
             elif isinstance(f, models.BooleanField) or isinstance(f, models.NullBooleanField):
                 result_repr = _boolean_icon(field_val)
@@ -101,7 +106,7 @@ def thumbnails_for_result(cl, result, form):
             result_repr = mark_safe('&nbsp;')
         # If list_display_links not defined, add the link tag to the first field
         if (first and not cl.list_display_links) or field_name in cl.list_display_links:
-            table_tag = {True: 'th', False: 'td'}[first]
+            # table_tag = {True: 'th', False: 'td'}[first]
             first = False
             url = cl.url_for_result(result)
             # Convert the pk to something that can be used in Javascript.
@@ -112,12 +117,12 @@ def thumbnails_for_result(cl, result, form):
                 attr = pk
             value = result.serializable_value(attr)
             result_id = repr(force_unicode(value))[1:]
-            if cl.is_popup and cl.params['pop'] == u'2':
-                yield mark_safe(u'<a href="%s"%s>%s</a>' % \
+            if cl.is_popup and cl.params.get('popup', 0) == u'2':
+                yield mark_safe(u'<a href="%s"%s>%s</a>' %
                 ('#', (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\', \'%s\', \'%s\'); return false;"' % (result.media_url or '', quo_esc(result.caption) or '', result.get_absolute_url())), conditional_escape(result_repr)))
-                #(url, (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\'); return false;"' % result.get_absolute_url() or ''), conditional_escape(result_repr)))
+                # (url, (cl.is_popup and ' onclick="FileBrowserDialogue.fileSubmit(\'%s\'); return false;"' % result.get_absolute_url() or ''), conditional_escape(result_repr)))
             else:
-                yield mark_safe(u'<a href="%s"%s>%s</a>' % \
+                yield mark_safe(u'<a href="%s"%s>%s</a>' %
                 (url, (cl.is_popup and ' onclick="opener.dismissRelatedLookupPopup(window, %s); return false;"' % result_id or ''), conditional_escape(result_repr)))
         else:
             # By default the fields come from ModelAdmin.list_editable, but if we pull

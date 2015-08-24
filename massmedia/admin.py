@@ -1,12 +1,8 @@
 from django.contrib import admin
 from django.contrib.admin.widgets import AdminFileWidget, AdminURLFieldWidget
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponse
-from django import template
-from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
-from django.utils.html import escape
 
 
 from models import (Image, Video, Audio, Flash, Collection, Embed, Document,
@@ -79,7 +75,7 @@ class MediaAdmin(admin.ModelAdmin):
         (_("Credit"), {'fields': ('author', 'one_off_author', 'reproduction_allowed')}),
         (_("Metadata"), {'fields': ('metadata', 'mime_type')}),
         (_("Connections"), {'fields': ('public', 'site')}),
-        (_("Widget"), {'fields': ('width', 'height')}),
+        # (_("Widget"), {'fields': ('width', 'height')}),
         (_("Advanced options"), {
             'classes': ('collapse',),
             'fields': ('slug', 'widget_template',)
@@ -102,6 +98,7 @@ class MediaAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'creation_date'
     search_fields = ('caption', 'file')
+    raw_id_fields = ('author', )
     add_form_template = 'admin/massmedia/content_add_form.html'
 
     def get_fieldsets(self, request, obj=None):
@@ -125,42 +122,6 @@ class MediaAdmin(admin.ModelAdmin):
         defaults.update(kwargs)
         return super(MediaAdmin, self).get_form(request, obj, **defaults)
 
-    def render_change_form(self, request, context, add=False, change=False,
-                           form_url='', obj=None):
-        opts = self.model._meta
-        app_label = opts.app_label
-        ordered_objects = opts.get_ordered_objects()
-        is_popup = '_popup' in request.REQUEST or 'pop' in request.REQUEST
-        context.update({
-            'add': add,
-            'change': change,
-            'has_add_permission': self.has_add_permission(request),
-            'has_change_permission': self.has_change_permission(request, obj),
-            'has_delete_permission': self.has_delete_permission(request, obj),
-            'has_file_field': True,  # FIXME - this should check if form or formsets have a FileField,
-            'has_absolute_url': hasattr(self.model, 'get_absolute_url'),
-            'ordered_objects': ordered_objects,
-            'form_url': mark_safe(form_url),
-            'opts': opts,
-            'content_type_id': ContentType.objects.get_for_model(self.model).id,
-            'save_as': self.save_as,
-            'save_on_top': self.save_on_top,
-            'is_popup': is_popup,
-        })
-        context_instance = template.RequestContext(request, current_app=self.admin_site.name)
-        if add:
-            return render_to_response(self.add_form_template or [
-                "admin/%s/%s/add_form.html" % (app_label, opts.object_name.lower()),
-                "admin/%s/add_form.html" % app_label,
-                "admin/change_form.html"
-            ], context, context_instance=context_instance)
-        else:
-            return render_to_response(self.change_form_template or [
-                "admin/%s/%s/change_form.html" % (app_label, opts.object_name.lower()),
-                "admin/%s/change_form.html" % app_label,
-                "admin/change_form.html"
-            ], context, context_instance=context_instance)
-
 
 class ImageAdmin(MediaAdmin):
     list_display = ('render_thumb', 'title', 'creation_date')
@@ -176,30 +137,44 @@ class ImageAdmin(MediaAdmin):
     )
     add_form = ImageCreationForm
 
+    def get_urls(self):
+        from django.conf.urls import patterns, url
+
+        urls = super(ImageAdmin, self).get_urls()
+        my_urls = patterns('',
+            (r'^(?P<image_id>\d+)/crops/add/$', self.add_crop),
+            (r'^(?P<image_id>\d+)/crops/(?P<object_id>\d+)/$', self.update_crop),
+            (r'^(?P<image_id>\d+)/crops/(?P<object_id>\d+)/delete/$', self.delete_crop),
+            url(r'^close/$', self.close_window, name="imagecustomsize_close"),
+        )
+        return my_urls + urls
+
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'file':
             kwargs['widget'] = AdminImageWidget
-            request = kwargs.pop('request')
+            kwargs.pop('request')
             return db_field.formfield(**kwargs)
         elif db_field.name == 'external_url':
             kwargs['widget'] = AdminExternalURLWidget
-            request = kwargs.pop('request')
+            kwargs.pop('request')
             return db_field.formfield(**kwargs)
         return super(ImageAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 
-    def response_add(self, request, obj, post_url_continue='../%s/'):
-        """
-        Determines the HttpResponse for the add_view stage.
+    def add_crop(self, request, image_id):
+        from massmedia.views import ImageCustomSizeCreate
+        return ImageCustomSizeCreate.as_view()(request, image_id=image_id)
 
-        Returns a different result only if pop=2
-        """
-        if 'pop' in request.GET:
-            pk_value = obj._get_pk_val()
-            return HttpResponse('<script type="text/javascript">opener.myDismissAddAnotherPopup(window, "%s", "%s");</script>' % \
-                # escape() calls force_unicode.
-                (escape(pk_value), escape(obj)))
-        else:
-            return super(ImageAdmin, self).response_add(request, obj, post_url_continue)
+    def delete_crop(self, request, image_id, object_id):
+        from massmedia.views import ImageCustomSizeDelete
+        return ImageCustomSizeDelete.as_view()(request, image_id=image_id, object_id=object_id)
+
+    def update_crop(self, request, image_id, object_id):
+        from massmedia.views import ImageCustomSizeUpdate
+        return ImageCustomSizeUpdate.as_view()(request, image_id=image_id, object_id=object_id)
+
+    def close_window(self, request):
+        from django.views.generic.base import TemplateView
+        return TemplateView.as_view(template_name='admin/massmedia/imagecustomsize/close_window.html')(request)
 
 
 class VideoAdmin(MediaAdmin):

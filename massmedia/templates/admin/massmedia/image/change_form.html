@@ -1,0 +1,89 @@
+{% extends "admin/change_form.html" %}
+{% block extrahead %}
+{{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}massmedia/css/jsmodal-light.css">
+<style type="text/css">
+    .ordered_thumb {
+  display: inline-table;
+  width: 100px;
+  text-align: center;
+}
+a.buttonlink {
+  display: inline-block;
+  color: #fff;
+  padding: .2em 10px;
+  background: #999;
+  border-radius: 15px;
+  font-weight: bold;
+}
+a.buttonlink.add {
+  background: #999 url({{ STATIC_URL }}admin/img/tooltag-add.png) 5% center no-repeat;
+  padding-left: 26px;
+}
+#cid_001 {
+    padding: 10px;
+}
+</style>
+{% endblock extrahead %}
+{% block object-tools %}
+{{ block.super }}
+<!-- including -->
+{% with original as object %}
+    {% include "admin/massmedia/image/image_info.html" %}
+{% endwith %}
+<!-- done -->
+{% endblock %}
+{% block after_field_sets %}
+    {{ block.super }}
+<script type="text/javascript" src="{{ STATIC_URL }}massmedia/js/jsmodal-1.0d.min.js"></script>
+<script type="text/javascript">
+    django.jQuery(document).on("modalClose", function(e) {
+        document.location.reload(true);
+    });
+    function display_photo_sizes(){
+        django.jQuery("#cid_001").toggle();
+        if (django.jQuery("#cid_001").is(":visible"))
+            django.jQuery("#thumblabel").html("Hide");
+        else
+            django.jQuery("#thumblabel").html("Show");
+    }
+    function parseQuery ( query ) {
+        var Params = {width: "80%", height: "550"},
+            Pairs, KeyVal, key, val;
+        if ( ! query ) { return Params; }// return empty object
+        Pairs = query.split(/[;&]/);
+        for ( var i = 0; i < Pairs.length; i++ ) {
+            KeyVal = Pairs[i].split('=');
+            if ( ! KeyVal || KeyVal.length != 2 ) {continue;}
+            key = unescape( KeyVal[0] );
+            val = unescape( KeyVal[1] );
+            val = val.replace(/\+/g, ' ');
+            Params[key] = val;
+        }
+        return Params;
+    }
+
+    django.jQuery(document).ready(function(){
+        var iframe_markup = '<div class="jsm-iframe-scaler" style="height:%height%">'+
+                                '<iframe class="jsm-iframe" src="%src%" frameborder="0" allowfullscreen style="width:100%;height:100%"></iframe>'+
+                            '</div>';
+        django.jQuery('.thickbox').click(function(e) {
+            var queryString = this.href.replace(/^[^\?]+\??/,''),
+                params = parseQuery( queryString ),
+                height = params.height;
+            if (height.indexOf('%') === -1) { height += 'px'; }
+            e.preventDefault();
+            Modal.open({
+                content: iframe_markup.replace('%src%', this.href).replace('%height%', height),
+                draggable: true,
+                width: params.width,
+                height: params.height,
+                closeCallback: function () {
+                    django.jQuery(document).trigger('modalClose');
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

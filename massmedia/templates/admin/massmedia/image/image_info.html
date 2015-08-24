@@ -1,0 +1,54 @@
+<style type="text/css">
+.tbl { border: 1px solid #eeffff;}
+.tbl_name {background-color: #dddddd; text-align: center; }
+tr.col_name td {font-weight:bold;}
+tr.col_subdued td {font-size:10px; text-align: center; line-height: 8px; }
+.size_name{ color: #330000 }
+#photo_info ul li { margin-left: 1.5em; }
+</style>
+<table style="width: 100%">
+    <tbody>
+        <tr>
+            <td>
+                <a href="{{ object.file.url }}" target="_blank"><img src="{{ object.thumbnail.url|safe }}" /></a>
+            </td>
+            <td>
+                <h5 style="margin-top:0">Primary Image</h5>
+                <ul style="margin-left: 15px">
+                    <li><strong>File name:</strong> {{ object.file.name }}</li>
+                    <li><strong>Orientation:</strong> {% if object.width > object.height %}Horizontal{% elif object.width == object.height %}Square{% else %}Vertical{% endif %}</li>
+                    <li><strong>Dimensions:</strong> {{ object.width }}x{{ object.height }}</li>
+                    <li><strong>Photo ID:</strong> {{ object.id }}</li>
+                </ul>
+            </td>
+            <td>
+                <h5 style="margin-top:0">Custom Thumbnails</h5>
+                <ul style="margin-left: 15px">{% for csize in object.custom_sizes.all %}
+                    <li>{{ csize.width }} &times; {{ csize.height }}</li>
+                    {% empty %}
+                    <li><em>No Custom Sizes</em></li>
+                {% endfor %}</ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="form-row">
+    <a href="#" onclick="display_photo_sizes()" class="buttonlink" stlye="margin-left: 100px;">
+        <span id="thumblabel">Show</span> Thumbnails
+    </a>
+
+    <a class="thickbox buttonlink add" href="{% url "admin:massmedia_image_change" object.id %}crops/add/">
+        Add Thumbnail
+    </a>
+<div id="cid_001" style="display: none">
+    {% for img in object.custom_sizes.all %}
+        <div class="ordered_thumb"><a class="thickbox" href="{% url "admin:massmedia_image_change" object.id %}crops/{{ img.id }}/"><img src="{{ img.url }}" style="max-width: 250px"/>{{ img.width }} x {{ img.height }}</a>
+        <p><a href="{{ img.url }}" target="_blank">View in new window</a></p>
+        <p class="deletelink-box"><a class="thickbox deletelink" href="{% url "admin:massmedia_image_change" object.id %}crops/{{ img.id }}/delete/?height=250&amp;width=300">Delete</a></p>
+        </div>
+    {% empty %}
+    <p><em>No custom thumbnails</em></p>
+    {% endfor %}
+</div>
+
+</div>

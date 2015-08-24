@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Custom Thumbnail</title>
+  <link href="{{ STATIC_URL }}massmedia/css/cropperwindow.css" rel="stylesheet">
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/jquery.init.js"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="ng-container ng-container-center" id="basic-example">
+  <div class="eg-main">
+    <form action="." class="ng-form{% if object.image %} ng-form-horizontal{% endif %}" method="POST" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %} style="width: 100%">{% csrf_token %}
+    {% if object.image %}
+        {{ form.image.as_hidden }}
+        {{ form.crop_x.as_hidden }}
+        {{ form.crop_y.as_hidden }}
+        {{ form.crop_w.as_hidden }}
+        {{ form.crop_h.as_hidden }}
+        {{ form.ratio.as_hidden }}
+        {{ form.width.as_hidden }}
+        {{ form.height.as_hidden }}
+        <div class="ng-form-row">
+          <label class="ng-form-label" for="{{ form.image.id_for_label }}">Custom Image</label>
+          <div class="ng-form-controls">
+            Currently <img src="{{ object.image.url }}" width="{{ form.width.value }}" height="{{ form.height.value }}">
+            <input id="image-clear_id" name="image-clear" type="checkbox"> <label for="image-clear_id">Clear</label>
+          </div>
+          <div class="ng-form-controls">
+            <input id="id_image" name="image" type="file">
+          </div>
+        </div>
+        <div class="ng-form-row">
+          <div class="ng-form-controls">
+            <input type="submit" class="ng-button" value="Cancel" name="_cancel">
+            <input type="submit" class="ng-button ng-button-primary" value="Save" name="_save">
+          </div>
+        </div>
+    {% else %}
+        <script src="{{ STATIC_URL }}massmedia/js/cropper.js"></script>
+        {% include "admin/massmedia/imagecustomsize/cropper.html" %}
+    {% endif %}
+    </form>
+  </div>
+</div>
+</body>
+</html>

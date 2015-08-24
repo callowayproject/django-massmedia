@@ -1,0 +1,588 @@
+{% load massmedia_admin %}
+<div class="eg-container" id="basic-example">
+  <div class="ng-grid ng-container-center eg-main">
+    <div class="ng-width-4-6">
+      <div class="eg-wrapper">
+        {{ form.image.as_hidden }}
+        <img class="cropper" src="{{ form.instance.image.file.url }}" alt="Picture">
+      </div>
+        <div class="ng-panel" style="margin-top: 15px">
+          <button class="ng-button" id="clear" type="button"><i class="sprite sprite-eraser"></i></button>
+          <button class="ng-button" id="zoomIn" type="button"><i class="sprite sprite-zoom-in"></i></button>
+          <button class="ng-button" id="zoomOut" type="button"><i class="sprite sprite-zoom-out"></i></button>
+        </div>
+    </div>
+    <div class="ng-width-2-6">
+      <div class="eg-preview clearfix">
+        <div class="ng-thumbnail ng-bordered">
+          <div class="preview preview-lg" {% if form.width.value %}style="width: {{ form.width.value }}px;height: {{ form.height.value }}px"{% endif %}></div>
+          <div class="ng-thumbnail-caption"><p class="ng-text-small ng-margin-top-remove">Thumbnail scaled to <span id="thumbSize"></span>.<br />Original dimensions: {{ form.instance.image.width }} &times; {{ form.instance.image.height }}<br />Aspect ratio: <span id="viewAspectRatio"></span></p>
+          </div>
+        </div>
+      </div>
+      <div class="eg-data">
+        {% if form.width.errors or form.height.errors %}
+          <div class="ng-alert ng-alert-danger" data-ng-alert="">
+          <p>The thumbnail width and height are required</p>
+          </div>
+        {% endif %}
+        <div class="ng-form-row">
+          <div class="ng-input-group">
+            {{ form.width.label_tag }}
+            <input class="ng-form-width-mini{% if form.width.errors %} ng-form-danger{% endif %}" name="{{ form.width.name }}" id="{{ form.width.id_for_label }}" value="{% if form.width.value %}{{ form.width.value }}{% else %}{{ form.instance.image.width }}{% endif %}" type="text" placeholder="w">
+            <span class="ng-input-group-addon">px</span>
+          </div>
+        </div>
+        <div class="ng-form-row ng-margin-remove clearfix">
+          <i id="lockIcon" class="sprite sprite-lock-open ng-float-right" style="height:18px"></i>
+        </div>
+        <div class="ng-form-row ng-margin-remove">
+          <div class="ng-input-group">
+              {{ form.height.label_tag }}
+              <input class="ng-form-width-mini{% if form.height.errors %} ng-form-danger{% endif %}" name="{{ form.height.name }}" id="{{ form.height.id_for_label }}" value="{% if form.height.value %}{{ form.height.value }}{% else %}{{ form.instance.image.height }}{% endif %}" type="text" placeholder="h">
+              <span class="ng-input-group-addon">px</span>
+          </div>
+          {{ form.ratio.as_hidden }}
+          <input type="hidden" id="aspectRatio" value="{% if form.ratio.value %}{{ form.ratio.value|div:1000 }}{% else %}{{ form.instance.image.width|div:form.instance.image.height }}{% endif %}" />
+          {{ form.crop_x.as_hidden }}
+          {{ form.crop_y.as_hidden }}
+          {{ form.crop_w.as_hidden }}
+          {{ form.crop_h.as_hidden }}
+        </div>
+        <div class="ng-form-row">
+          <input type="checkbox" id="maintainAspectRatio"> <label for="maintainAspectRatio">Maintain aspect ratio</label>
+        </div>
+        <div class="ng-form-row">
+          <label for="aspectRatioChoice">Set aspect ratio to</label> <select id="aspectRatioChoice">
+            <option value="auto" selected>-------</option>
+            <option value="2.39">Cinema (21:9)</option>
+            <option value="1.778">HDTV (16:9)</option>
+            <option value="1.5">35mm (3:2)</option>
+            <option value="1.333">SDTV (4:3)</option>
+            <option value="1">Square (1:1)</option>
+            <option value="0.8">8x10 (4:5)</option>
+            <option value="0.75">Portrait SDTV (3:4)</option>
+            <option value="0.667">4x6 (2:3)</option>
+          </select>
+        </div>
+        <div class="ng-form-row" style="text-align: right">
+          <a href="{% url "admin:imagecustomsize_close" %}" class="ng-button">Cancel</a> <input type="submit" class="ng-button ng-button-primary" value="Save" name="_save">
+        </div>
+      </div>{# eg-data #}
+    </div>{# width-2-6 #}
+  </div>{# ng-grid #}
+</div>{# ng-container #}
+<script>
+django.jQuery(document).ready(function(){
+    (function($) {
+      var $image = $(".cropper"),
+          $dataX = $("#{{ form.crop_x.id_for_label }}"),
+          $dataY = $("#{{ form.crop_y.id_for_label }}"),
+          $dataHeight = $("#{{ form.crop_h.id_for_label }}"),
+          $dataWidth = $("#{{ form.crop_w.id_for_label }}"),
+          $targetHeight = $("#{{ form.height.id_for_label }}"),
+          $targetWidth = $("#{{ form.width.id_for_label }}"),
+          $targetRatio = $("#{{ form.ratio.id_for_label }}"),
+          $aspectRatio = $("#aspectRatio"),
+          $viewAspectRatio = $("#viewAspectRatio"),
+          maintainAspectRatio = false,
+          originalWidth = {{ form.instance.image.width }},
+          originalHeight = {{ form.instance.image.height }};
+
+      filterInt = function (value) {
+        if(/^(\-|\+)?([0-9]+|Infinity)$/.test(value))
+          return Number(value);
+        return NaN;
+      };
+
+      function calcTargetRatio() {
+          var w = filterInt($targetWidth.val()),
+              h = filterInt($targetHeight.val()),
+              previewW = w,
+              previewH = h,
+              r,
+              currentData = $image.cropper("getData", true),
+              aspectRatioFraction;
+          if (maintainAspectRatio) return;
+          if (!isNaN(w) && !isNaN(h)) {
+              r = w / h;
+              if ((previewW > previewH) && (previewW > 283)) {
+                previewW = 283;
+                previewH = Math.round(h / (w / 283));
+              } else if (previewH > 160){
+                previewW = Math.round(w / (h / 160));
+                previewH = 160;
+              }
+              $('.preview.preview-lg').css({width: previewW + 'px',height:previewH + 'px'});
+              $targetRatio.val(Math.round(r * 1000));
+              $aspectRatio.val(r);
+              if (Math.round((currentData.width / currentData.height) * 1000) != $targetRatio.val()){
+                $image.cropper("setAspectRatio", r);
+                $image.cropper("setData", {x: $dataX.val(), y: $dataY.val(), width: $dataWidth.val(), height: $dataHeight.val()});
+              }
+              aspectRatioFraction = new Fraction(w, h);
+              $viewAspectRatio.html(aspectRatioFraction.numerator + ":" + aspectRatioFraction.denominator);
+              $("#thumbSize").html(previewW + "px &times; " + previewH + "px");
+          } else {
+              $targetRatio.val("");
+              $aspectRatio.val("");
+              $viewAspectRatio.html("");
+              $('.preview.preview-lg').css({width: '283px', height: '160px'});
+              $image.cropper("setAspectRatio", "auto");
+          }
+      }
+      // calcTargetRatio();
+      $targetHeight.on('change', function(){
+        if (maintainAspectRatio) {
+          $targetWidth.val(Math.round($targetHeight.val() / $aspectRatio.val()));
+        } else {
+          calcTargetRatio();
+        }
+      });
+      $targetWidth.on('change', function(){
+        if (maintainAspectRatio) {
+          $targetHeight.val(Math.round($targetWidth.val() / $aspectRatio.val()));
+        } else {
+          calcTargetRatio();
+        }
+      });
+      $image.cropper({
+        aspectRatio: {% if form.ratio.value %}{{ form.ratio.value|div:1000 }}{% else %}{{ form.instance.image.width }} / {{ form.instance.image.height }}{% endif %},
+        data: {
+          x: {% if form.crop_x.value %}{{ form.crop_x.value }}{% else %}0{% endif %},
+          y: {% if form.crop_y.value %}{{ form.crop_y.value }}{% else %}0{% endif %},
+          width: {% if form.crop_w.value %}{{ form.crop_w.value }}{% else %}{{ form.instance.image.width }}{% endif %},
+          height: {% if form.crop_h.value %}{{ form.crop_h.value }}{% else %}{{ form.instance.image.height }}{% endif %}
+        },
+        preview: ".preview",
+
+        done: function(data) {
+          $dataX.val(Math.round(data.x));
+          $dataY.val(Math.round(data.y));
+          $dataHeight.val(Math.round(data.height));
+          $dataWidth.val(Math.round(data.width));
+        }
+      });
+      $("#aspectRatioChoice").change(function() {
+        var aspectRatio = this.value,
+            w = filterInt($targetWidth.val()),
+            h = filterInt($targetHeight.val()),
+            temp;
+        if (this.value === "auto") return;
+        aspectRatio = parseFloat(aspectRatio);
+        if (aspectRatio > 1.0) {
+          temp = Math.round(w / aspectRatio);
+          if (temp > originalHeight) {
+            $targetHeight.val(originalHeight);
+            $targetWidth.val(Math.round(originalHeight * aspectRatio));
+          } else {
+            $targetHeight.val(temp);
+          }
+        } else {
+          temp = Math.round(h * aspectRatio);
+          if (temp > originalWidth) {
+            $targetWidth.val(originalWidth);
+            $targetHeight.val(Math.round(originalWidth / aspectRatio));
+          } else {
+            $targetWidth.val(temp);
+          }
+        }
+        $('#aspectRatioChoice').val('auto');
+        maintainAspectRatio = false;  // To force the calcTargetRatio to calcuate
+        calcTargetRatio();
+        maintainAspectRatio = true;
+        $("#lockIcon").removeClass('sprite sprite-unlock').addClass('sprite sprite-lock');
+        $("#maintainAspectRatio").prop('checked', maintainAspectRatio);
+      });
+      $("#lockIcon").click(function(){
+        maintainAspectRatio = !maintainAspectRatio
+        $("#maintainAspectRatio").prop('checked', maintainAspectRatio);
+        if (maintainAspectRatio) {
+          $("#lockIcon").removeClass('sprite sprite-lock-open').addClass('sprite sprite-lock');
+        } else {
+          $("#lockIcon").removeClass('sprite sprite-lock').addClass('sprite sprite-lock-open');
+        }
+      });
+      $("#maintainAspectRatio").click(function(){
+        maintainAspectRatio = !maintainAspectRatio
+        if (maintainAspectRatio) {
+          $("#lockIcon").removeClass('sprite sprite-lock-open').addClass('sprite sprite-lock');
+        } else {
+          $("#lockIcon").removeClass('sprite sprite-lock').addClass('sprite sprite-lock-open');
+        }
+      });
+      $("#clear").click(function() {
+        $image.cropper("clear");
+      });
+
+      $("#zoomIn").click(function() {
+        $image.cropper("zoom", 0.1);
+      });
+
+      $("#zoomOut").click(function() {
+        $image.cropper("zoom", -0.1);
+      });
+      calcTargetRatio();
+    })(django.jQuery);
+});
+/*
+fraction.js
+A Javascript fraction library.
+
+Copyright (c) 2009  Erik Garrison <erik@hypervolu.me>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+*/
+
+
+/* Fractions */
+/*
+ *
+ * Fraction objects are comprised of a numerator and a denomenator.  These
+ * values can be accessed at fraction.numerator and fraction.denomenator.
+ *
+ * Fractions are always returned and stored in lowest-form normalized format.
+ * This is accomplished via Fraction.normalize.
+ *
+ * The following mathematical operations on fractions are supported:
+ *
+ * Fraction.equals
+ * Fraction.add
+ * Fraction.subtract
+ * Fraction.multiply
+ * Fraction.divide
+ *
+ * These operations accept both numbers and fraction objects.  (Best results
+ * are guaranteed when the input is a fraction object.)  They all return a new
+ * Fraction object.
+ *
+ * Usage:
+ *
+ * TODO
+ *
+ */
+
+/*
+ * The Fraction constructor takes one of:
+ *   an explicit numerator (integer) and denominator (integer),
+ *   a string representation of the fraction (string),
+ *   or a floating-point number (float)
+ *
+ * These initialization methods are provided for convenience.  Because of
+ * rounding issues the best results will be given when the fraction is
+ * constructed from an explicit integer numerator and denomenator, and not a
+ * decimal number.
+ *
+ *
+ * e.g. new Fraction(1, 2) --> 1/2
+ *      new Fraction('1/2') --> 1/2
+ *      new Fraction('2 3/4') --> 11/4  (prints as 2 3/4)
+ *
+ */
+Fraction = function(numerator, denominator)
+{
+    /* double argument invocation */
+    if (numerator && denominator) {
+        if (typeof(numerator) === 'number' && typeof(denominator) === 'number') {
+            this.numerator = numerator;
+            this.denominator = denominator;
+        } else if (typeof(numerator) === 'string' && typeof(denominator) === 'string') {
+            // what are they?
+            // hmm....
+            // assume they are ints?
+            this.numerator = parseInt(numerator);
+            this.denominator = parseInt(denominator);
+        }
+    /* single-argument invocation */
+    } else if (!denominator) {
+        num = numerator; // swap variable names for legibility
+        if (typeof(num) === 'number') {  // just a straight number init
+            this.numerator = num;
+            this.denominator = 1;
+        } else if (typeof(num) === 'string') {
+            var nums, a, b;  // hold the first and second part of the fraction, e.g. a = '1' and b = '2/3' in 1 2/3
+                       // or a = '2/3' and b = undefined if we are just passed a single-part number
+            nums = num.split(' ');
+            a = nums[0];
+            b = nums[1];
+            /* compound fraction e.g. 'A B/C' */
+            //  if a is an integer ...
+            if (a % 1 === 0 && b && b.match('/')) {
+                return (new Fraction(a)).add(new Fraction(b));
+            } else if (a && !b) {
+                /* simple fraction e.g. 'A/B' */
+                if (typeof(a) === 'string' && a.match('/')) {
+                    // it's not a whole number... it's actually a fraction without a whole part written
+                    var f = a.split('/');
+                    this.numerator = f[0]; this.denominator = f[1];
+                /* string floating point */
+                } else if (typeof(a) === 'string' && a.match('\.')) {
+                    return new Fraction(parseFloat(a));
+                /* whole number e.g. 'A' */
+                } else { // just passed a whole number as a string
+                    this.numerator = parseInt(a);
+                    this.denominator = 1;
+                }
+            } else {
+                return undefined; // could not parse
+            }
+        }
+    }
+    this.normalize();
+}
+
+
+Fraction.prototype.clone = function()
+{
+    return new Fraction(this.numerator, this.denominator);
+}
+
+
+/* pretty-printer, converts fractions into whole numbers and fractions */
+Fraction.prototype.toString = function()
+{
+    var wholepart = Math.floor(this.numerator / this.denominator);
+    var numerator = this.numerator % this.denominator
+    var denominator = this.denominator;
+    var result = [];
+    if (wholepart != 0)
+        result.push(wholepart);
+    if (numerator != 0)
+        result.push(numerator + '/' + denominator);
+    return result.length > 0 ? result.join(' ') : 0;
+}
+
+
+/* destructively rescale the fraction by some integral factor */
+Fraction.prototype.rescale = function(factor)
+{
+    this.numerator *= factor;
+    this.denominator *= factor;
+    return this;
+}
+
+
+Fraction.prototype.add = function(b)
+{
+    var a = this.clone();
+    if (b instanceof Fraction) {
+        b = b.clone();
+    } else {
+        b = new Fraction(b);
+    }
+    td = a.denominator;
+    a.rescale(b.denominator);
+    b.rescale(td);
+
+    a.numerator += b.numerator;
+
+    return a.normalize();
+}
+
+
+Fraction.prototype.subtract = function(b)
+{
+    var a = this.clone();
+    if (b instanceof Fraction) {
+        b = b.clone();  // we scale our argument destructively, so clone
+    } else {
+        b = new Fraction(b);
+    }
+    td = a.denominator;
+    a.rescale(b.denominator);
+    b.rescale(td);
+
+    a.numerator -= b.numerator;
+
+    return a.normalize();
+}
+
+
+Fraction.prototype.multiply = function(b)
+{
+    var a = this.clone();
+    if (b instanceof Fraction)
+    {
+        a.numerator *= b.numerator;
+        a.denominator *= b.denominator;
+    } else if (typeof b === 'number') {
+        a.numerator *= b;
+    } else {
+        return a.multiply(new Fraction(b));
+    }
+    return a.normalize();
+}
+
+
+Fraction.prototype.divide = function(b)
+{
+    var a = this.clone();
+    if (b instanceof Fraction)
+    {
+        a.numerator /= b.numerator;
+        a.denominator /= b.denominator;
+    } else if (typeof b === 'number') {
+        a.numerator /= b;
+    } else {
+        return a.divide(new Fraction(b));
+    }
+    return a.normalize();
+}
+
+
+Fraction.prototype.equals = function(b)
+{
+    if (!(b instanceof Fraction)) {
+        b = new Fraction(b);
+    }
+    // fractions that are equal should have equal normalized forms
+    var a = this.clone().normalize();
+    var b = b.clone().normalize();
+    return (a.numerator === b.numerator && a.denominator === b.denominator);
+}
+
+
+/* Utility functions */
+
+/* Destructively normalize the fraction to its smallest representation.
+ * e.g. 4/16 -> 1/4, 14/28 -> 1/2, etc.
+ * This is called after all math ops.
+ */
+Fraction.prototype.normalize = (function()
+{
+
+    var isFloat = function(n)
+    {
+        return (typeof(n) === 'number' &&
+                ((n > 0 && n % 1 > 0 && n % 1 < 1) ||
+                 (n < 0 && n % -1 < 0 && n % -1 > -1))
+               );
+    }
+
+    var roundToPlaces = function(n, places)
+    {
+        if (!places) {
+            return Math.round(n);
+        } else {
+            var scalar = Math.pow(10, places);
+            return Math.round(n*scalar)/scalar;
+        }
+    }
+
+    return (function() {
+
+        // XXX hackish.  Is there a better way to address this issue?
+        //
+        /* first check if we have decimals, and if we do eliminate them
+         * multiply by the 10 ^ number of decimal places in the number
+         * round the number to nine decimal places
+         * to avoid js floating point funnies
+         */
+        if (isFloat(this.denominator)) {
+            var rounded = roundToPlaces(this.denominator, 9);
+            var scaleup = Math.pow(10, rounded.toString().split('.')[1].length);
+            this.denominator = Math.round(this.denominator * scaleup); // this !!! should be a whole number
+            //this.numerator *= scaleup;
+            this.numerator *= scaleup;
+        }
+        if (isFloat(this.numerator)) {
+            var rounded = roundToPlaces(this.numerator, 9);
+            var scaleup = Math.pow(10, rounded.toString().split('.')[1].length);
+            this.numerator = Math.round(this.numerator * scaleup); // this !!! should be a whole number
+            //this.numerator *= scaleup;
+            this.denominator *= scaleup;
+        }
+        var gcf = Fraction.gcf(this.numerator, this.denominator);
+        this.numerator /= gcf;
+        this.denominator /= gcf;
+        return this;
+    });
+
+})();
+
+
+/* Takes two numbers and returns their greatest common factor.
+ */
+Fraction.gcf = function(a, b)
+{
+
+    var common_factors = [];
+    var fa = Fraction.primeFactors(a);
+    var fb = Fraction.primeFactors(b);
+    // for each factor in fa
+    // if it's also in fb
+    // put it into the common factors
+    fa.forEach(function (factor)
+    {
+        var i = fb.indexOf(factor);
+        if (i >= 0) {
+            common_factors.push(factor);
+            fb.splice(i,1); // remove from fb
+        }
+    });
+
+    if (common_factors.length === 0)
+        return 1;
+
+    var gcf = (function() {
+        var r = common_factors[0];
+        var i;
+        for (i=1;i<common_factors.length;i++)
+        {
+            r = r * common_factors[i];
+        }
+        return r;
+    })();
+
+    return gcf;
+
+};
+
+
+// Adapted from:
+// http://www.btinternet.com/~se16/js/factor.htm
+Fraction.primeFactors = function(n)
+{
+
+    var num = n;
+    var factors = [];
+    var _factor = 2;  // first potential prime factor
+
+    while (_factor * _factor <= num)  // should we keep looking for factors?
+    {
+      if (num % _factor === 0)  // this is a factor
+        {
+            factors.push(_factor);  // so keep it
+            num = num/_factor;  // and divide our search point by it
+        }
+        else
+        {
+            _factor++;  // and increment
+        }
+    }
+
+    if (num != 1)                    // If there is anything left at the end...
+    {                                // ...this must be the last prime factor
+        factors.push(num);           //    so it too should be recorded
+    }
+
+    return factors;                  // Return the prime factors
+}
+</script>

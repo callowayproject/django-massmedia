@@ -3,8 +3,7 @@ import re
 import time
 
 from django.db import models
-from django.utils.simplejson import dumps, loads
-from django.utils import simplejson
+import simplejson
 
 
 class SerializedObjectField(models.TextField):
@@ -18,9 +17,9 @@ class SerializedObjectField(models.TextField):
     def to_python(self, value):
         try:
             if self.decoder:
-                return loads(str(value), cls=self.decoder)
+                return simplejson.loads(str(value), cls=self.decoder)
             else:
-                return loads(str(value))
+                return simplejson.loads(str(value))
         except Exception:
             # If an error was raised, just return the plain value
             return value
@@ -33,7 +32,7 @@ class SerializedObjectField(models.TextField):
                 except UnicodeDecodeError:
                     return '{}'
             else:
-                value = dumps(value)
+                value = simplejson.dumps(value)
         return str(value)
 
     def get_internal_type(self):
