@@ -220,6 +220,7 @@ class DocumentAdmin(MediaAdmin):
 
 class CollectionInline(GenericCollectionTabularInline):
     model = CollectionRelation
+    template = 'admin/edit_inline/gen_coll_tabular.html'
 
 
 class CollectionAdmin(admin.ModelAdmin):
