@@ -146,6 +146,7 @@ class JSONResponse(HttpResponse):
 
 class ImageCustomSizeCreate(CreateView):
     template_name = 'admin/massmedia/imagecustomsize/change_form.html'
+    fields = '__all__'
 
     def get_form_kwargs(self):
         """
