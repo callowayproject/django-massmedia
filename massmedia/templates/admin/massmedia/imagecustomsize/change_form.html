@@ -20,35 +20,8 @@
 <div class="ng-container ng-container-center" id="basic-example">
   <div class="eg-main">
     <form action="." class="ng-form{% if object.image %} ng-form-horizontal{% endif %}" method="POST" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %} style="width: 100%">{% csrf_token %}
-    {% if object.image %}
-        {{ form.image.as_hidden }}
-        {{ form.crop_x.as_hidden }}
-        {{ form.crop_y.as_hidden }}
-        {{ form.crop_w.as_hidden }}
-        {{ form.crop_h.as_hidden }}
-        {{ form.ratio.as_hidden }}
-        {{ form.width.as_hidden }}
-        {{ form.height.as_hidden }}
-        <div class="ng-form-row">
-          <label class="ng-form-label" for="{{ form.image.id_for_label }}">Custom Image</label>
-          <div class="ng-form-controls">
-            Currently <img src="{{ object.image.url }}" width="{{ form.width.value }}" height="{{ form.height.value }}">
-            <input id="image-clear_id" name="image-clear" type="checkbox"> <label for="image-clear_id">Clear</label>
-          </div>
-          <div class="ng-form-controls">
-            <input id="id_image" name="image" type="file">
-          </div>
-        </div>
-        <div class="ng-form-row">
-          <div class="ng-form-controls">
-            <input type="submit" class="ng-button" value="Cancel" name="_cancel">
-            <input type="submit" class="ng-button ng-button-primary" value="Save" name="_save">
-          </div>
-        </div>
-    {% else %}
         <script src="{{ STATIC_URL }}massmedia/js/cropper.js"></script>
         {% include "admin/massmedia/imagecustomsize/cropper.html" %}
-    {% endif %}
     </form>
   </div>
 </div>
