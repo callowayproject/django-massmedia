@@ -182,6 +182,7 @@ class ImageCustomSizeCreate(CreateView):
 
 class ImageCustomSizeUpdate(UpdateView):
     template_name = 'admin/massmedia/imagecustomsize/change_form.html'
+    fields = '__all__'
 
     def get_form_kwargs(self):
         """
