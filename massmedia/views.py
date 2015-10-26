@@ -187,13 +187,13 @@ class ImageCustomSizeUpdate(UpdateView):
         """
         Returns the keyword arguments for instantiating the form.
         """
-        kwargs = super(models.ImageCustomSizeUpdate, self).get_form_kwargs()
+        kwargs = super(ImageCustomSizeUpdate, self).get_form_kwargs()
         kwargs.update({'instance': self.get_object()})
         return kwargs
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        return super(models.ImageCustomSizeUpdate, self).get(request, *args, **kwargs)
+        return super(ImageCustomSizeUpdate, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         """
