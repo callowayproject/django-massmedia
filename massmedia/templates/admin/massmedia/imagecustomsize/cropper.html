@@ -134,7 +134,7 @@ django.jQuery(document).ready(function(){
       // calcTargetRatio();
       $targetHeight.on('change', function(){
         if (maintainAspectRatio) {
-          $targetWidth.val(Math.round($targetHeight.val() / $aspectRatio.val()));
+          $targetWidth.val(Math.round($targetHeight.val() * $aspectRatio.val()));
         } else {
           calcTargetRatio();
         }
@@ -154,6 +154,7 @@ django.jQuery(document).ready(function(){
           width: {% if form.crop_w.value %}{{ form.crop_w.value }}{% else %}{{ form.instance.image.width }}{% endif %},
           height: {% if form.crop_h.value %}{{ form.crop_h.value }}{% else %}{{ form.instance.image.height }}{% endif %}
         },
+        autoCropArea: 1.0,
         preview: ".preview",
 
         done: function(data) {
@@ -165,8 +166,8 @@ django.jQuery(document).ready(function(){
       });
       $("#aspectRatioChoice").change(function() {
         var aspectRatio = this.value,
-            w = filterInt($targetWidth.val()),
-            h = filterInt($targetHeight.val()),
+            w = originalWidth,
+            h = originalHeight,
             temp;
         if (this.value === "auto") return;
         aspectRatio = parseFloat(aspectRatio);
@@ -177,6 +178,7 @@ django.jQuery(document).ready(function(){
             $targetWidth.val(Math.round(originalHeight * aspectRatio));
           } else {
             $targetHeight.val(temp);
+            $targetWidth.val(w)
           }
         } else {
           temp = Math.round(h * aspectRatio);
@@ -185,13 +187,14 @@ django.jQuery(document).ready(function(){
             $targetHeight.val(Math.round(originalWidth / aspectRatio));
           } else {
             $targetWidth.val(temp);
+            $targetHeight.val(h);
           }
         }
         $('#aspectRatioChoice').val('auto');
         maintainAspectRatio = false;  // To force the calcTargetRatio to calcuate
         calcTargetRatio();
         maintainAspectRatio = true;
-        $("#lockIcon").removeClass('sprite sprite-unlock').addClass('sprite sprite-lock');
+        $("#lockIcon").removeClass('sprite sprite-lock-open').addClass('sprite sprite-lock');
         $("#maintainAspectRatio").prop('checked', maintainAspectRatio);
       });
       $("#lockIcon").click(function(){
