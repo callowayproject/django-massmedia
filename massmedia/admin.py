@@ -78,7 +78,7 @@ class MediaAdmin(admin.ModelAdmin):
         # (_("Widget"), {'fields': ('width', 'height')}),
         (_("Advanced options"), {
             'classes': ('collapse',),
-            'fields': ('slug', 'widget_template',)
+            'fields': ('widget_template',)
         }),
     )
 
@@ -88,14 +88,13 @@ class MediaAdmin(admin.ModelAdmin):
         (_("Rights"), {'fields': ('public', 'reproduction_allowed')}),
         (_("Additional Info"), {
             'classes': ('collapse',),
-            'fields': ('slug', 'creation_date', 'site')
+            'fields': ('creation_date', 'site')
         })
     )
 
     list_display = ('title', 'author_name', 'mime_type', 'public', 'creation_date')
     list_filter = ('site', 'creation_date', 'public')
     list_editable = ('public',)
-    prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'creation_date'
     search_fields = ('caption', 'file')
     raw_id_fields = ('author', )
@@ -132,7 +131,7 @@ class ImageAdmin(MediaAdmin):
         (_("Rights"), {'fields': ('public', 'reproduction_allowed')}),
         (_("Additional Info"), {
             'classes': ('collapse',),
-            'fields': ('title', 'slug', 'creation_date', 'site')
+            'fields': ('title', 'creation_date', 'site')
         })
     )
     add_form = ImageCreationForm
@@ -189,13 +188,13 @@ class VideoAdmin(MediaAdmin):
         (_("Widget"), {'fields': ('width', 'height')}),
         (_("Advanced options"), {
             'classes': ('collapse',),
-            'fields': ('slug', 'widget_template',)
+            'fields': ('widget_template',)
         }),
     )
 
     raw_id_fields = ('thumbnail',)
     add_fieldsets = (
-        (None, {'fields': ('title', 'slug',)}),
+        (None, {'fields': ('title', )}),
         (_("Content"), {'fields': (('external_url', 'file'), 'thumbnail')}),
         (_("Rights"), {'fields': ('public', 'reproduction_allowed')}),
         (_("Additional Info"), {
@@ -224,10 +223,9 @@ class CollectionInline(GenericCollectionTabularInline):
 
 
 class CollectionAdmin(admin.ModelAdmin):
-    fields = ('title', 'slug', 'caption', 'zip_file', 'external_url', 'public', 'site')
+    fields = ('title', 'caption', 'zip_file', 'external_url', 'public', 'site')
     list_display = ('title', 'caption', 'public', 'creation_date')
     list_filter = ('site', 'creation_date', 'public')
-    prepopulated_fields = {'slug': ('title', )}
     date_hierarchy = 'creation_date'
     search_fields = ('caption', )
     inlines = (CollectionInline, )
@@ -248,7 +246,7 @@ class EmbedAdmin(MediaAdmin):
         (_("Widget"), {'fields': ('width', 'height')}),
         (_("Advanced options"), {
             'classes': ('collapse',),
-            'fields': ('slug', 'widget_template',)
+            'fields': ('widget_template',)
         }),
     )
 
@@ -256,7 +254,7 @@ class EmbedAdmin(MediaAdmin):
         (_("Content"), {'fields': ('title', 'external_url', 'caption')}),
         (_("Additional Info"), {
             'classes': ('collapse',),
-            'fields': ('slug', 'creation_date', 'site')
+            'fields': ('creation_date', 'site')
         })
     )
 
@@ -265,7 +263,6 @@ class EmbedAdmin(MediaAdmin):
     list_display = ('title', 'mime_type', 'public', 'creation_date')
     list_filter = ('site', 'creation_date', 'public')
     list_editable = ('public',)
-    prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'creation_date'
     search_fields = ('caption', )
 

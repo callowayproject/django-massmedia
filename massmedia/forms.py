@@ -15,7 +15,7 @@ class ContentCreationForm(forms.Form):
         max_length=255,
         widget=forms.TextInput(attrs={'size': 85}),
         required=False)
-    slug = forms.CharField(required=False)
+    # slug = forms.CharField(required=False)
     external_url = forms.URLField(
         required=False,
         help_text="If this URLField is set, the media will be pulled externally")
@@ -40,12 +40,10 @@ class ContentCreationForm(forms.Form):
                                         error_class, label_suffix,
                                         empty_permitted, instance)
 
-    def set_title_and_slug(self):
+    def set_title(self):
         """
         If the title is empty, set it to the name of the uploaded or external file
         """
-        from django.template.defaultfilters import slugify
-
         if not self.cleaned_data.get('title', False):
             if 'file' in self.cleaned_data and hasattr(self.cleaned_data['file'], 'name'):
                 filename = self.cleaned_data['file'].name
@@ -56,50 +54,39 @@ class ContentCreationForm(forms.Form):
                 return
             self.cleaned_data['title'] = filename
 
-        if not self.cleaned_data.get('slug', False):
-            slug = slugify(self.cleaned_data['title'])
-        else:
-            slug = self.cleaned_data['slug']
-        try:
-            self._meta.model.objects.get(slug=slug)
-            slug = "%s_%d" % (slug, datetime.datetime.now().toordinal())
-        except self._meta.model.DoesNotExist:
-            pass
-        self.cleaned_data['slug'] = slug
-
     def clean(self):
-        self.set_title_and_slug()
+        self.set_title()
         return super(ContentCreationForm, self).clean()
 
 
 class ImageCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
         model = Image
-        fields = ('external_url', 'file', 'caption', 'public', 'reproduction_allowed', 'title', 'slug', 'creation_date', 'site')
+        fields = ('external_url', 'file', 'caption', 'public', 'reproduction_allowed', 'title', 'creation_date', 'site')
 
 
 class VideoCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
         model = Video
-        fields = ('title', 'slug', 'file', 'external_url', 'creation_date')
+        fields = ('title', 'file', 'external_url', 'creation_date')
 
 
 class AudioCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
         model = Audio
-        fields = ('title', 'slug', 'file', 'external_url', 'creation_date')
+        fields = ('title', 'file', 'external_url', 'creation_date')
 
 
 class FlashCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
         model = Flash
-        fields = ('title', 'slug', 'file', 'external_url', 'creation_date')
+        fields = ('title', 'file', 'external_url', 'creation_date')
 
 
 class DocumentCreationForm(ContentCreationForm, forms.ModelForm):
     class Meta:
         model = Document
-        fields = ('title', 'slug', 'file', 'external_url', 'creation_date')
+        fields = ('title', 'file', 'external_url', 'creation_date')
 
 
 class EmbedCreationForm(forms.ModelForm):

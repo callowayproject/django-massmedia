@@ -11,7 +11,8 @@ from django.template.loader import select_template
 from django.template import Context, TemplateDoesNotExist
 
 from fields import (Metadata, SerializedObjectField,
-                    MetadataJSONEncoder, MetadataJSONDecoder)
+                    MetadataJSONEncoder, MetadataJSONDecoder,
+                    AutoSlugField)
 
 from massmedia import settings as appsettings
 from massmedia.utils import value_or_list, super_force_ascii
@@ -48,9 +49,11 @@ class Media(models.Model):
     title = models.CharField(
         _("Title"),
         max_length=255)
-    slug = models.SlugField(
-        _("Slug"),
-        unique=True)
+    slug = AutoSlugField(
+        populate_from='title',
+        verbose_name=_("Slug"),
+        unique=True,
+        max_length=255)
     creation_date = models.DateTimeField(
         _("Creation Date"),
         auto_now_add=True)
@@ -145,11 +148,8 @@ class Media(models.Model):
 
         if not self.metadata and hasattr(self, 'file') and self.file and EXTRACT_METADATA:
             self.parse_metadata()
-        try:
-            super(Media, self).save(*args, **kwargs)
-        except Exception, e:
-            print e
-            print self.__dict__
+        kwargs.pop('force_insert', None)
+        super(Media, self).save(*args, **kwargs)
 
     def thumb(self):
         return "<p>" + _("No Thumbnail Available") + "</p>"
@@ -168,16 +168,16 @@ class Media(models.Model):
         if appsettings.FS_TEMPLATES:
             if self.widget_template:
                 lookups = [self.widget_template]
-            elif mime_type is None:
-                lookups = [
-                    'massmedia/mediatypes/generic_%s.html' % template_type
-                ]
             else:
-                lookups = [
+                lookups = []
+            if mime_type is None:
+                lookups.append('massmedia/mediatypes/generic_%s.html' % template_type)
+            else:
+                lookups.extend([
                     'massmedia/mediatypes/%s_%s.html' % (mime_type, template_type),
                     'massmedia/mediatypes/%s/generic_%s.html' % (mime_type.split('/')[0], template_type),
                     'massmedia/mediatypes/generic_%s.html' % template_type
-                ]
+                ])
             try:
                 return select_template(lookups)
             except TemplateDoesNotExist:

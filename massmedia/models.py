@@ -24,7 +24,7 @@ from .settings import (IMAGE_STORAGE, VIDEO_STORAGE, AUDIO_STORAGE,
     IMAGE_EXTS, VIDEO_EXTS, AUDIO_EXTS, FLASH_EXTS, DOC_EXTS, CONTENT_TYPE_CHOICES,
     TRANSMOGRIFY_KEY)
 
-
+from fields import AutoSlugField
 from base_models import Media, PublicMediaManager
 from massmedia import resize
 
@@ -436,7 +436,11 @@ class Collection(models.Model):
     """
     creation_date = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
+    slug = AutoSlugField(
+        populate_from='title',
+        verbose_name=_("Slug"),
+        unique=True,
+        max_length=255)
     caption = models.TextField(blank=True)
     zip_file = models.FileField(
         _("Media files in a .zip"),
@@ -545,7 +549,7 @@ class Collection(models.Model):
             try:
                 media = model.objects.get(slug=slug)
             except model.DoesNotExist:
-                media = model(title=title, slug=slug)
+                media = model(title=title)
                 media.file.save(filename, ContentFile(data))
 
             CollectionRelation(content_object=media, collection=self).save()
